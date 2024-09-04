@@ -1,0 +1,50 @@
+.dropdown {
+    position: relative;
+    display: inline-block; /* Esto asegura que el contenedor solo sea tan ancho como el contenido dentro de él */
+    font-family: Arial, sans-serif;
+  }
+  
+  .dropdown-button {
+    background-color: #f0e8d9; /* Un tono beige claro */
+    color: #5a5343; /* Color de texto café oscuro */
+    padding: 8px 12px;
+    border: 1px solid #d3c2ae; /* Borde en un tono café claro */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 290px; /* Ajustamos el ancho aquí */
+    text-align: left;
+    display: block; /* Asegura que el botón ocupe todo el ancho del contenedor .dropdown */
+  }
+  
+  .dropdown-button:hover {
+    background-color: #e2e0d6;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #d3c2ae;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: 100%; /* Hace que el menú desplegable sea del mismo ancho que el botón */
+  }
+  
+  .dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style-type: none;
+    color: #5a5343; /* Texto café para las opciones */
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f4f4ec;
+  }
+  
+  .dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #d3c2ae;
+  }
+  

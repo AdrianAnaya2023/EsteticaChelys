@@ -1,0 +1,76 @@
+.footer-container {
+  background-color: #2C2F33;
+  color: #ffffff;
+  padding: 10px 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 5px;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-logo {
+  flex: 0 1 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.footer-logo img {
+  max-height: 100px;
+  width: auto;
+  filter: brightness(0.8) saturate(0.7);
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    position: static; /* Elimina el posicionamiento fijo */
+    padding: 5px 15px;
+    font-size: 12px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .footer-left, .footer-right {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .footer-logo {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .footer-logo img {
+    max-height: 120px; /* Aumenta el tamaño máximo del logo */
+  }
+}

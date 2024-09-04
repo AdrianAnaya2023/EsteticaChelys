@@ -1,0 +1,59 @@
+.gallery-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #f0f0f0e1; /* Un tono beige claro para el fondo */
+    color: #fff9f5; /* Cambiado a un marrón oscuro para mejor contraste */
+    background-image: url('https://st4.depositphotos.com/5273971/20237/i/450/depositphotos_202378378-stock-photo-background-natural-knotted-wood-fence.jpg');
+    opacity: 0.9;
+    position: relative; /* Añadido para posicionamiento absoluto del botoncito */
+}
+.gallery-container h1, .gallery-container p {
+    text-shadow: 2px 2px 3px rgb(0, 0, 0); /* Añade una sombra ligera para aumentar contraste */
+}
+.gallery-container h1 {
+    color: #503e2e;
+}
+
+.images-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Aumento del espacio entre imágenes */
+    overflow: hidden; 
+    flex-wrap: wrap; /* Permite que las imágenes se envuelvan si no caben en una sola línea */
+}
+
+.image {
+    width: 450px; 
+    height: 350px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(156, 133, 107, 0.2); /* Sombra suave en tonos marrones */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suavizada para hover */
+    animation: fadeInScale 0.8s forwards;
+}
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.image:hover {
+    box-shadow: 0 8px 16px rgba(156, 133, 107, 0.4); /* Sombra más intensa en hover */
+    transform: scale(1.05); 
+}
+
+@media (max-width: 768px) {
+    .images-container {
+        flex-direction: column;
+    }
+
+    .image {
+        width: 90%; /* Ancho más grande para una mejor visibilidad en móviles */
+        height: auto; /* Mantiene la proporción de la imagen */
+        margin: 20px auto; /* Aumento del margen para más espacio */
+    }
+}

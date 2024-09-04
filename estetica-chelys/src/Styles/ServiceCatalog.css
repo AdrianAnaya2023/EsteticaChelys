@@ -1,0 +1,71 @@
+.service-container {
+  text-align: center;
+  padding: 70px;
+  background-image: url('https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?cs=srgb&dl=pexels-8moments-1323550.jpg&fm=jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  background-color: rgba(244, 241, 238, 0.7);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.services-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card {
+  width: 300px;
+  height: 400px;
+  margin: 20px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-card h2, .service-card p {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  margin: 0;
+  padding: 10px 20px;
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+}
+
+.service-card h2 {
+  top: 10px;
+  font-size: 24px;
+  background: rgba(143, 101, 68, 0.8);
+}
+
+.service-card p {
+  bottom: 0;
+  font-size: 16px;
+  background: rgba(89, 61, 43, 0.85);
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .service-container {
+    padding: 30px 10px;
+  }
+}

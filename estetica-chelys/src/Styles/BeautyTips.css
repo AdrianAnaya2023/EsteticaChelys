@@ -1,0 +1,83 @@
+.beauty-tips-container {
+  padding: 50px;
+  background: linear-gradient(
+      rgba(245, 245, 245, 0.5),
+      rgba(245, 245, 245, 0.5)
+    ),
+    url('https://c0.wallpaperflare.com/preview/663/693/294/dawn-daylight-evening-grass.jpg');
+  background-size: cover;
+  text-align: center;
+  position: relative; /* Añadido para posicionar el Botoncito */
+
+  box-shadow: 1px 4px 8px rgba(0,0,0,0.4);
+  overflow-x: hidden; /* Asegura que no haya desplazamiento horizontal innecesario */
+  
+}
+.beauty-tips-container h1 {
+  color: #000000;
+  text-shadow: 1px 1px 3px rgb(255, 255, 255);
+}
+
+.tips-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en la pantalla */
+}
+
+.tip-card {
+  flex: 1 1 30%; /* Ajusta el ancho para permitir tres elementos por fila en pantallas grandes */
+  margin: 10px;
+  background-color: rgba(255, 248, 220, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+  max-width: 300px; /* Establece un máximo ancho para cada tarjeta */
+}
+
+.tip-card:hover {
+  transform: scale(1.05);
+}
+
+.tip-card h2, .tip-card p {
+  color: #0c0d0e;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+}
+
+.tip-image {
+  width: 100%; /* Las imágenes ocupan todo el ancho de la tarjeta */
+  height: 200px; /* Altura fija para todas las imágenes */
+  object-fit: cover; /* Asegura que las imágenes cubran el área designada sin deformarse */
+  border-radius: 5px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.navigation button {
+  padding: 10px 20px;
+  background-color: #d7b19d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navigation button:hover {
+  background-color: #a88270;
+}
+
+@media (max-width: 768px) {
+  .tips-display {
+    flex-direction: column; /* Alinea las tarjetas verticalmente en pantallas pequeñas */
+  }
+
+  .tip-card {
+    flex: 1 1 100%; /* Cada tarjeta ocupa el 100% del ancho en pantallas pequeñas */
+    max-width: none; /* Elimina el máximo ancho en pantallas pequeñas */
+  }
+}

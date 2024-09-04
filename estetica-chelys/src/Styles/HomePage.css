@@ -1,0 +1,138 @@
+/* Estilos generales */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
+  margin-bottom: 0;
+}
+
+/* Contenedor principal */
+.homepage {
+  width: 100%;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* Hero section */
+.hero-section {
+  background: url('https://www.shutterstock.com/image-photo/luxury-beauty-product-podium-stage-600nw-2193496973.jpg') no-repeat center center / cover;
+  padding: 50px 20px;
+  text-align: center;
+  margin: 0; /* Eliminado cualquier margen para asegurar continuidad */
+}
+
+.hero-section h1, .hero-section p {
+  color: #fff;
+}
+
+/* Botones */
+.button-wrapper {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #7209b7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #5a189a;
+}
+
+/* Sección 'Quién es Cristina' */
+.about-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px 20px;
+  margin: 0; /* Margen eliminado */
+  background: url('https://www.blucactus.com.mx/wp-content/uploads/2018/08/blucactus-fondo-oscuro-paginas-web-1.jpg') no-repeat center center / cover;
+  color: #fff;
+}
+.about-section h2 {
+  color: #fff;
+}
+.about-section .text, .about-section img {
+  margin-left: 50px;
+}
+
+/* Carrusel de imágenes del local */
+.facilities {
+  margin: 0; /* Margen superior e inferior eliminado */
+  padding: 0; /* Padding eliminado para evitar espacios */
+  background: url("https://marketplace.canva.com/EAFfop3Vk5U/1/0/1600w/canva-fondo-de-pantalla-aesthetic-delicado-con-frase-en-beige-qj6bfX6z6dE.jpg") no-repeat center center / cover;
+}
+
+.carousel img {
+  height: 300px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.carousel .slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  margin: 0;
+}
+
+.facilities-header, .facilities-invitation {
+  font-size: 36px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  color: #f7f7f7;
+  margin: 0 0 0px 0;
+}
+
+/* Footer */
+.footer {
+  background-color: #da959573;
+  color: #f5f5f5;
+  text-align: center;
+  padding: 30px 0;
+  margin: 0; /* Asegura que no hay margen extra */
+}
+
+.footer a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 60px;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 8px;
+  }
+
+  .about-section .text, .about-section img {
+    width: 80%;
+    margin: 0;
+  }
+
+  .hero-section p, .about-section .text {
+    padding: 0 20px;
+  }
+
+  .button {
+    display: block;
+    width: 80%;
+    margin: 15px auto;
+  }
+}

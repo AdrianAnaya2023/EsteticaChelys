@@ -1,0 +1,61 @@
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1); /* Estado normal */
+  }
+  50% {
+    transform: scale(1.1); /* Aumenta un poco el tamaño */
+  }
+}
+
+.floating-help-icon {
+  position: fixed;
+  bottom: 700px; /* Aumenta la distancia desde el fondo para pantallas grandes */
+  right: 20px;
+  background-color: hsl(0, 73%, 97%); /* Color de fondo claro */
+  color: rgb(0, 0, 0);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Icono circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1500;
+  transition: transform 0.3s ease-in-out;
+  animation: pulse 2s infinite ease-in-out; /* Aplica la animación de pulsación */
+}
+
+.floating-help-icon:hover {
+  transform: scale(1.2); /* Aumenta más al pasar el mouse */
+}
+
+.floating-help-icon i {
+  font-size: 22px; /* Tamaño del icono de FontAwesome */
+}
+
+@media (max-width: 768px) {
+  .floating-help-icon {
+    width: 40px;
+    height: 40px;
+    bottom: 500px; /* Mueve el botón más arriba en pantallas pequeñas */
+    right: 15px;
+  }
+
+  .floating-help-icon i {
+    font-size: 18px; /* Ajusta el tamaño del icono en pantallas pequeñas */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .floating-help-icon {
+    width: 45px;
+    height: 45px;
+    bottom: 100px; /* Mueve el botón más arriba en pantallas medianas */
+    right: 25px;
+  }
+
+  .floating-help-icon i {
+    font-size: 20px;
+  }
+}
