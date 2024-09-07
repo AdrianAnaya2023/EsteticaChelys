@@ -1,0 +1,18 @@
+/* src/Components/ViewMoreButton.css */
+.view-more-button {
+    padding: 12px 20px; /* Botón más grande */
+    background-color: #4CAF50; /* Verde para el botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px; /* Tamaño de fuente más grande */
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-more-button:hover {
+    background-color: #45a049;
+  }
+  
+  
