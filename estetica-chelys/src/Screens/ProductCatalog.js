@@ -46,8 +46,8 @@ const ProductCatalog = ({ isAdmin }) => {
     <div id="product-section" className="catalog-container" ref={productSectionRef}>
       {currentCategory ? (
         <div>
+          {/* Solo mostramos el título de la categoría en el centro */}
           <h1>{currentCategory.name}</h1>
-          <div className="category-title">{currentCategory.name}</div>
           <div className="catalog-grid">
             {sampleProducts[currentCategory.id]
               .slice(currentPage, currentPage + 4)
