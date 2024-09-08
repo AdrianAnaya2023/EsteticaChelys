@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ openSpecialOffers }) => { // Añadimos `openSpecialOffers` como prop
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const links = [
@@ -11,11 +11,14 @@ const Navbar = () => {
     { id: 3, link: "products", name: "Catálogo de Productos" },
     { id: 4, link: "gallery-container", name: "Galería" },
     { id: 5, link: "beauty-tips-container", name: "Consejos de Belleza" },
-    { id: 6, link: "offers-container", name: "Promociones y Ofertas Especiales" }
+    { id: 6, link: "offers-container", name: "Promociones y Ofertas Especiales", action: openSpecialOffers } // Añadimos el `action`
   ];
 
   const handleLinkClick = (link) => {
-    setNavbarOpen(false);
+    if (link.action) {
+      link.action(); // Ejecuta la acción si existe (como abrir el modal de ofertas)
+    }
+    setNavbarOpen(false); // Cierra el menú
   };
 
   return (
@@ -45,4 +48,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Components/Navbar';
 import HomePage from './Screens/HomePage';
 import ServiceCatalog from './Screens/ServiceCatalog';
@@ -6,7 +6,7 @@ import ProductCatalog from './Screens/ProductCatalog';
 import Gallery from './Screens/Gallery';
 import BeautyTips from './Screens/BeautyTips';
 import SatisfactionSurvey from './Screens/SatisfactionSurvey';
-import SpecialOffers from './Screens/SpecialOffers';
+import SpecialOffers from './Screens/SpecialOffers'; // Importa el componente de ofertas especiales
 import FooterPage from './Screens/FooterPage';
 import Login from './Screens/Login';
 import AddService from './Screens-Admin/AddService';
@@ -22,6 +22,12 @@ function App() {
   const [isAddServiceVisible, setIsAddServiceVisible] = useState(false);
   const [isAddImageVisible, setIsAddImageVisible] = useState(false);
   const [isAddTipVisible, setIsAddTipVisible] = useState(false);
+  const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false); // Estado para el modal de ofertas especiales
+
+  // Abrir el modal de promociones automáticamente cuando se ingresa a la página por primera vez
+  useEffect(() => {
+    setIsSpecialOffersVisible(true); // Se abre al cargar la página
+  }, []);
 
   const toggleSurvey = () => {
     setIsSurveyVisible(!isSurveyVisible);
@@ -72,6 +78,14 @@ function App() {
     setIsAddTipVisible(false);
   };
 
+  const openSpecialOffers = () => {
+    setIsSpecialOffersVisible(true); // Muestra el modal de ofertas especiales
+  };
+
+  const closeSpecialOffers = () => {
+    setIsSpecialOffersVisible(false); // Cierra el modal de ofertas especiales
+  };
+
   const handleHelpClick = () => {
     // Abre el SatisfactionSurvey cuando se hace clic en el FloatingHelpIcon
     setIsSurveyVisible(true);
@@ -79,13 +93,13 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar toggleSurvey={toggleSurvey} />
+      <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} /> {/* Añade `openSpecialOffers` */}
       <HomePage isAdmin={isAdmin} />
       <ServiceCatalog isAdmin={isAdmin} openAddService={openAddService} />
       <ProductCatalog isAdmin={isAdmin} />
       <Gallery isAdmin={isAdmin} openAddGallery={openAddGallery} />
       <BeautyTips isAdmin={isAdmin} openAddTip={openAddTip} />
-      <SpecialOffers isAdmin={isAdmin} />
+      {isSpecialOffersVisible && <SpecialOffers isAdmin={isAdmin} onClose={closeSpecialOffers} />} {/* Modal de Ofertas Especiales */}
       {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
       <FooterPage openLogin={openLogin} />
       {isLoginVisible && <Login closeLogin={closeLogin} handleLogin={handleLogin} />}

@@ -1,4 +1,4 @@
-.category-label {
+.category-title {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -10,11 +10,11 @@
   z-index: 1000;
 }
 
-.product-container {
+.catalog-container {
   padding: 40px;
   text-align: center;
   font-family: 'Arial', sans-serif;
-  background-image: url('https://images.unsplash.com/photo-1710184121893-f6f5f2375051?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('https://static.vecteezy.com/system/resources/previews/011/561/871/non_2x/aesthetic-abstract-modern-brown-background-illustration-perfect-for-wallpaper-backdrop-postcard-background-banner-vector.jpg');
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;
@@ -23,12 +23,12 @@
   min-height: 70vh;
 }
 
-.product-container h1 {
+.catalog-container h1 {
   color: #8d735c;
   text-shadow: 2px 2px 5px rgb(250, 250, 250);
 }
 
-.product-grid {
+.catalog-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -36,35 +36,43 @@
   margin-top: 30px;
 }
 
-.product-card {
-  width: 220px;
+.catalog-card {
+  flex: 1 1 30%;
   margin: 10px;
-  background-color: #b18888ee;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255, 248, 220, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 300px;
 }
 
-.product-card:hover {
+.catalog-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.product-card img {
+.catalog-card h3, .catalog-card p {
+  color: #0c0d0e;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+}
+
+.catalog-card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
+  margin-bottom: 15px;
 }
 
-.pagination-buttons {
+.pagination-controls {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-.pagination-buttons button {
+.pagination-controls button {
   padding: 10px 20px;
   background-color: #d3c2ae;
   color: rgb(37, 36, 36);
@@ -72,39 +80,71 @@
   cursor: pointer;
 }
 
-.pagination-buttons button:hover {
+.pagination-controls button:hover {
   background-color: #b8a691;
 }
 
-.back-button {
+.catalog-back-button {
   padding: 10px 20px;
-  margin-top: 20px;
   background-color: #e05a5a;
-  color: rgb(37, 36, 36);
+  color: white;
   border-radius: 5px;
   cursor: pointer;
-  position: absolute; /* Hace que el botón se coloque de forma absoluta */
-  right: 20px; /* Alinea a la derecha con un margen de 20px desde el borde derecho */
-  top: 500px; /* Alinea el botón en la parte superior con 20px de margen desde arriba */
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
-.back-button:hover {
+.catalog-back-button:hover {
   background-color: #b8a691;
+}
+
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 1024px) {
+  .catalog-card {
+    flex: 1 1 45%;
+  }
 }
 
 @media (max-width: 768px) {
-  .product-grid {
+  .catalog-grid {
     flex-direction: column;
     align-items: center;
   }
 
-  .product-card {
+  .catalog-card {
     width: 100%;
     max-width: 300px;
   }
 
-  .category-label {
+  .category-title {
     font-size: 18px;
     padding: 8px;
+  }
+
+  .catalog-back-button {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-card {
+    width: 100%;
+    max-width: 90%;
+    margin: 15px auto;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .catalog-back-button {
+    right: 5px;
+    bottom: 5px;
+    padding: 8px 14px;
+    font-size: 14px;
   }
 }

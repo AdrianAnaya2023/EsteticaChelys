@@ -4,15 +4,16 @@
       rgba(245, 245, 245, 0.5),
       rgba(245, 245, 245, 0.5)
     ),
-    url('https://c0.wallpaperflare.com/preview/663/693/294/dawn-daylight-evening-grass.jpg');
+    url('https://image.slidesdocs.com/responsive-images/background/aged-and-weathered-paper-texture-brown-vintage-backdrop-featuring-scratch-marks-and-discoloration-(3d-render)-powerpoint-background_35759e5832__960_540.jpg');
   background-size: cover;
   text-align: center;
   position: relative; /* Añadido para posicionar el Botoncito */
-
   box-shadow: 1px 4px 8px rgba(0,0,0,0.4);
   overflow-x: hidden; /* Asegura que no haya desplazamiento horizontal innecesario */
-  
+  min-height: 25vh; /* Asegura que la sección cubra al menos la altura de la pantalla */
+  margin-bottom: 85px; /* Agrega espacio extra al final de la sección */
 }
+
 .beauty-tips-container h1 {
   color: #000000;
   text-shadow: 1px 1px 3px rgb(255, 255, 255);
@@ -56,6 +57,8 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 30px; /* Agrega espacio al final para separar los botones del footer */
+
 }
 
 .navigation button {
