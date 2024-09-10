@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import Botoncito from '../Components/Botoncito'; // Importa el componente Botoncito
-import ViewMoreButton from '../Components/ViewMoreButton'; // Importa el botón "Ver más"
-import '../Styles/ProductCatalog.css'; // Asegúrate de que el path al archivo CSS sea correcto
+import Botoncito from '../Components/Botoncito'; 
+import ViewMoreButton from '../Components/ViewMoreButton'; 
+import AddProductCategory from '../Screens-Admin/AddProductCategory'; // Importa la screen para agregar categorías o productos
+import '../Styles/ProductCatalog.css'; 
 
-const ProductCatalog = ({ isAdmin }) => {
+const ProductCatalog = ({ isAdmin, openAddProductCategory }) => {
   const sampleCategories = [
     { id: 1, name: 'Cuidado de la Piel', imageUrl: 'https://www.depidel.com/wp-content/uploads/2020/07/cuidado-piel-1080x646.jpg' },
     { id: 2, name: 'Cuidado del Cabello', imageUrl: 'https://www.capilclinic.es/blog/wp-content/uploads/2022/01/cuidar-pelo-mujeres.jpg' },
@@ -42,11 +43,18 @@ const ProductCatalog = ({ isAdmin }) => {
     }
   };
 
+  const handleDelete = (item) => {
+    console.log('Eliminar:', item);
+  };
+
+  const handleEdit = (item) => {
+    console.log('Editar:', item);
+  };
+
   return (
     <div id="product-section" className="catalog-container" ref={productSectionRef}>
       {currentCategory ? (
         <div>
-          {/* Solo mostramos el título de la categoría en el centro */}
           <h1>{currentCategory.name}</h1>
           <div className="catalog-grid">
             {sampleProducts[currentCategory.id]
@@ -56,6 +64,12 @@ const ProductCatalog = ({ isAdmin }) => {
                   <img src={product.imageUrl} alt={product.name} />
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
+                  {isAdmin && (
+                    <div className="admin-actions">
+                      <button onClick={() => handleEdit(product)} className="edit-button">Modificar</button>
+                      <button onClick={() => handleDelete(product)} className="delete-button">Borrar</button>
+                    </div>
+                  )}
                 </div>
               ))}
           </div>
@@ -78,12 +92,18 @@ const ProductCatalog = ({ isAdmin }) => {
                 <img src={category.imageUrl} alt={category.name} />
                 <h3>{category.name}</h3>
                 <ViewMoreButton onClick={() => viewMore(category)} />
+                {isAdmin && (
+                  <div className="admin-actions">
+                    <button onClick={() => handleEdit(category)} className="edit-button">Modificar</button>
+                    <button onClick={() => handleDelete(category)} className="delete-button">Borrar</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       )}
-      {isAdmin && <Botoncito style={{ top: '20px', left: '10px' }} />}
+      {isAdmin && <Botoncito style={{ top: '20px', left: '10px' }} onClick={openAddProductCategory} />} {/* Usa el prop para abrir la pantalla */}
     </div>
   );
 };

@@ -1,10 +1,12 @@
-.add-service-container {
+.add-product-category-container-unique {
   position: fixed;
   left: 0;
   top: 0;
   width: 33%;
   height: 100%;
-  background: url('https://i.ytimg.com/vi/u5rY4e2ew8Q/maxresdefault.jpg') no-repeat center center / cover;
+  background-color: #fff;
+  background-image: url('https://i.ytimg.com/vi/u5rY4e2ew8Q/maxresdefault.jpg');
+  background-size: cover;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   padding: 20px;
   overflow-y: auto;
@@ -13,15 +15,15 @@
   z-index: 1000;
 }
 
-.add-service-container.visible {
+.add-product-category-container-unique.visible {
   transform: translateX(0);
 }
 
-.close-button {
+.close-button-unique {
   position: absolute;
-  top: 20px;
-  left: 30px;
-  background: #b96d6d;
+  top: 25px;
+  right: 20px;
+  background: #f44336; /* Cambié a un rojo más oscuro */
   border: none;
   font-size: 24px;
   color: white;
@@ -34,9 +36,9 @@
   justify-content: center;
 }
 
-.form-container {
+.form-container-unique {
   background-color: rgba(244, 241, 226, 0.9);
-  padding: 50px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -72,7 +74,7 @@ h2 {
 }
 
 button {
-  background-color: #a28c78;
+  background-color: #5e91f2; /* Cambié a un color azul más brillante */
   color: white;
   padding: 10px;
   border: none;
@@ -82,5 +84,19 @@ button {
 }
 
 button:hover {
-  background-color: #8c705d;
+  background-color: #487ac9; /* Azul más oscuro al pasar el ratón */
+}
+
+.toggle-button {
+  background-color: #ffcc00; /* Cambié a un color amarillo para diferenciar */
+  color: #333;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.toggle-button:hover {
+  background-color: #e5b800; /* Amarillo más oscuro al pasar el ratón */
 }

@@ -1,134 +1,88 @@
 .add-beauty-tip-container {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 33%;
-    height: 100%;
-    background-color: #fff;
-    background-image: url('https://i.ytimg.com/vi/u5rY4e2ew8Q/maxresdefault.jpg'); /* Añade la imagen de fondo */
-    background-size: cover;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(-100%);
-    z-index: 1000;
-  }
-  
-  .add-beauty-tip-container.visible {
-    transform: translateX(0);
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    background: #ff5c5c;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .form-container {
-    background-color: rgba(244, 241, 226, 0.9); /* Contenedor beige con transparencia */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin: 10px 0 5px;
-    color: #4a4743;
-    font-weight: bold;
-  }
-  
-  input, textarea {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #a28c78;
-    border-radius: 5px;
-    background-color: #fffaf0;
-  }
-  
-  textarea {
-    resize: vertical;
-  }
-  
-  h2 {
-    color: #4a4743;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-  }
-  
-  button {
-    background-color: #a28c78; /* Verde para botones */
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px 0;
-  }
-  
-  button:hover {
-    background-color: #8c705d;
-  }
-  
-  .buttons-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .buttons-container button {
-    background-color: #a28c78;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px;
-    flex: 1;
-  }
-  
-  .buttons-container button:hover {
-    background-color: #8c705d;
-  }
-  
-  .buttons-container button:first-of-type {
-    background-color: #8c6c52;
-  }
-  
-  .buttons-container button:first-of-type:hover {
-    background-color: #705b47;
-  }
-  
-  .buttons-container button:nth-of-type(2) {
-    background-color: #d8a973;
-  }
-  
-  .buttons-container button:nth-of-type(2):hover {
-    background-color: #b8905d;
-  }
-  
-  .buttons-container button:last-of-type {
-    background-color: #b96d6d;
-  }
-  
-  .buttons-container button:last-of-type:hover {
-    background-color: #9e5a5a;
-  }
-  
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 33%;
+  height: 100%;
+  background-color: #fff;
+  background-image: url('https://i.ytimg.com/vi/u5rY4e2ew8Q/maxresdefault.jpg');
+  background-size: cover;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+  z-index: 1000;
+}
+
+.add-beauty-tip-container.visible {
+  transform: translateX(0);
+}
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #ff5c5c;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  background-color: rgba(244, 241, 226, 0.9);
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 10px 0 5px;
+  color: #4a4743;
+  font-weight: bold;
+}
+
+input, textarea, select {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #a28c78;
+  border-radius: 5px;
+  background-color: #fffaf0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+h2 {
+  color: #4a4743;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+button {
+  background-color: #a28c78;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+button:hover {
+  background-color: #8c705d;
+}

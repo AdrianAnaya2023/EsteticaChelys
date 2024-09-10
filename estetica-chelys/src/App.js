@@ -6,13 +6,14 @@ import ProductCatalog from './Screens/ProductCatalog';
 import Gallery from './Screens/Gallery';
 import BeautyTips from './Screens/BeautyTips';
 import SatisfactionSurvey from './Screens/SatisfactionSurvey';
-import SpecialOffers from './Screens/SpecialOffers'; // Importa el componente de ofertas especiales
+import SpecialOffers from './Screens/SpecialOffers';
 import FooterPage from './Screens/FooterPage';
 import Login from './Screens/Login';
 import AddService from './Screens-Admin/AddService';
 import AddGalleryImage from './Screens-Admin/AddGalleryImage';
 import AddBeautyTip from './Screens-Admin/AddBeautyTip';
-import FloatingHelpIcon from './Components/FloatingHelpIcon'; // Importa el componente FloatingHelpIcon
+import AddProductCategory from './Screens-Admin/AddProductCategory'; // Importa la pantalla de agregar categoría de productos
+import FloatingHelpIcon from './Components/FloatingHelpIcon';
 import './App.css';
 
 function App() {
@@ -22,11 +23,12 @@ function App() {
   const [isAddServiceVisible, setIsAddServiceVisible] = useState(false);
   const [isAddImageVisible, setIsAddImageVisible] = useState(false);
   const [isAddTipVisible, setIsAddTipVisible] = useState(false);
-  const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false); // Estado para el modal de ofertas especiales
+  const [isAddProductCategoryVisible, setIsAddProductCategoryVisible] = useState(false); // Estado para agregar categoría de productos
+  const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false);
 
-  // Abrir el modal de promociones automáticamente cuando se ingresa a la página por primera vez
+  // Mostrar las ofertas especiales automáticamente cuando se carga la página
   useEffect(() => {
-    setIsSpecialOffersVisible(true); // Se abre al cargar la página
+    setIsSpecialOffersVisible(true);
   }, []);
 
   const toggleSurvey = () => {
@@ -78,34 +80,47 @@ function App() {
     setIsAddTipVisible(false);
   };
 
+  const openAddProductCategory = () => {
+    setIsAddProductCategoryVisible(true);
+  };
+
+  const closeAddProductCategory = () => {
+    setIsAddProductCategoryVisible(false);
+  };
+
   const openSpecialOffers = () => {
-    setIsSpecialOffersVisible(true); // Muestra el modal de ofertas especiales
+    setIsSpecialOffersVisible(true);
   };
 
   const closeSpecialOffers = () => {
-    setIsSpecialOffersVisible(false); // Cierra el modal de ofertas especiales
+    setIsSpecialOffersVisible(false);
   };
 
   const handleHelpClick = () => {
-    // Abre el SatisfactionSurvey cuando se hace clic en el FloatingHelpIcon
     setIsSurveyVisible(true);
   };
 
   return (
     <div className="App">
-      <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} /> {/* Añade `openSpecialOffers` */}
+      <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} />
       <HomePage isAdmin={isAdmin} />
       <ServiceCatalog isAdmin={isAdmin} openAddService={openAddService} />
-      <ProductCatalog isAdmin={isAdmin} />
+      <ProductCatalog isAdmin={isAdmin} openAddProductCategory={openAddProductCategory} />
       <Gallery isAdmin={isAdmin} openAddGallery={openAddGallery} />
       <BeautyTips isAdmin={isAdmin} openAddTip={openAddTip} />
-      {isSpecialOffersVisible && <SpecialOffers isAdmin={isAdmin} onClose={closeSpecialOffers} />} {/* Modal de Ofertas Especiales */}
+      
+      {/* Pantallas sobrepuestas */}
+      {isSpecialOffersVisible && <SpecialOffers isAdmin={isAdmin} onClose={closeSpecialOffers} />}
       {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
-      <FooterPage openLogin={openLogin} />
       {isLoginVisible && <Login closeLogin={closeLogin} handleLogin={handleLogin} />}
+      
+      {/* Screens para admin */}
       {isAddServiceVisible && <AddService isVisible={isAddServiceVisible} onClose={closeAddService} />}
       {isAddImageVisible && <AddGalleryImage isVisible={isAddImageVisible} onClose={closeAddGallery} />}
       {isAddTipVisible && <AddBeautyTip isVisible={isAddTipVisible} onClose={closeAddTip} />}
+      {isAddProductCategoryVisible && <AddProductCategory isVisible={isAddProductCategoryVisible} onClose={closeAddProductCategory} />}
+      
+      <FooterPage openLogin={openLogin} />
       <FloatingHelpIcon onClick={handleHelpClick} />
     </div>
   );

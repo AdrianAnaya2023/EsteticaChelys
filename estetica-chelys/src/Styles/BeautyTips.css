@@ -72,6 +72,43 @@
   background-color: #b84040;
 }
 
+/* Contenedor de botones de administración */
+.admin-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Estilo para los botones de administración */
+.admin-buttons-container button {
+  background-color: #d3c2ae;
+  color: rgb(37, 36, 36);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  margin: 5px;
+}
+
+.admin-buttons-container button:hover {
+  background-color: #b8a691;
+}
+
+.admin-buttons-container button:first-of-type {
+  background-color: #a28c78;
+}
+
+.admin-buttons-container button:first-of-type:hover {
+  background-color: #8c705d;
+}
+
+.admin-buttons-container button:last-of-type {
+  background-color: #e05a5a;
+}
+
+.admin-buttons-container button:last-of-type:hover {
+  background-color: #b84040;
+}
 
 /* Controles de paginación */
 .pagination-controls-tips-custom {
