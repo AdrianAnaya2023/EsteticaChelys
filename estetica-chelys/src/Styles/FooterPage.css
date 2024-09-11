@@ -1,9 +1,9 @@
 .footer-container {
   background-color: #2C2F33;
   color: #ffffff;
-  padding: 10px 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
+  padding: 5px 40px; /* Ajusta el padding para más espacio */
+  font-family: 'Arial', sans-serif;
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -13,26 +13,27 @@
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Distribuye el contenido a la izquierda y derecha */
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Evita que los elementos se envuelvan en pantallas grandes */
 }
 
 .footer-section {
   flex: 1;
   padding: 5px;
+  color: #ffffff;
 }
 
 .footer-left {
-  text-align: left;
+  text-align: left; /* Alinea el contenido a la izquierda */
 }
 
 .footer-right {
-  text-align: right;
+  text-align: right; /* Alinea el contenido a la derecha */
 }
 
 .footer-logo {
-  flex: 0 1 200px;
+  flex: 0 1 180px; /* Fija el tamaño del logo */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,17 +47,21 @@
   opacity: 0.9;
 }
 
+.clickable-text {
+  cursor: pointer;
+  color: inherit;
+}
+
 @media (max-width: 768px) {
   .footer-container {
-    position: static; /* Elimina el posicionamiento fijo */
-    padding: 5px 15px;
-    font-size: 12px;
+    position: static;
+    padding: 10px 20px;
+    font-size: 16px; /* Ajusta el tamaño de la fuente para móviles */
   }
 
   .footer-content {
     flex-direction: column;
     text-align: center;
-    justify-content: center;
   }
 
   .footer-left, .footer-right {
@@ -71,6 +76,6 @@
   }
 
   .footer-logo img {
-    max-height: 120px; /* Aumenta el tamaño máximo del logo */
+    max-height: 120px; /* Aumenta el tamaño máximo del logo en móviles */
   }
 }

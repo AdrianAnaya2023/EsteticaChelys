@@ -6,7 +6,7 @@ import Modal from '../Components/Modal'; // Asegúrate de tener este componente 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../Styles/HomePage.css';
 
-const HomePage = ({ isAdmin }) => {
+const HomePage = ({ isAdmin, openModifyHome }) => {
   const [showMap, setShowMap] = useState(false);
 
   const openMap = () => setShowMap(true);
@@ -14,7 +14,7 @@ const HomePage = ({ isAdmin }) => {
 
   return (
     <div className="homepage">
-      {isAdmin && <Botoncito style={{ top: '85px', left: '10px' }} />}
+      {isAdmin && <Botoncito style={{ top: '85px', left: '10px' }} onClick={openModifyHome} />}
       <section className="hero-section">
         <h1>Estetica Chely's</h1>
         <p>Un lugar para cuidarte</p>
@@ -52,6 +52,7 @@ const HomePage = ({ isAdmin }) => {
         </Carousel>
         <p className="facilities-invitation">¡Te esperamos!</p>
       </section>
+
       {showMap && (
         <Modal onClose={closeMap}>
           <iframe

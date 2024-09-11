@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import '../Styles/SatisfactionSurvey.css'; // Asegúrate de que el path al archivo CSS sea correcto
 
-const SatisfactionSurvey = ({ isVisible, closeSurvey }) => {
+const SatisfactionSurvey = ({ isVisible, closeSurvey, isAdmin, openManageQuestions }) => {
   const surveyRef = useRef(null);
 
+  // Focus en el primer campo del formulario cuando la encuesta esté visible
   useEffect(() => {
     if (isVisible && surveyRef.current) {
       const firstInput = surveyRef.current.querySelector('select, textarea, input');
@@ -13,13 +14,33 @@ const SatisfactionSurvey = ({ isVisible, closeSurvey }) => {
     }
   }, [isVisible]);
 
+  // Verificar si isAdmin es true
+  console.log('isAdmin:', isAdmin); // Esto imprimirá el valor de isAdmin en la consola
+
+  // Función para cerrar la encuesta y abrir ManageQuestions
+  const handleCloseAndOpenManageQuestions = () => {
+    closeSurvey(); // Cierra la ventana de la encuesta
+    openManageQuestions(); // Abre la pantalla de ManageQuestions
+  };
+
   return (
     <>
+      {/* Overlay que cubre la pantalla cuando la encuesta está visible */}
       {isVisible && <div className="overlay visible" onClick={closeSurvey}></div>}
+      
+      {/* Contenedor de la encuesta */}
       <div ref={surveyRef} className={`survey-container ${isVisible ? 'visible' : ''}`}>
-        <button onClick={closeSurvey} className="cerrar-button">X</button>
+        
+        {/* Contenedor para los botones superiores */}
+        <div className="top-buttons">
+          {/* Botón para cerrar la encuesta en la parte superior */}
+          <button onClick={closeSurvey} className="cerrar-button">X</button>
+        </div>
+
+        {/* Contenido de la encuesta */}
         <h1>Encuesta de Satisfacción</h1>
         <p>Por favor, completa nuestra encuesta de satisfacción.</p>
+        
         <form>
           <label htmlFor="customerService">¿Cómo calificarías nuestro servicio al cliente?</label>
           <select id="customerService" name="customerService">
@@ -50,8 +71,16 @@ const SatisfactionSurvey = ({ isVisible, closeSurvey }) => {
 
           <label htmlFor="comments">Comentarios:</label>
           <textarea id="comments" name="comments" rows="4"></textarea>
-          
-          <button type="submit">Enviar</button>
+
+          {/* Botón para enviar el formulario */}
+          <button type="submit" className="submit-button">Enviar</button>
+
+          {/* Mostrar este botón solo si isAdmin es true */}
+          {isAdmin && (
+            <button type="button" onClick={handleCloseAndOpenManageQuestions} className="close-button-bottom">
+              Cerrar y Administrar Preguntas
+            </button>
+          )}
         </form>
       </div>
     </>
