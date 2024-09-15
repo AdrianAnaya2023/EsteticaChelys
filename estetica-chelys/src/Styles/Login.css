@@ -65,6 +65,9 @@ button:hover{
     background-color: #fff;
     color: #131212;
 }
+label{
+    color: #fff;
+}
 
 @media (max-width: 768px) {
     .login-container{

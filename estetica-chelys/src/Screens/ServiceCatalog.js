@@ -84,7 +84,7 @@ const ServiceCatalog = ({ isAdmin, openAddService }) => {
   const serviceSectionRef = useRef(null);
 
   const handlePageChange = (direction) => {
-    const totalPages = Math.ceil(services.length / 4);
+    const totalPages = Math.ceil(services.length / 3);
     const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1;
     if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
@@ -144,7 +144,7 @@ const ServiceCatalog = ({ isAdmin, openAddService }) => {
         <div>
           <h1>Catálogo de Servicios</h1>
           <div className="services-grid-catalog-new">
-            {services.slice(currentPage * 4, currentPage * 4 + 4).map(service => (
+            {services.slice(currentPage * 3, currentPage * 3 + 3).map(service => (
               <div key={service.id} className="service-card-catalog-new">
                 <img src={service.imageUrl} alt={service.title} className="service-image-catalog-new" />
                 <h2>{service.title}</h2>
@@ -163,7 +163,7 @@ const ServiceCatalog = ({ isAdmin, openAddService }) => {
             <button onClick={() => handlePageChange('prev')} disabled={currentPage === 0}>
               Anterior
             </button>
-            <button onClick={() => handlePageChange('next')} disabled={currentPage * 4 + 4 >= services.length}>
+            <button onClick={() => handlePageChange('next')} disabled={currentPage * 3 + 3 >= services.length}>
               Siguiente
             </button>
           </div>
