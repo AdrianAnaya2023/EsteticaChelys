@@ -10,67 +10,46 @@
   transition: transform 0.3s ease-in-out;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
-  z-index: 2000;
+  overflow-y: auto; /* Permite desplazamiento si el contenido es demasiado */
+  z-index: 2000; /* Asegúrate de que esto sea mayor que el z-index de otros elementos */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  z-index: 1999; /* Menor que el survey pero suficiente para cubrir otros contenidos */
+  display: none; /* Oculto por defecto */
+}
+
+.overlay.visible {
+  display: block; /* Se muestra cuando la encuesta es visible */
+}
+
+.cerrar-button {
+  position: absolute;
+  top: 10px; /* Sube el botón un poco más arriba */
+  right: 10px; /* Mueve el botón un poco más a la derecha */
+  background: rgb(112, 112, 90);
+  border: none;
+  font-size: 10px;
+  cursor: pointer;
+  color: #b96d6d;
+}
+
+
+
+
+.cerrar-button:hover {
+  color: #666; /* Color al pasar el mouse */
+  
 }
 
 .survey-container.visible {
   transform: translateX(0);
-}
-
-/* Contenedor para los botones en la parte superior */
-.top-buttons {
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  width: 100%;
-}
-
-/* Botón de cerrar en la parte superior derecha */
-.cerrar-button {
-  background: rgb(112, 112, 90);
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  color: #b96d6d;
-  padding: 8px;
-  border-radius: 5px;
-}
-
-.cerrar-button:hover {
-  color: #666;
-}
-
-/* Botón para enviar el formulario */
-.submit-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  background-color: #4a4743;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #3b3835;
-}
-
-/* Nuevo botón de cierre que también abre ManageQuestions */
-.close-button-bottom {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.close-button-bottom:hover {
-  background-color: #d32f2f;
 }
 
 .survey-container h1, .survey-container p, .survey-container label {
@@ -89,17 +68,21 @@
   border-radius: 4px;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1999;
-  display: none;
+.survey-container button {
+  padding: 10px 15px;
+  background-color: #4a4743;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.overlay.visible {
-  display: block;
+.survey-container button:hover {
+  background-color: #3b3835;
+}
+
+@media (max-width: 600px) {
+  .survey-container {
+    width: 100%; /* Ajusta el ancho para dispositivos móviles */
+  }
 }

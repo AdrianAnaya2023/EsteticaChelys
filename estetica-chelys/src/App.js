@@ -13,21 +13,17 @@ import AddService from './Screens-Admin/AddService';
 import AddGalleryImage from './Screens-Admin/AddGalleryImage';
 import AddBeautyTip from './Screens-Admin/AddBeautyTip';
 import AddProductCategory from './Screens-Admin/AddProductCategory'; // Importa la pantalla de agregar categoría de productos
-import ModifyHome from './Screens-Admin/ModifyHome'; // Importa la pantalla de modificar home
-import ManageQuestions from './Screens-Admin/ManageQuestions'; // Importa la pantalla de administrar preguntas
 import FloatingHelpIcon from './Components/FloatingHelpIcon';
 import './App.css';
 
 function App() {
   const [isSurveyVisible, setIsSurveyVisible] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Estado para verificar si es administrador
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isAddServiceVisible, setIsAddServiceVisible] = useState(false);
   const [isAddImageVisible, setIsAddImageVisible] = useState(false);
   const [isAddTipVisible, setIsAddTipVisible] = useState(false);
   const [isAddProductCategoryVisible, setIsAddProductCategoryVisible] = useState(false); // Estado para agregar categoría de productos
-  const [isModifyHomeVisible, setIsModifyHomeVisible] = useState(false); // Estado para modificar home
-  const [isManageQuestionsVisible, setIsManageQuestionsVisible] = useState(false); // Estado para administrar preguntas
   const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false);
 
   // Mostrar las ofertas especiales automáticamente cuando se carga la página
@@ -35,12 +31,10 @@ function App() {
     setIsSpecialOffersVisible(true);
   }, []);
 
-  // Función para alternar visibilidad de la encuesta de satisfacción
   const toggleSurvey = () => {
     setIsSurveyVisible(!isSurveyVisible);
   };
 
-  // Funciones para abrir y cerrar la ventana de Login
   const openLogin = () => {
     setIsLoginVisible(true);
   };
@@ -49,24 +43,19 @@ function App() {
     setIsLoginVisible(false);
   };
 
-  // Función para manejar el login
   const handleLogin = (email, password) => {
     if (email === 'Admin@gmail.com' && password === 'Admin') {
-      console.log('Admin login successful');
-      setIsAdmin(true); // Si el login es exitoso, establecer isAdmin en true
+      setIsAdmin(true);
     } else {
-      console.log('Admin login failed');
-      setIsAdmin(false); // Si el login falla, establecer isAdmin en false
+      setIsAdmin(false);
     }
     closeLogin();
   };
 
-  // Función para cerrar la encuesta de satisfacción
   const closeSurvey = () => {
     setIsSurveyVisible(false);
   };
 
-  // Funciones para manejar la visibilidad de las pantallas de administración
   const openAddService = () => {
     setIsAddServiceVisible(true);
   };
@@ -99,23 +88,6 @@ function App() {
     setIsAddProductCategoryVisible(false);
   };
 
-  const openModifyHome = () => {
-    setIsModifyHomeVisible(true);
-  };
-
-  const closeModifyHome = () => {
-    setIsModifyHomeVisible(false);
-  };
-
-  const openManageQuestions = () => {
-    setIsManageQuestionsVisible(true);
-  };
-
-  const closeManageQuestions = () => {
-    setIsManageQuestionsVisible(false);
-  };
-
-  // Funciones para manejar ofertas especiales
   const openSpecialOffers = () => {
     setIsSpecialOffersVisible(true);
   };
@@ -124,7 +96,6 @@ function App() {
     setIsSpecialOffersVisible(false);
   };
 
-  // Función para manejar la ayuda flotante
   const handleHelpClick = () => {
     setIsSurveyVisible(true);
   };
@@ -132,7 +103,7 @@ function App() {
   return (
     <div className="App">
       <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} />
-      <HomePage isAdmin={isAdmin} openModifyHome={openModifyHome} />
+      <HomePage isAdmin={isAdmin} />
       <ServiceCatalog isAdmin={isAdmin} openAddService={openAddService} />
       <ProductCatalog isAdmin={isAdmin} openAddProductCategory={openAddProductCategory} />
       <Gallery isAdmin={isAdmin} openAddGallery={openAddGallery} />
@@ -140,7 +111,7 @@ function App() {
       
       {/* Pantallas sobrepuestas */}
       {isSpecialOffersVisible && <SpecialOffers isAdmin={isAdmin} onClose={closeSpecialOffers} />}
-      {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} isAdmin={isAdmin} openManageQuestions={openManageQuestions} />}
+      {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
       {isLoginVisible && <Login closeLogin={closeLogin} handleLogin={handleLogin} />}
       
       {/* Screens para admin */}
@@ -148,8 +119,6 @@ function App() {
       {isAddImageVisible && <AddGalleryImage isVisible={isAddImageVisible} onClose={closeAddGallery} />}
       {isAddTipVisible && <AddBeautyTip isVisible={isAddTipVisible} onClose={closeAddTip} />}
       {isAddProductCategoryVisible && <AddProductCategory isVisible={isAddProductCategoryVisible} onClose={closeAddProductCategory} />}
-      {isModifyHomeVisible && <ModifyHome isVisible={isModifyHomeVisible} onClose={closeModifyHome} />}
-      {isManageQuestionsVisible && <ManageQuestions onClose={closeManageQuestions} />} {/* Nueva pantalla para administrar preguntas */}
       
       <FooterPage openLogin={openLogin} />
       <FloatingHelpIcon onClick={handleHelpClick} />
