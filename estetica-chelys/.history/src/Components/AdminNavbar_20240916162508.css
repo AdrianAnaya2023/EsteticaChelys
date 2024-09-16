@@ -1,0 +1,107 @@
+/* AdminNavbar.css */
+.admin-navbar {
+    background-color: #333;  /* Fondo oscuro para mantener coherencia */
+    color: white;
+    padding: 10px 20px;
+    position: fixed;  /* Fijo en la parte superior */
+    top: 0;  /* Alineado con la parte superior */
+    width: 100%;  /* Ocupa todo el ancho de la pantalla */
+    z-index: 1000;  /* Asegura que el navbar esté por encima de otros elementos */
+    display: flex;
+    justify-content: space-between; /* Espaciado entre links y botón de salir */
+    align-items: center;
+  }
+  
+  .admin-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .admin-navbar-toggle {
+    display: none; /* Oculto en PC */
+    cursor: pointer;
+    font-size: 16px;
+    background: #91827e; /* Color inicial resaltado */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave del color */
+  }
+  
+  .admin-navbar-toggle:active {
+    background-color: #4e4846; /* Color cuando se presiona */
+  }
+  
+  .admin-navbar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;  /* Distribución uniforme */
+    width: 100%;  /* Ocupa el ancho restante después del botón de salir */
+  }
+  
+  .admin-navbar-item {
+    display: inline;
+  }
+  
+  .admin-navbar-link {
+    color: white;  /* Mantener los links blancos */
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Transición suave para los links */
+  }
+  
+  .admin-navbar-link:hover {
+    background-color: #444;  /* Color oscuro al pasar el cursor, sin resaltar demasiado */
+  }
+  
+  .admin-exit-button {
+    background-color: #FF4136;  /* Rojo claro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;  /* Tamaño de texto adecuado para que sea siempre visible */
+  }
+  
+  .admin-exit-button:hover {
+    background-color: #FF6347; /* Color más claro al pasar el cursor */
+  }
+  
+  /* Responsividad para móviles */
+  @media (max-width: 768px) {
+    .admin-navbar-toggle {
+      display: block; /* Visible en móviles */
+    }
+  
+    .admin-navbar-list {
+      flex-direction: column;
+      display: none;
+      width: 100%;
+      position: absolute;
+      top: 56px; /* Altura del navbar */
+      left: 0;
+      background-color: #333;
+    }
+  
+    .admin-navbar-list.show {
+      display: flex; /* Mostrar cuando está activo */
+    }
+  
+    .admin-navbar-item {
+      text-align: center;
+      width: 100%;
+    }
+  
+    .admin-exit-button {
+      margin-top: 20px;  /* Asegurarse de que el botón de salir tenga suficiente margen */
+    }
+  }
+  

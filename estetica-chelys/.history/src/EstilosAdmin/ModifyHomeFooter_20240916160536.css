@@ -1,0 +1,141 @@
+.modify-home-footer-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    color: black;
+}
+
+.close-button-modify {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.title-modify {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.buttons-container-modify {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-view-button-modify {
+    background-color: #A65245;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.table-container-modify {
+    margin-bottom: 40px;
+}
+
+.custom-table-modify {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.custom-table-modify th, .custom-table-modify td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.table-image-modify {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.edit-button-modify {
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-modify {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-modify {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-modify {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal-label-modify {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.modal-buttons-modify {
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-button-modify, .cancel-button-modify {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button-modify {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-button-modify {
+    background-color: red;
+    color: white;
+}

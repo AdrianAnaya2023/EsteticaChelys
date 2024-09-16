@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/SpecialOffers.css'; // Asegúrate de que el path al archivo CSS sea correcto
 
-const SpecialOffers = ({ onClose }) => {
+const SpecialOffers = ({ isAdmin, onClose }) => {
   const offers = [
     { 
       id: 1, 

@@ -1,0 +1,172 @@
+.manage-beauty-tips-container-Consejitos {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg'); /* Cambia esta URL por tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 40px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    overflow-y: auto;
+}
+
+.close-button-Consejitos {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.title-Consejitos {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.buttons-container-Consejitos {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.toggle-view-button-Consejitos,
+.add-button-Consejitos {
+    background-color: #da9765;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-button-Consejitos {
+    background-color: #A65245;
+}
+
+.toggle-view-button-Consejitos:hover {
+    background-color: #6D4B32;
+}
+
+.add-button-Consejitos:hover {
+    background-color: #883C34;
+}
+
+.table-container-Consejitos {
+    margin-bottom: 40px;
+}
+
+.custom-table-Consejitos {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.custom-table-Consejitos th,
+.custom-table-Consejitos td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.custom-table-Consejitos th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.table-image-Consejitos {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.modal-Consejitos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-Consejitos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-Consejitos {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal-label-Consejitos {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.modal-buttons-Consejitos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-button-Consejitos,
+.cancel-button-Consejitos {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button-Consejitos {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-button-Consejitos {
+    background-color: red;
+    color: white;
+}
+
+.edit-button-Consejitos {
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-button-Consejitos {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}

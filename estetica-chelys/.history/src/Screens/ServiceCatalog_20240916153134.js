@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Botoncito from '../Components/Botoncito';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ServiceCatalog.css'; 
 
@@ -76,7 +77,7 @@ const services = [
 ];
 
 
-const ServiceCatalog = () => {
+const ServiceCatalog = ({ isAdmin, openAddService }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentService, setCurrentService] = useState(null);
 
@@ -101,8 +102,25 @@ const ServiceCatalog = () => {
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleEdit = (service) => {
+    console.log('Edit service:', service);
+  };
+
+  const handleDelete = (service) => {
+    console.log('Delete service:', service);
+  };
+
+  const handleEditSubservice = (subservice) => {
+    console.log('Edit subservice:', subservice);
+  };
+
+  const handleDeleteSubservice = (subservice) => {
+    console.log('Delete subservice:', subservice);
+  };
+
   return (
     <div ref={serviceSectionRef} className="service-catalog-container-new">
+      {isAdmin && <Botoncito style={{ top: '10px', left: '10px' }} onClick={openAddService} />}
       {currentService ? (
         <div>
           <h1>{currentService.title}</h1>
@@ -111,6 +129,12 @@ const ServiceCatalog = () => {
               <div key={subservice.id} className="subservice-card-catalog-new">
                 <img src={subservice.imageUrl} alt={subservice.title} />
                 <h3>{subservice.title}</h3>
+                {isAdmin && (
+                  <div className="subservice-card-buttons">
+                    <button onClick={() => handleEditSubservice(subservice)} className="edit-button-sub">Modificar</button>
+                    <button onClick={() => handleDeleteSubservice(subservice)} className="delete-button-sub">Eliminar</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -126,6 +150,12 @@ const ServiceCatalog = () => {
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
                 <ViewMoreButton onClick={() => viewServiceDetails(service)} />
+                {isAdmin && (
+                  <div className="service-card-buttons">
+                    <button onClick={() => handleEdit(service)} className="edit-button">Modificar</button>
+                    <button onClick={() => handleDelete(service)} className="delete-button">Eliminar</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

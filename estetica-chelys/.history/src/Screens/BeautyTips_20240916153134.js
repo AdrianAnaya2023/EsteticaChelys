@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import Botoncito from '../Components/Botoncito';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/BeautyTips.css';
 
-const BeautyTips = () => {
+const BeautyTips = ({ isAdmin, openAddTip, onEditCategory, onDeleteCategory, onEditSubcategory, onDeleteSubcategory }) => {
   const [currentTip, setCurrentTip] = useState(0);
   const [currentCategory, setCurrentCategory] = useState(null);
 
@@ -72,6 +73,7 @@ const BeautyTips = () => {
 
   return (
     <div className="beauty-tips-main-container-custom">
+      {isAdmin && <Botoncito style={{ top: '20px', left: '20px' }} onClick={openAddTip} />}
       {currentCategory ? (
         <div className="beauty-tips-subcategories-container">
           <h1>{currentCategory.title}</h1>
@@ -81,6 +83,12 @@ const BeautyTips = () => {
                 <img src={sub.imageUrl} alt={sub.title} className="beauty-tips-card-img" />
                 <h3>{sub.title}</h3>
                 <p>{sub.content}</p>
+                {isAdmin && (
+                  <div className="admin-buttons-container">
+                    <button onClick={() => onEditSubcategory(currentCategory, sub)}>Modificar</button>
+                    <button onClick={() => onDeleteSubcategory(currentCategory, sub)}>Eliminar</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -101,6 +109,12 @@ const BeautyTips = () => {
                 <h3>{tip.title}</h3>
                 <p>{tip.content}</p>
                 <ViewMoreButton onClick={() => viewCategoryDetails(tip)} />
+                {isAdmin && (
+                  <div className="admin-buttons-container">
+                    <button onClick={() => onEditCategory(tip)}>Modificar</button>
+                    <button onClick={() => onDeleteCategory(tip)}>Eliminar</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

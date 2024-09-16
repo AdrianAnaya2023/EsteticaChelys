@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Botoncito from '../Components/Botoncito'; // Importa el componente Botoncito
 import '../Styles/Gallery.css';  // Asegúrate de que el path al archivo CSS sea correcto
 
-const Gallery = () => {
+const Gallery = ({ isAdmin, openAddGallery }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
@@ -25,8 +26,10 @@ const Gallery = () => {
         <img src={images[currentIndex].before} alt="Antes" className="image"/>
         <img src={images[currentIndex].after} alt="Después" className="image"/>
       </div>
+      {isAdmin && <Botoncito style={{ top: '10px', left: '10px' }} onClick={openAddGallery} />} {/* Posición específica para esta sección */}
     </div>
   );
 };
 
 export default Gallery;
+

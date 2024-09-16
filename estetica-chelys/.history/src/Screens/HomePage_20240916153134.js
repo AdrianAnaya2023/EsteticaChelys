@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Button from '../Components/Button';
+import Botoncito from '../Components/Botoncito'; // Asegúrate de que el componente Botoncito esté importado correctamente
 import Modal from '../Components/Modal'; // Asegúrate de tener este componente o crea uno
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../Styles/HomePage.css';
 
-const HomePage = () => {
+const HomePage = ({ isAdmin }) => {
   const [showMap, setShowMap] = useState(false);
 
   const openMap = () => setShowMap(true);
@@ -13,6 +14,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
+      {isAdmin && <Botoncito style={{ top: '85px', left: '10px' }} />}
       <section className="hero-section">
         <h1>Estetica Chely's</h1>
         <p>Un lugar para cuidarte</p>

@@ -1,0 +1,74 @@
+/* Estilos generales del navbar */
+.admin-navbar {
+    background-color: #333;  /* Fondo oscuro */
+    color: white;
+    padding: 10px 20px;
+    position: fixed;  /* Fijo en la parte superior */
+    top: 0;
+    width: 98%;  /* Ocupa todo el ancho de la pantalla */
+    z-index: 1000;  /* Prioridad sobre otros elementos */
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos horizontalmente */
+    align-items: center;  /* Alinea verticalmente al centro */
+  }
+  
+  .admin-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  /* Centra verticalmente los elementos dentro del navbar */
+    width: 100%;
+  }
+  
+  /* Lista de links de navegación */
+  .admin-navbar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centra los links horizontalmente */
+    align-items: center;  /* Alinea verticalmente */
+    width: 100%;  /* Ocupa todo el ancho disponible */
+  }
+  
+  /* Cada link en la lista */
+  .admin-navbar-item {
+    display: inline;
+    margin-right: 80px; /* Espacio más grande entre los links */
+  }
+  
+  .admin-navbar-item:last-child {
+    margin-right: 0; /* Elimina el margen a la derecha del último elemento */
+  }
+  
+  /* Estilo de los links */
+  .admin-navbar-link {
+    color: white;  /* Texto blanco */
+    background: none;  /* Sin fondo */
+    border: none;  /* Sin borde */
+    text-decoration: none;  /* Sin subrayado */
+    padding: 0;  /* Sin relleno */
+    cursor: pointer;
+    font-size: 18px;  /* Tamaño de texto */
+    transition: color 0.3s ease;  /* Transición suave solo para el color */
+  }
+  
+  .admin-navbar-link:hover {
+    color: #cccccc;  /* Cambia el color del texto al pasar el cursor */
+  }
+  
+  /* Botón de salir con estilo de botón */
+  .admin-exit-button {
+    background-color: #FF4136;  /* Rojo */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .admin-exit-button:hover {
+    background-color: #FF6347; /* Color más claro al pasar el cursor */
+  }
+  
