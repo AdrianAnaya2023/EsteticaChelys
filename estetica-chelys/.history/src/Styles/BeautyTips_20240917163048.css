@@ -24,7 +24,6 @@
   justify-content: center;
   gap: 20px;
   margin-top: 35px;
-  color: aliceblue;
 }
 
 /* Tarjeta de consejos */
@@ -46,7 +45,7 @@
 
 .beauty-tips-card-container-custom h3, .beauty-tips-card-container-custom p {
   color: #0c0d0e;
-  
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
 }
 
 .beauty-tips-card-container-custom img {

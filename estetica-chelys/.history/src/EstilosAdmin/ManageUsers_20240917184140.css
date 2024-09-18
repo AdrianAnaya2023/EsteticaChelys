@@ -1,4 +1,4 @@
-.manage-promos-container-promosAdmin {
+.manage-users-container {
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -7,134 +7,119 @@
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
-    color: black;
-    overflow-y: auto;
+    color: white;
   }
   
-  .title-promosAdmin {
+  .title {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 30px;
-    color: rgb(0, 0, 0);
   }
   
-  .add-button-promosAdmin {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: block;
-    margin: 0 auto 30px auto;
-  }
-  
-  .custom-table-promosAdmin {
+  .custom-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: black;
-    border-radius: 10px;
-    overflow: hidden;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
   }
   
-  .custom-table-promosAdmin th,
-  .custom-table-promosAdmin td {
+  .custom-table th,
+  .custom-table td {
+    text-align: center;
     padding: 10px;
     border: 1px solid #ddd;
-    text-align: center;
   }
   
-  .custom-table-promosAdmin th {
+  .custom-table th {
     background-color: #4CAF50;
     color: white;
   }
   
-  .table-image-promosAdmin {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  
-  .edit-button-promosAdmin,
-  .delete-button-promosAdmin {
+  .add-button,
+  .edit-button,
+  .delete-button {
     padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    margin-right: 5px;
+    border-radius: 5px;
   }
   
-  .edit-button-promosAdmin {
+  .add-button {
+    background-color: #4CAF50;
+    color: white;
+    margin-bottom: 20px;
+    border: none;
+  }
+  
+  .edit-button {
     background-color: orange;
     color: white;
+    border: none;
   }
   
-  .delete-button-promosAdmin {
+  .delete-button {
     background-color: red;
     color: white;
+    border: none;
   }
   
-  .modal-promosAdmin {
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .modal-content-promosAdmin {
+  .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .modal-label-promosAdmin {
+  .modal-label {
     font-size: 1rem;
-    color: black;
+    color: #333;
     margin-bottom: 5px;
     display: block;
   }
   
-  .input-promosAdmin {
+  .input {
     display: block;
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 1rem;
   }
   
-  .modal-buttons-promosAdmin {
+  .modal-buttons {
     display: flex;
     justify-content: space-between;
   }
   
-  .save-button-promosAdmin {
+  .save-button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
   }
   
-  .cancel-button-promosAdmin {
+  .cancel-button {
     background-color: red;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
   }
   

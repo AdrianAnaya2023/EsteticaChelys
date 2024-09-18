@@ -7,10 +7,10 @@ const Navbar = ({ openSpecialOffers }) => { // Añadimos `openSpecialOffers` com
 
   const links = [
     { id: 1, link: "homepage", name: "Página Principal" },
-    { id: 2, link: "service-catalog-container-new", name: "Catálogo de Servicios" },
-    { id: 3, link: "catalog-container", name: "Catálogo de Productos" },
+    { id: 2, link: "service-container", name: "Catálogo de Servicios" },
+    { id: 3, link: "products", name: "Catálogo de Productos" },
     { id: 4, link: "gallery-container", name: "Galería" },
-    { id: 5, link: "beauty-tips-main-container-custom", name: "Consejos de Belleza" },
+    { id: 5, link: "beauty-tips-container", name: "Consejos de Belleza" },
     { id: 6, link: "offers-container", name: "Promociones y Ofertas Especiales", action: openSpecialOffers } // Añadimos el `action`
   ];
 

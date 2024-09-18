@@ -28,9 +28,7 @@ const Gallery = () => {
   };
 
   const [currentCategory, setCurrentCategory] = useState(null);
-  const [currentCategoryPage, setCurrentCategoryPage] = useState(0);  // Controlar la paginación de las categorías
   const [currentSubcategoryPage, setCurrentSubcategoryPage] = useState(0);  // Controlar la paginación de las subcategorías
-  const categoriesPerPage = 3;  // Mostrar 3 categorías a la vez
   const subcategoriesPerPage = 3;  // Mostrar 3 subcategorías a la vez
   const gallerySectionRef = useRef(null);
 
@@ -43,15 +41,6 @@ const Gallery = () => {
   const goBack = () => {
     setCurrentCategory(null);
     gallerySectionRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleCategoryPageChange = (direction) => {
-    const totalPages = Math.ceil(sampleCategories.length / categoriesPerPage);
-    const newPage = direction === 'next' ? currentCategoryPage + 1 : currentCategoryPage - 1;
-
-    if (newPage >= 0 && newPage < totalPages) {
-      setCurrentCategoryPage(newPage);
-    }
   };
 
   const handleSubcategoryPageChange = (direction) => {
@@ -95,27 +84,14 @@ const Gallery = () => {
         <div>
           <h1>Categorías de Galería</h1>
           <div className="gallery-grid-gallerita">
-            {sampleCategories
-              .slice(currentCategoryPage * categoriesPerPage, (currentCategoryPage + 1) * categoriesPerPage)
-              .map(category => (
-                <div key={category.id} className="gallery-card-gallerita">
-                  <img src={category.imageUrl} alt={category.name} />
-                  <h2>{category.name}</h2>
-                  <p>{category.description}</p>
-                  <ViewMoreButton onClick={() => viewCategoryDetails(category)} />
-                </div>
-              ))}
-          </div>
-          <div className="pagination-controls-gallerita">
-            <button onClick={() => handleCategoryPageChange('prev')} disabled={currentCategoryPage === 0}>
-              Anterior
-            </button>
-            <button
-              onClick={() => handleCategoryPageChange('next')}
-              disabled={(currentCategoryPage + 1) * categoriesPerPage >= sampleCategories.length}
-            >
-              Siguiente
-            </button>
+            {sampleCategories.map(category => (
+              <div key={category.id} className="gallery-card-gallerita">
+                <img src={category.imageUrl} alt={category.name} />
+                <h2>{category.name}</h2>
+                <p>{category.description}</p>
+                <ViewMoreButton onClick={() => viewCategoryDetails(category)} />
+              </div>
+            ))}
           </div>
         </div>
       )}
