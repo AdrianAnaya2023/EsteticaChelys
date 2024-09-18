@@ -24,14 +24,14 @@
 .close-buttonOfertillas {
   position: absolute;
   top: 10px;
-  right: 5px;
+  right: 20px;
   font-size: 24px;
-  background-color: rgb(0, 0, 0); /* Fondo negro */
- 
+  background-color: black; /* Fondo negro */
+  border: 2px solid rgb(219, 13, 13); /* Borde rojo oscuro */
   color: rgb(219, 13, 13); /* Color de texto */
   border-radius: 50%; /* Borde redondeado */
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;

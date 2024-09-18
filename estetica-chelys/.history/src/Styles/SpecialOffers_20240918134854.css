@@ -24,26 +24,13 @@
 .close-buttonOfertillas {
   position: absolute;
   top: 10px;
-  right: 5px;
+  right: 20px;
   font-size: 24px;
-  background-color: rgb(0, 0, 0); /* Fondo negro */
- 
-  color: rgb(219, 13, 13); /* Color de texto */
-  border-radius: 50%; /* Borde redondeado */
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: none;
+  border: none;
+  color: rgb(219, 13, 13);
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-.close-buttonOfertillas:hover {
-  background-color: rgb(219, 13, 13); /* Fondo rojo al hacer hover */
-  color: white; /* Texto blanco al hacer hover */
-}
-
 
 .offer-cardOfertillas img {
   width: 100%;

@@ -113,8 +113,9 @@
 .pagination-buttons-catalog-new {
   margin-top: 20px;
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  justify-content: space-between; /* Coloca los botones en los extremos izquierdo y derecho */
+  align-items: center; /* Asegura que los botones estén alineados verticalmente */
+  width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
 }
 
 .pagination-buttons-catalog-new button {
@@ -123,6 +124,8 @@
   color: rgb(37, 36, 36);
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+  width: 120px; /* Define un ancho consistente para los botones */
 }
 
 .pagination-buttons-catalog-new button:hover {
@@ -208,3 +211,48 @@
   background-color: #b84040;
 }
 
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .services-grid-catalog-new {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card-catalog-new {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .subservice-grid-catalog-new {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .subservice-card-catalog-new {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .pagination-buttons-catalog-new {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card-catalog-new {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .pagination-buttons-catalog-new {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .catalog-back-button-new {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}

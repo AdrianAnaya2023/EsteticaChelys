@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import AdminNavbar from './Components/AdminNavbar';
 import HomePage from './Screens/HomePage';
@@ -19,23 +20,13 @@ import ModifyHomeFooter from './Screens-Admin/ModifyHomeFooter';
 import ManageSurveysPreguntita from './Screens-Admin/ManageSurveysPreguntita';
 import ManageProducts from './Screens-Admin/ManageProducts';
 import ManagePromosPromosAdmin from './Screens-Admin/ManagePromosPromosAdmin';
-import ManageUsersAdmin from './Screens-Admin/ManageUsers'; // Componente para administrar usuarios
+import ManageUsersAdmin from './Screens-Admin/ManageUsers';
 import FloatingHelpIcon from './Components/FloatingHelpIcon';
 import './App.css';
 
 function App() {
   const [isSurveyVisible, setIsSurveyVisible] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoginVisible, setIsLoginVisible] = useState(false); // Controlar la visibilidad del login
-
-  // Verificar si estamos en /Admin
-  useEffect(() => {
-    if (window.location.pathname === '/Admin') {
-      setIsLoginVisible(true);
-    } else {
-      setIsLoginVisible(false);
-    }
-  }, [window.location.pathname]);
 
   // Estados para cada pantalla de administración
   const [isModifyHomeFooterVisible, setIsModifyHomeFooterVisible] = useState(false);
@@ -45,7 +36,7 @@ function App() {
   const [isManageBeautyTipsVisible, setIsManageBeautyTipsVisible] = useState(false);
   const [isManageSurveysPreguntitaVisible, setIsManageSurveysPreguntitaVisible] = useState(false);
   const [isManagePromosVisible, setIsManagePromosVisible] = useState(false);
-  const [isManageUsersVisible, setIsManageUsersVisible] = useState(false); // Estado para gestionar usuarios
+  const [isManageUsersVisible, setIsManageUsersVisible] = useState(false);
 
   const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false);
 
@@ -87,7 +78,7 @@ function App() {
 
   const openManageUsers = () => {
     closeAllAdminScreens();
-    setIsManageUsersVisible(true); // Abrir la pantalla de usuarios
+    setIsManageUsersVisible(true);
   };
 
   // Cerrar todas las pantallas de administración
@@ -99,7 +90,7 @@ function App() {
     setIsManageBeautyTipsVisible(false);
     setIsManageSurveysPreguntitaVisible(false);
     setIsManagePromosVisible(false);
-    setIsManageUsersVisible(false); // Cerrar la pantalla de usuarios
+    setIsManageUsersVisible(false);
   };
 
   const openSpecialOffers = () => {
@@ -123,7 +114,6 @@ function App() {
     if (email === 'Admin@gmail.com' && password === 'Admin') {
       setIsAdmin(true);
       openModifyHomeFooter();
-      setIsLoginVisible(false); // Cerrar el login si inicia sesión correctamente
     } else {
       setIsAdmin(false);
     }
@@ -142,46 +132,49 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {!isAdmin ? (
-        <>
-          <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} />
-          <HomePage />
-          <ServiceCatalog />
-          <ProductCatalog />
-          <Gallery />
-          <BeautyTips />
-          {isSpecialOffersVisible && <SpecialOffers onClose={closeSpecialOffers} />}
-          {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
-          {/* El login solo se muestra si se accede a /Admin */}
-          {isLoginVisible && <Login closeLogin={() => setIsLoginVisible(false)} handleLogin={handleLogin} />}
-        </>
-      ) : (
-        <>
-          <AdminNavbar
-            openModifyHomeFooter={openModifyHomeFooter}
-            openManageServices={openManageServices}
-            openManageProducts={openManageProducts}
-            openManageGallery={openManageGallery}
-            openManageBeautyTips={openManageBeautyTips}
-            openManageSurveysPreguntita={openManageSurveysPreguntita}
-            openManagePromos={openManagePromos}
-            openManageUsers={openManageUsers}
-            logoutAdmin={logoutAdmin}
-          />
-          {isModifyHomeFooterVisible && <ModifyHomeFooter onClose={closeAllAdminScreens} />}
-          {isManageServicesVisible && <ManageServices onClose={closeAllAdminScreens} />}
-          {isManageProductsVisible && <ManageProducts onClose={closeAllAdminScreens} />}
-          {isManageGalleryVisible && <ManageGallery onClose={closeAllAdminScreens} />}
-          {isManageBeautyTipsVisible && <ManageBeautyTips onClose={closeAllAdminScreens} />}
-          {isManageSurveysPreguntitaVisible && <ManageSurveysPreguntita onClose={closeAllAdminScreens} />}
-          {isManagePromosVisible && <ManagePromosPromosAdmin onClose={closeAllAdminScreens} />}
-          {isManageUsersVisible && <ManageUsersAdmin onClose={closeAllAdminScreens} />}
-        </>
-      )}
-      {!isAdmin && <FooterPage />}
-      {!isAdmin && <FloatingHelpIcon onClick={handleHelpClick} />}
-    </div>
+    <Router>
+      <div className="App">
+        {!isAdmin ? (
+          <>
+            <Navbar toggleSurvey={toggleSurvey} openSpecialOffers={openSpecialOffers} />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServiceCatalog />} />
+              <Route path="/products" element={<ProductCatalog />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/beauty-tips" element={<BeautyTips />} />
+              <Route path="/admin" element={isLoginVisible ? <Navigate to="/admin/dashboard" /> : <Login handleLogin={handleLogin} />} />
+            </Routes>
+            {isSpecialOffersVisible && <SpecialOffers onClose={closeSpecialOffers} />}
+            {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
+          </>
+        ) : (
+          <>
+            <AdminNavbar
+              openModifyHomeFooter={openModifyHomeFooter}
+              openManageServices={openManageServices}
+              openManageProducts={openManageProducts}
+              openManageGallery={openManageGallery}
+              openManageBeautyTips={openManageBeautyTips}
+              openManageSurveysPreguntita={openManageSurveysPreguntita}
+              openManagePromos={openManagePromos}
+              openManageUsers={openManageUsers}
+              logoutAdmin={logoutAdmin}
+            />
+            {isModifyHomeFooterVisible && <ModifyHomeFooter onClose={closeAllAdminScreens} />}
+            {isManageServicesVisible && <ManageServices onClose={closeAllAdminScreens} />}
+            {isManageProductsVisible && <ManageProducts onClose={closeAllAdminScreens} />}
+            {isManageGalleryVisible && <ManageGallery onClose={closeAllAdminScreens} />}
+            {isManageBeautyTipsVisible && <ManageBeautyTips onClose={closeAllAdminScreens} />}
+            {isManageSurveysPreguntitaVisible && <ManageSurveysPreguntita onClose={closeAllAdminScreens} />}
+            {isManagePromosVisible && <ManagePromosPromosAdmin onClose={closeAllAdminScreens} />}
+            {isManageUsersVisible && <ManageUsersAdmin onClose={closeAllAdminScreens} />}
+          </>
+        )}
+        {!isAdmin && <FooterPage />}
+        {!isAdmin && <FloatingHelpIcon onClick={handleHelpClick} />}
+      </div>
+    </Router>
   );
 }
 

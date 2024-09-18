@@ -79,12 +79,11 @@ const services = [
 const ServiceCatalog = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentService, setCurrentService] = useState(null);
-  const [currentSubservicePage, setCurrentSubservicePage] = useState(0); // Nuevo estado para paginación de subservicios
 
   const serviceSectionRef = useRef(null);
 
   const handlePageChange = (direction) => {
-    const totalPages = Math.ceil(services.length / 3);
+    const totalPages = Math.ceil(services.length / 4);
     const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1;
     if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
@@ -92,17 +91,8 @@ const ServiceCatalog = () => {
     }
   };
 
-  const handleSubservicePageChange = (direction) => {
-    const totalSubservicePages = Math.ceil(currentService.subservices.length / 3);
-    const newSubservicePage = direction === 'next' ? currentSubservicePage + 1 : currentSubservicePage - 1;
-    if (newSubservicePage >= 0 && newSubservicePage < totalSubservicePages) {
-      setCurrentSubservicePage(newSubservicePage);
-    }
-  };
-
   const viewServiceDetails = (service) => {
     setCurrentService(service);
-    setCurrentSubservicePage(0); // Reinicia la paginación de subservicios al cambiar de servicio
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -117,22 +107,12 @@ const ServiceCatalog = () => {
         <div>
           <h1>{currentService.title}</h1>
           <div className="subservice-grid-catalog-new">
-            {currentService.subservices
-              .slice(currentSubservicePage * 3, currentSubservicePage * 3 + 3)
-              .map(subservice => (
-                <div key={subservice.id} className="subservice-card-catalog-new">
-                  <img src={subservice.imageUrl} alt={subservice.title} />
-                  <h3>{subservice.title}</h3>
-                </div>
-              ))}
-          </div>
-          <div className="pagination-buttons-catalog-new">
-            <button onClick={() => handleSubservicePageChange('prev')} disabled={currentSubservicePage === 0}>
-              Anterior
-            </button>
-            <button onClick={() => handleSubservicePageChange('next')} disabled={currentSubservicePage * 3 + 3 >= currentService.subservices.length}>
-              Siguiente
-            </button>
+            {currentService.subservices.map(subservice => (
+              <div key={subservice.id} className="subservice-card-catalog-new">
+                <img src={subservice.imageUrl} alt={subservice.title} />
+                <h3>{subservice.title}</h3>
+              </div>
+            ))}
           </div>
           <button className="catalog-back-button-new" onClick={goBack}>Regresar</button>
         </div>

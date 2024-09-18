@@ -22,7 +22,7 @@
 }
 
 .service-card-catalog-new {
-  flex: 1 1 30%; /* Ajusta el ancho para permitir tres elementos por fila en pantallas grandes */
+  flex: 1 1 30%;
   margin: 10px;
   background-color: rgba(255, 248, 220, 0.9);
   padding: 20px;
@@ -60,7 +60,6 @@
   margin-top: 10px;
 }
 
-/* Botones para modificar y eliminar en las categorías de servicios */
 .service-card-buttons {
   display: flex;
   justify-content: space-between;
@@ -113,7 +112,7 @@
 .pagination-buttons-catalog-new {
   margin-top: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 15px;
 }
 
@@ -172,7 +171,6 @@
   text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
 }
 
-/* Botones en los subservicios */
 .subservice-card-buttons {
   display: flex;
   justify-content: space-between;
@@ -208,3 +206,51 @@
   background-color: #b84040;
 }
 
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .services-grid-catalog-new {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card-catalog-new {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .subservice-grid-catalog-new {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .subservice-card-catalog-new {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Cambios responsivos para la paginación */
+  .pagination-buttons-catalog-new {
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card-catalog-new {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .pagination-buttons-catalog-new {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .catalog-back-button-new {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}

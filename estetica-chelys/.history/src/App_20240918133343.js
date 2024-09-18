@@ -25,17 +25,8 @@ import './App.css';
 
 function App() {
   const [isSurveyVisible, setIsSurveyVisible] = useState(false);
+  const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoginVisible, setIsLoginVisible] = useState(false); // Controlar la visibilidad del login
-
-  // Verificar si estamos en /Admin
-  useEffect(() => {
-    if (window.location.pathname === '/Admin') {
-      setIsLoginVisible(true);
-    } else {
-      setIsLoginVisible(false);
-    }
-  }, [window.location.pathname]);
 
   // Estados para cada pantalla de administración
   const [isModifyHomeFooterVisible, setIsModifyHomeFooterVisible] = useState(false);
@@ -119,14 +110,22 @@ function App() {
     setIsSurveyVisible(!isSurveyVisible);
   };
 
+  const openLogin = () => {
+    setIsLoginVisible(true);
+  };
+
+  const closeLogin = () => {
+    setIsLoginVisible(false);
+  };
+
   const handleLogin = (email, password) => {
     if (email === 'Admin@gmail.com' && password === 'Admin') {
       setIsAdmin(true);
       openModifyHomeFooter();
-      setIsLoginVisible(false); // Cerrar el login si inicia sesión correctamente
     } else {
       setIsAdmin(false);
     }
+    closeLogin();
   };
 
   const closeSurvey = () => {
@@ -153,8 +152,7 @@ function App() {
           <BeautyTips />
           {isSpecialOffersVisible && <SpecialOffers onClose={closeSpecialOffers} />}
           {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
-          {/* El login solo se muestra si se accede a /Admin */}
-          {isLoginVisible && <Login closeLogin={() => setIsLoginVisible(false)} handleLogin={handleLogin} />}
+          {isLoginVisible && <Login closeLogin={closeLogin} handleLogin={handleLogin} />}
         </>
       ) : (
         <>
@@ -166,7 +164,7 @@ function App() {
             openManageBeautyTips={openManageBeautyTips}
             openManageSurveysPreguntita={openManageSurveysPreguntita}
             openManagePromos={openManagePromos}
-            openManageUsers={openManageUsers}
+            openManageUsers={openManageUsers} // Añadir usuarios al AdminNavbar
             logoutAdmin={logoutAdmin}
           />
           {isModifyHomeFooterVisible && <ModifyHomeFooter onClose={closeAllAdminScreens} />}
@@ -179,7 +177,7 @@ function App() {
           {isManageUsersVisible && <ManageUsersAdmin onClose={closeAllAdminScreens} />}
         </>
       )}
-      {!isAdmin && <FooterPage />}
+      {!isAdmin && <FooterPage openLogin={openLogin} />}
       {!isAdmin && <FloatingHelpIcon onClick={handleHelpClick} />}
     </div>
   );
