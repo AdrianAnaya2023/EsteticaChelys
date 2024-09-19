@@ -1,0 +1,177 @@
+.manage-gallery-container-GaleriaAdmin {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg'); /* Imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 40px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    overflow-y: auto;
+  }
+  
+  .close-button-GaleriaAdmin {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .title-GaleriaAdmin {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .buttons-container-GaleriaAdmin {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-view-button-GaleriaAdmin,
+  .add-button-GaleriaAdmin {
+    background-color: #da9765;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-button-GaleriaAdmin {
+    background-color: #A65245;
+  }
+  
+  .toggle-view-button-GaleriaAdmin:hover {
+    background-color: #6D4B32;
+  }
+  
+  .add-button-GaleriaAdmin:hover {
+    background-color: #883C34;
+  }
+  
+  .table-container-GaleriaAdmin {
+    margin-bottom: 40px;
+  }
+  
+  .custom-table-GaleriaAdmin {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .custom-table-GaleriaAdmin th,
+  .custom-table-GaleriaAdmin td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .custom-table-GaleriaAdmin th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .table-image-GaleriaAdmin {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  /* Estilo de los botones de Editar y Eliminar */
+  .edit-button-GaleriaAdmin,
+  .delete-button-GaleriaAdmin {
+    background-color: orange; /* Naranja para Editar */
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  .delete-button-GaleriaAdmin {
+    background-color: red; /* Rojo para Eliminar */
+  }
+  
+  .edit-button-GaleriaAdmin:hover {
+    background-color: #e68a00; /* Un tono más oscuro en hover para Editar */
+  }
+  
+  .delete-button-GaleriaAdmin:hover {
+    background-color: darkred; /* Un tono más oscuro en hover para Eliminar */
+  }
+  
+  .modal-GaleriaAdmin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content-GaleriaAdmin {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-GaleriaAdmin {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .modal-label-GaleriaAdmin {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .modal-buttons-GaleriaAdmin {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .save-button-GaleriaAdmin,
+  .cancel-button-GaleriaAdmin {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .save-button-GaleriaAdmin {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .cancel-button-GaleriaAdmin {
+    background-color: red;
+    color: white;
+  }
+  

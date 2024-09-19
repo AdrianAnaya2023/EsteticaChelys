@@ -1,0 +1,100 @@
+.gallery-container-gallerita {
+    padding: 40px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://i.pinimg.com/736x/a2/3c/e4/a23ce481993d9c10b74e1cfc6a4de001.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+   
+    position: relative;
+    min-height: 85vh;
+  }
+  
+  .gallery-container-gallerita h1 {
+    color: #ffffff;
+    
+  }
+  
+  .gallery-grid-gallerita {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .gallery-card-gallerita {
+    flex: 1 1 30%;
+    margin: 10px;
+    background-color: rgba(255, 248, 220, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 300px;
+  }
+  
+  .gallery-card-gallerita:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .gallery-card-gallerita h2, .gallery-card-gallerita p {
+    color: #0c0d0e;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+  }
+  
+  .gallery-card-gallerita img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .images-container-gallerita {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .image-gallerita {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .gallery-back-button-gallerita {
+    padding: 10px 20px;
+    background-color: #e05a5a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .gallery-back-button-gallerita:hover {
+    background-color: #b84040;
+  }
+  
+  .pagination-controls-gallerita {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .pagination-controls-gallerita button {
+    padding: 10px 20px;
+    background-color: #d3c2ae;
+    color: rgb(37, 36, 36);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls-gallerita button:hover {
+    background-color: #b8a691;
+  }
+  

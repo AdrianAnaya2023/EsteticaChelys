@@ -4,6 +4,7 @@
   padding: 1px 30px; /* Ajusta el padding para más espacio */
   font-family: 'Arial', sans-serif;
   font-size: 16px; /* Aumenta el tamaño de la fuente */
+
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -13,27 +14,26 @@
 
 .footer-content {
   display: flex;
-  justify-content: space-between; /* Distribuye el contenido a la izquierda y derecha */
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap; /* Evita que los elementos se envuelvan en pantallas grandes */
+  flex-wrap: wrap;
 }
 
 .footer-section {
   flex: 1;
   padding: 5px;
-  color: #ffffff;
 }
 
 .footer-left {
-  text-align: left; /* Alinea el contenido a la izquierda */
+  text-align: left;
 }
 
 .footer-right {
-  text-align: right; /* Alinea el contenido a la derecha */
+  text-align: right;
 }
 
 .footer-logo {
-  flex: 0 1 180px; /* Fija el tamaño del logo */
+  flex: 0 1 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,21 +47,17 @@
   opacity: 0.9;
 }
 
-.clickable-text {
-  cursor: pointer;
-  color: inherit;
-}
-
 @media (max-width: 768px) {
   .footer-container {
-    position: static;
-    padding: 10px 20px;
-    font-size: 16px; /* Ajusta el tamaño de la fuente para móviles */
+    position: static; /* Elimina el posicionamiento fijo */
+    padding: 5px 15px;
+    font-size: 12px;
   }
 
   .footer-content {
     flex-direction: column;
     text-align: center;
+    justify-content: center;
   }
 
   .footer-left, .footer-right {
@@ -76,6 +72,6 @@
   }
 
   .footer-logo img {
-    max-height: 120px; /* Aumenta el tamaño máximo del logo en móviles */
+    max-height: 120px; /* Aumenta el tamaño máximo del logo */
   }
 }

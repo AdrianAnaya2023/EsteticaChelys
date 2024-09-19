@@ -1,0 +1,125 @@
+.manage-users-container-person {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    padding: 40px;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg');
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+  }
+  
+  .title-person {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .custom-table-person {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  .custom-table-person th,
+  .custom-table-person td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .custom-table-person th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .add-button-person,
+  .edit-button-person,
+  .delete-button-person {
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .add-button-person {
+    background-color: #4CAF50;
+    color: white;
+    margin-bottom: 20px;
+    border: none;
+  }
+  
+  .edit-button-person {
+    background-color: orange;
+    color: white;
+    border: none;
+  }
+  
+  .delete-button-person {
+    background-color: red;
+    color: white;
+    border: none;
+  }
+  
+  .modal-person {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content-person {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-label-person {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .input-person {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .modal-buttons-person {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .save-button-person {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cancel-button-person {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  

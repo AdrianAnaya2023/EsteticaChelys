@@ -1,0 +1,178 @@
+.admin-manage-services-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg'); /* Cambia esta URL por tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 35px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    overflow-y: auto;
+}
+
+.admin-manage-services-close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.admin-manage-services-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.admin-manage-services-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.admin-manage-services-toggle-view-button,
+.admin-manage-services-add-button {
+    background-color: #8B5E3C; /* Color marrón para el botón de "Ver" */
+    color: white;
+    border: none;
+    padding: 15px 40px; /* Hacemos los botones más grandes */
+    border-radius: 8px;
+    font-size: 1.2rem; /* Aumentamos el tamaño de la fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-manage-services-add-button {
+    background-color: #A65245; /* Color rojo suave para el botón de "Agregar" */
+}
+
+.admin-manage-services-toggle-view-button:hover {
+    background-color: #6D4B32; /* Un tono más oscuro al pasar el mouse para "Ver" */
+}
+
+.admin-manage-services-add-button:hover {
+    background-color: #883C34; /* Un tono más oscuro al pasar el mouse para "Agregar" */
+}
+
+.admin-manage-services-table-container {
+    margin-top: 20px;
+}
+
+.admin-manage-services-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.admin-manage-services-table th,
+.admin-manage-services-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.admin-manage-services-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.admin-manage-services-table-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.admin-manage-services-edit-button,
+.admin-manage-services-delete-button {
+    background-color: #ff9800; /* Cambiado el color de editar a naranja suave */
+    color: white;
+    border: none;
+    padding: 5px 15px; /* Tamaño más uniforme */
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px; /* Reducido el espacio entre los botones */
+}
+
+.admin-manage-services-edit-button:hover {
+    background-color: #e68a00; /* Un tono más oscuro de naranja al pasar el mouse */
+}
+
+.admin-manage-services-delete-button {
+    background-color: red;
+}
+
+.admin-manage-services-delete-button:hover {
+    background-color: darkred;
+}
+
+.admin-manage-services-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-manage-services-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-manage-services-modal-label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.admin-manage-services-input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+.admin-manage-services-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-manage-services-save-button,
+.admin-manage-services-cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+}
+
+.admin-manage-services-save-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.admin-manage-services-cancel-button {
+    background-color: red;
+    color: white;
+}

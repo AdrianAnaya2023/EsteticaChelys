@@ -1,0 +1,100 @@
+/* AdminNavbar.css */
+.admin-navbar {
+    width: 100%;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .admin-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+  }
+  
+  .admin-navbar-toggle {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.2rem;
+  }
+  
+  .admin-navbar-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .admin-navbar-list.show {
+    flex-direction: column;
+  }
+  
+  .admin-navbar-item {
+    margin: 0;
+  }
+  
+  .admin-navbar-link {
+    background-color: #555;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+  
+  .admin-navbar-link:hover {
+    background-color: #777;
+  }
+  
+  .admin-exit-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .admin-exit-button:hover {
+    background-color: #ff3333;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .admin-navbar-list {
+      display: none;
+    }
+  
+    .admin-navbar-list.show {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background-color: #333;
+    }
+  
+    .admin-navbar-item {
+      width: 100%;
+    }
+  
+    .admin-navbar-link {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  

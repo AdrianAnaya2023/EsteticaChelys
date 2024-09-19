@@ -1,0 +1,140 @@
+.manage-promos-container-promosAdmin {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    padding: 40px;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg');
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    color: black;
+    overflow-y: auto;
+  }
+  
+  .title-promosAdmin {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: rgb(0, 0, 0);
+  }
+  
+  .add-button-promosAdmin {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: block;
+    margin: 0 auto 30px auto;
+  }
+  
+  .custom-table-promosAdmin {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .custom-table-promosAdmin th,
+  .custom-table-promosAdmin td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .custom-table-promosAdmin th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .table-image-promosAdmin {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .edit-button-promosAdmin,
+  .delete-button-promosAdmin {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .edit-button-promosAdmin {
+    background-color: orange;
+    color: white;
+  }
+  
+  .delete-button-promosAdmin {
+    background-color: red;
+    color: white;
+  }
+  
+  .modal-promosAdmin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content-promosAdmin {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-label-promosAdmin {
+    font-size: 1rem;
+    color: black;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .input-promosAdmin {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .modal-buttons-promosAdmin {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .save-button-promosAdmin {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cancel-button-promosAdmin {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

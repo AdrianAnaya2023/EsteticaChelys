@@ -1,0 +1,176 @@
+/* Contenedor principal de los consejos de belleza */
+.beauty-tips-main-container-custom {
+  padding: 40px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-image: url('https://www.todofondos.net/wp-content/uploads/50-fondos-de-pantalla-de-madera-hd-para-descargar-gratis.-wallpaper-de-madera-1024x640.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  
+  position: relative;
+  min-height: 85vh; /* Asegura que no se pegue con el footer */
+}
+
+.beauty-tips-main-container-custom h1 {
+  color: #ffffff;
+  
+}
+
+/* Contenedor para las tarjetas de consejos */
+.beauty-tips-grid-container-custom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 35px;
+}
+
+/* Tarjeta de consejos */
+.beauty-tips-card-container-custom {
+  flex: 1 1 30%;
+  margin: 10px;
+  background-color: rgba(255, 248, 220, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 300px;
+}
+
+.beauty-tips-card-container-custom:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.beauty-tips-card-container-custom h3, .beauty-tips-card-container-custom p {
+  color: #0c0d0e;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+}
+
+.beauty-tips-card-container-custom img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* Botón para regresar en las subcategorías */
+.BotoncitoReturn {
+  padding: 10px 20px;
+  background-color: #e05a5a;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.BotoncitoReturn:hover {
+  background-color: #b84040;
+}
+
+/* Contenedor de botones de administración */
+.admin-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Estilo para los botones de administración */
+.admin-buttons-container button {
+  background-color: #d3c2ae;
+  color: rgb(37, 36, 36);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  margin: 5px;
+}
+
+.admin-buttons-container button:hover {
+  background-color: #b8a691;
+}
+
+.admin-buttons-container button:first-of-type {
+  background-color: #a28c78;
+}
+
+.admin-buttons-container button:first-of-type:hover {
+  background-color: #8c705d;
+}
+
+.admin-buttons-container button:last-of-type {
+  background-color: #e05a5a;
+}
+
+.admin-buttons-container button:last-of-type:hover {
+  background-color: #b84040;
+}
+
+/* Controles de paginación */
+.pagination-controls-tips-custom {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pagination-controls-tips-custom button {
+  padding: 10px 20px;
+  background-color: #d3c2ae;
+  color: rgb(37, 36, 36);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-controls-tips-custom button:hover {
+  background-color: #b8a691;
+}
+
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 1024px) {
+  .beauty-tips-card-container-custom {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .beauty-tips-grid-container-custom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .beauty-tips-card-container-custom {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .BotoncitoReturn {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .beauty-tips-card-container-custom {
+    width: 100%;
+    max-width: 90%;
+    margin: 15px auto;
+  }
+
+  .pagination-controls-tips-custom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .BotoncitoReturn {
+    right: 5px;
+    bottom: 5px;
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}

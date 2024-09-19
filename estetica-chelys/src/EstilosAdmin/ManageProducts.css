@@ -1,0 +1,191 @@
+.manage-products-container-ManageProducts {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg'); /* Mantiene la imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 35px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    overflow-y: auto;
+}
+
+.close-button-ManageProducts {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.title-ManageProducts {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.subtitle-ManageProducts {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.table-container-ManageProducts {
+    margin-bottom: 40px;
+    margin-left: 20px; /* Añade margen a los lados de la tabla */
+    margin-right: 20px; /* Añade margen a los lados de la tabla */
+}
+
+.custom-table-ManageProducts {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.custom-table-ManageProducts th,
+.custom-table-ManageProducts td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.custom-table-ManageProducts th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.table-image-ManageProducts {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Estilo de los botones de "Agregar" y "Ver" */
+.products-buttons-container-ManageProducts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+    margin-left: 20px; /* Añade margen a los lados de los botones */
+    margin-right: 20px; /* Añade margen a los lados de los botones */
+}
+
+.products-toggle-view-button-ManageProducts,
+.products-add-button-ManageProducts {
+    background-color: #da9765; /* Color marrón para el botón de "Ver" */
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.products-add-button-ManageProducts {
+    background-color: #A65245; /* Color rojo suave para el botón de "Agregar" */
+}
+
+.products-toggle-view-button-ManageProducts:hover {
+    background-color: #6D4B32; /* Un tono más oscuro para "Ver" en hover */
+}
+
+.products-add-button-ManageProducts:hover {
+    background-color: #883C34; /* Un tono más oscuro para "Agregar" en hover */
+}
+
+/* Estilo de los botones de Editar y Eliminar */
+.edit-button-ManageProducts,
+.delete-button-ManageProducts {
+    background-color: #ff9800; /* Botón de editar en naranja */
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.edit-button-ManageProducts:hover {
+    background-color: #e68a00; /* Tono más oscuro en hover para Editar */
+}
+
+.delete-button-ManageProducts {
+    background-color: red; /* Botón de eliminar en rojo */
+}
+
+.delete-button-ManageProducts:hover {
+    background-color: darkred; /* Tono más oscuro en hover para Eliminar */
+}
+
+/* Estilo del modal */
+.modal-ManageProducts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-ManageProducts {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-ManageProducts {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+.modal-label-ManageProducts {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.modal-buttons-ManageProducts {
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-button-ManageProducts,
+.cancel-button-ManageProducts {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+}
+
+.save-button-ManageProducts {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-button-ManageProducts {
+    background-color: red;
+    color: white;
+}
