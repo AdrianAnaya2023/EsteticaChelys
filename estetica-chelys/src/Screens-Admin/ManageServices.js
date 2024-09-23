@@ -78,7 +78,7 @@ const ManageServices = ({ onClose }) => {
   return (
     <div className="admin-manage-services-container">
       <button onClick={onClose} className="admin-manage-services-close-button">Cerrar</button>
-      <h1 className="admin-manage-services-title">Administrar {isServicesView ? 'Servicios' : 'Categorías de Servicios'}</h1>
+      <h1 className="admin-manage-services-title"> {isServicesView ? 'Servicios' : 'Categorías de Servicios'}</h1>
 
       <div className="admin-manage-services-buttons-container">
         <button onClick={() => setIsServicesView(!isServicesView)} className="admin-manage-services-toggle-view-button">

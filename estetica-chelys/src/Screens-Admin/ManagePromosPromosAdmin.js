@@ -62,7 +62,7 @@ const ManagePromosPromosAdmin = () => {
 
   return (
     <div className="manage-promos-container-promosAdmin">
-      <h1 className="title-promosAdmin">Administrar Promociones</h1>
+      <h1 className="title-promosAdmin">Promociones</h1>
 
       <button onClick={() => openModal()} className="add-button-promosAdmin">
         Agregar Promoción

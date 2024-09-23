@@ -1,27 +1,31 @@
 
-.login-container{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: url('https://img.freepik.com/vector-gratis/paisaje-degradado-rio_23-2149113449.jpg');
-  background-size: cover;
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Asegura que el fondo cubra todo el ancho de la ventana */
+    height: 100vh; /* Asegura que el fondo cubra todo el alto de la ventana */
+    background-image: url('https://cdn.pixabay.com/photo/2024/06/14/11/07/shadows-8829575_640.jpg');
+    background-size: cover;
     background-position: center;
     padding: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    z-index: 1000;
-    color:fff;
-
-   
-}
-.login-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    color: #fff;
+  }
+  
+  .login-content {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
-}
-
-.close-button{
+    width: 90%; /* Ajusta el ancho de la caja de contenido */
+    max-width: 400px; /* Establece un ancho máximo */
+  }
+  
+  .close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -30,48 +34,50 @@
     font-size: 20px;
     cursor: pointer;
     color: #fff;
-}
-.login-container h1{
+  }
+  
+  .login-container h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #ffffff;
-}
-form{
+  }
+  
+  form {
     display: flex;
     flex-direction: column;
-}
-label{
+  }
+  
+  label {
     margin-bottom: 10px;
-font-weight: bold;
+    font-weight: bold;
     font-size: 18px;
-
-}
-input{
+    color: #fff;
+  }
+  
+  input {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
     border: none;
-}
-
-button{
+  }
+  
+  button {
     padding: 10px;
     border-radius: 5px;
     border: none;
     background-color: #131212;
     color: #fff;
     cursor: pointer;
-}
-button:hover{
+  }
+  
+  button:hover {
     background-color: #fff;
     color: #131212;
-}
-label{
-    color: #fff;
-}
-
-@media (max-width: 768px) {
-    .login-container{
-        margin: 90%;
-        margin: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .login-container {
+      padding: 20px;
     }
-}
+  }
+  

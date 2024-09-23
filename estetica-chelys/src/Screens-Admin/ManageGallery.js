@@ -76,7 +76,7 @@ const ManageGallery = ({ onClose }) => {
   return (
     <div className="manage-gallery-container-GaleriaAdmin">
       <button onClick={onClose} className="close-button-GaleriaAdmin">Cerrar</button>
-      <h1 className="title-GaleriaAdmin">Administrar {isGalleryView ? 'Galería' : 'Categorías de Galería'}</h1>
+      <h1 className="title-GaleriaAdmin"> {isGalleryView ? 'Galería' : 'Categorías de Galería'}</h1>
 
       <div className="buttons-container-GaleriaAdmin">
         <button onClick={() => setIsGalleryView(!isGalleryView)} className="toggle-view-button-GaleriaAdmin">

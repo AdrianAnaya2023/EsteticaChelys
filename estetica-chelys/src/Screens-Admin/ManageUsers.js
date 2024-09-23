@@ -47,7 +47,7 @@ const ManageUsersPerson = () => {
 
   return (
     <div className="manage-users-container-person">
-      <h1 className="title-person">Administrar Usuarios</h1>
+      <h1 className="title-person">Usuarios</h1>
 
       <button onClick={() => openModal()} className="add-button-person">
         Agregar Usuario

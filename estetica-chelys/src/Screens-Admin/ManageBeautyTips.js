@@ -78,7 +78,7 @@ const ManageBeautyTips = ({ onClose }) => {
   return (
     <div className="manage-beauty-tips-container-Consejitos">
       <button onClick={onClose} className="close-button-Consejitos">Cerrar</button>
-      <h1 className="title-Consejitos">Administrar {isBeautyTipsView ? 'Consejos de Belleza' : 'Categorías de Consejos'}</h1>
+      <h1 className="title-Consejitos"> {isBeautyTipsView ? 'Consejos de Belleza' : 'Categorías de Consejos'}</h1>
 
       <div className="buttons-container-Consejitos">
         <button onClick={() => setIsBeautyTipsView(!isBeautyTipsView)} className="toggle-view-button-Consejitos">

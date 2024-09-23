@@ -63,7 +63,7 @@ const ModifyHomeFooter = ({ onClose }) => {
   return (
     <div className="modify-home-footer-container">
       <button onClick={onClose} className="close-button-modify">Cerrar</button>
-      <h1 className="title-modify">Modificar Home y Footer</h1>
+      <h1 className="title-modify">Home y Footer</h1>
 
       <div className="buttons-container-modify">
         <button onClick={() => setIsTableView(!isTableView)} className="toggle-view-button-modify">

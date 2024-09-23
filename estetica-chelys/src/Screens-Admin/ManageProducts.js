@@ -70,7 +70,7 @@ const ManageProducts = ({ onClose }) => {
   return (
     <div className="manage-products-container-ManageProducts">
       <button onClick={onClose} className="close-button-ManageProducts">Cerrar</button>
-      <h1 className="title-ManageProducts">Administrar {isProductsView ? 'Productos de Estética' : 'Categorías de Estética'}</h1>
+      <h1 className="title-ManageProducts"> {isProductsView ? 'Productos' : 'Categorías de Productos'}</h1>
 
       <div className="products-buttons-container-ManageProducts">
         <button onClick={() => setIsProductsView(!isProductsView)} className="products-toggle-view-button-ManageProducts">
