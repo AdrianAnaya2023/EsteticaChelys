@@ -10,7 +10,7 @@ import SatisfactionSurvey from './Screens/SatisfactionSurvey';
 import SpecialOffers from './Screens/SpecialOffers';
 import FooterPage from './Screens/FooterPage';
 import Login from './Screens/Login';
-
+import axios from 'axios'; // Importa axios para hacer solicitudes HTTP
 
 
 // Importar los componentes de administración

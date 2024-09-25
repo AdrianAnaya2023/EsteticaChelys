@@ -10,7 +10,7 @@ import SatisfactionSurvey from './Screens/SatisfactionSurvey';
 import SpecialOffers from './Screens/SpecialOffers';
 import FooterPage from './Screens/FooterPage';
 import Login from './Screens/Login';
-
+import axios from 'axios'; // Importa axios para hacer solicitudes HTTP
 
 
 // Importar los componentes de administración
@@ -40,7 +40,24 @@ function App() {
   }, [window.location.pathname]);
 
 
-  
+  const [promos, setPromos] = useState([]);
+
+   // Función para obtener promos del backend
+   const fetchPromos = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/promos`);
+      setPromos(response.data);
+    } catch (error) {
+      console.error('Error al obtener las promos:', error);
+    }
+  };
+
+  // Ejecución de las funciones para cargar datos al montar el componente
+  useEffect(() => {
+   
+    fetchPromos();
+  }, []);
+
 
 
   // Estados para cada pantalla de administración

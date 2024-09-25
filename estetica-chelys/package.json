@@ -7,7 +7,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
     "chart.js": "^4.4.4",
+    "firebase": "^10.13.2",
+    "firebase-admin": "^12.5.0",
     "react": "^18.3.1",
     "react-awesome-reveal": "^4.2.12",
     "react-chartjs-2": "^5.2.0",
@@ -17,6 +20,7 @@
     "react-scripts": "5.0.1",
     "react-scroll": "^1.9.0",
     "react-slick": "^0.30.2",
+    "react-toastify": "^10.0.5",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },

@@ -14,8 +14,6 @@ import {
   updateCategoriaProducto,
   deleteCategoriaProducto,
 } from './categoriaProductosAPI';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebaseConfig.js'; // Asegúrate de tener la configuración correcta de Firebase
 
 const ManageProducts = ({ onClose }) => {
   const [categories, setCategories] = useState([]);
@@ -31,7 +29,6 @@ const ManageProducts = ({ onClose }) => {
     categoria_id: '',
     nombre: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     // Cargar productos y categorías al montar el componente
@@ -68,36 +65,6 @@ const ManageProducts = ({ onClose }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setUploadProgress(0); // Reiniciar progreso al cerrar el modal
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const fileRef = ref(storage, `${isProductsView ? 'productos' : 'categorias'}/${file.name}`);
-    const uploadTask = uploadBytesResumable(fileRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        // Manejo del progreso de la carga
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
-      (error) => {
-        toast.error('Error al subir la imagen: ' + error.message);
-        setUploadProgress(0);
-      },
-      () => {
-        // Obtener URL de descarga una vez completada la carga
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setNewItem((prev) => ({ ...prev, imagen: downloadURL }));
-          toast.success('Imagen cargada con éxito!');
-          setUploadProgress(0); // Reiniciar el progreso después de la carga
-        });
-      }
-    );
   };
 
   const handleChange = (e) => {
@@ -322,31 +289,14 @@ const ManageProducts = ({ onClose }) => {
               Imagen (URL)
             </label>
             <input
-              type="file"
+              type="text"
               id="imagen"
               name="imagen"
-              onChange={handleFileChange}
-              className="input-file-ManageProducts"
+              placeholder="URL de la Imagen"
+              value={newItem.imagen}
+              onChange={handleChange}
+              className="input-ManageProducts"
             />
-            {uploadProgress > 0 && (
-              <div className="progress-bar-ManageProducts">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
-            {newItem.imagen && (
-              <input
-                type="text"
-                value={newItem.imagen}
-                onChange={(e) =>
-                  setNewItem({ ...newItem, imagen: e.target.value })
-                }
-                className="input-ManageProducts"
-                readOnly
-              />
-            )}
 
             {isProductsView && (
               <>

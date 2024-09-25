@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchPromos, createPromo, updatePromo, deletePromo } from './promosAPI';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig.js'; // Asegúrate de tener la configuración correcta de Firebase
 import '../EstilosAdmin/ManagePromosPromosAdmin.css';
 
@@ -17,7 +16,6 @@ const ManagePromosPromosAdmin = () => {
     descripcion: '',
     fecha_fin: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     const loadPromos = async () => {
@@ -31,30 +29,26 @@ const ManagePromosPromosAdmin = () => {
     loadPromos();
   }, []);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const fileRef = ref(storage, `promos/${file.name}`);
-    const uploadTask = uploadBytesResumable(fileRef, file);
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(`promos/${file.name}`);
+    const uploadTask = fileRef.put(file);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
-        // Manejo del progreso de la carga
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
+        // Opcional: Manejo del progreso de la carga
       },
       (error) => {
         toast.error('Error al subir la imagen: ' + error.message);
-        setUploadProgress(0);
       },
       () => {
-        // Obtener URL de descarga una vez completada la carga
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setCurrentPromo((prev) => ({ ...prev, foto: downloadURL }));
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          setCurrentPromo(prev => ({ ...prev, foto: downloadURL }));
           toast.success('Imagen cargada con éxito!');
-          setUploadProgress(0); // Reiniciar el progreso después de la carga
         });
       }
     );
@@ -75,7 +69,7 @@ const ManagePromosPromosAdmin = () => {
       let data;
       if (isEditing) {
         data = await updatePromo(currentPromo.id, currentPromo);
-        setPromos(promos.map((promo) => (promo.id === currentPromo.id ? data : promo)));
+        setPromos(promos.map(promo => promo.id === currentPromo.id ? data : promo));
         toast.success('Promoción actualizada con éxito');
       } else {
         data = await createPromo(currentPromo);
@@ -91,7 +85,7 @@ const ManagePromosPromosAdmin = () => {
   const handleDelete = async (id) => {
     try {
       await deletePromo(id);
-      setPromos(promos.filter((promo) => promo.id !== id));
+      setPromos(promos.filter(promo => promo.id !== id));
       toast.success('Promoción eliminada con éxito');
     } catch (error) {
       toast.error(error.message);
@@ -100,21 +94,9 @@ const ManagePromosPromosAdmin = () => {
 
   return (
     <div className="manage-promos-container-promosAdmin">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <h1 className="title-promosAdmin">Promociones</h1>
-      <button onClick={() => openModal()} className="add-button-promosAdmin">
-        Agregar Promoción
-      </button>
+      <button onClick={() => openModal()} className="add-button-promosAdmin">Agregar Promoción</button>
       <table className="custom-table-promosAdmin">
         <thead>
           <tr>
@@ -127,28 +109,16 @@ const ManagePromosPromosAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {promos.map((promo) => (
+          {promos.map(promo => (
             <tr key={promo.id}>
               <td>{promo.id}</td>
-              <td>
-                <img src={promo.foto} alt={promo.titulo} className="table-image-promosAdmin" />
-              </td>
+              <td><img src={promo.foto} alt={promo.titulo} className="table-image-promosAdmin" /></td>
               <td>{promo.titulo}</td>
               <td>{promo.descripcion}</td>
               <td>{promo.fecha_fin}</td>
               <td>
-                <button
-                  onClick={() => openModal(promo)}
-                  className="edit-button-promosAdmin"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(promo.id)}
-                  className="delete-button-promosAdmin"
-                >
-                  Eliminar
-                </button>
+                <button onClick={() => openModal(promo)} className="edit-button-promosAdmin">Editar</button>
+                <button onClick={() => handleDelete(promo.id)} className="delete-button-promosAdmin">Eliminar</button>
               </td>
             </tr>
           ))}
@@ -159,62 +129,42 @@ const ManagePromosPromosAdmin = () => {
         <div className="modal-promosAdmin">
           <div className="modal-content-promosAdmin">
             <h2>{isEditing ? 'Editar Promoción' : 'Agregar Promoción'}</h2>
-            <label className="modal-label-promosAdmin">Imagen de la promoción:</label>
+            <label className="label-promosAdmin">Imagen de la promoción:</label>
             <input
               type="file"
               onChange={handleFileChange}
               className="input-file-promosAdmin"
             />
-            {uploadProgress > 0 && (
-              <div className="progress-bar-promosAdmin">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
-            <label className="modal-label-promosAdmin">URL de la imagen:</label>
+            <label className="label-promosAdmin">URL de la imagen:</label>
             <input
               type="text"
               value={currentPromo.foto}
-              onChange={(e) =>
-                setCurrentPromo({ ...currentPromo, foto: e.target.value })
-              }
+              onChange={(e) => setCurrentPromo({ ...currentPromo, foto: e.target.value })}
               className="input-promosAdmin"
             />
-            <label className="modal-label-promosAdmin">Título de la promoción:</label>
+            <label className="label-promosAdmin">Título de la promoción:</label>
             <input
               type="text"
               value={currentPromo.titulo}
-              onChange={(e) =>
-                setCurrentPromo({ ...currentPromo, titulo: e.target.value })
-              }
+              onChange={(e) => setCurrentPromo({ ...currentPromo, titulo: e.target.value })}
               className="input-promosAdmin"
             />
-            <label className="modal-label-promosAdmin">Descripción de la promoción:</label>
+            <label className="label-promosAdmin">Descripción de la promoción:</label>
             <textarea
               value={currentPromo.descripcion}
-              onChange={(e) =>
-                setCurrentPromo({ ...currentPromo, descripcion: e.target.value })
-              }
+              onChange={(e) => setCurrentPromo({ ...currentPromo, descripcion: e.target.value })}
               className="input-promosAdmin"
             />
-            <label className="modal-label-promosAdmin">Fecha de fin de la promoción:</label>
+            <label className="label-promosAdmin">Fecha de fin de la promoción:</label>
             <input
               type="date"
               value={currentPromo.fecha_fin}
-              onChange={(e) =>
-                setCurrentPromo({ ...currentPromo, fecha_fin: e.target.value })
-              }
+              onChange={(e) => setCurrentPromo({ ...currentPromo, fecha_fin: e.target.value })}
               className="input-promosAdmin"
             />
             <div className="modal-buttons-promosAdmin">
-              <button onClick={handleSave} className="save-button-promosAdmin">
-                Guardar
-              </button>
-              <button onClick={closeModal} className="cancel-button-promosAdmin">
-                Cancelar
-              </button>
+              <button onClick={handleSave} className="save-button-promosAdmin">Guardar</button>
+              <button onClick={closeModal} className="cancel-button-promosAdmin">Cancelar</button>
             </div>
           </div>
         </div>
