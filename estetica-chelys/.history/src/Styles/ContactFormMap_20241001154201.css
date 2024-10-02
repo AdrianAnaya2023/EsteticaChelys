@@ -1,0 +1,106 @@
+.contact-form-map-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro transparente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1999;
+  }
+  
+  .map-section {
+    flex: 1;
+    position: relative;
+  }
+  
+  .form-section {
+    flex: 1;
+    background-color: rgba(216, 156, 156, 0.9); /* Fondo blanco translúcido */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e05a5a;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .close-button:hover {
+    background-color: #b84141;
+  }
+  
+  .form-title {
+    font-size: 28px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  label {
+    font-size: 16px;
+    color: white; /* Color de las letras blanco */
+  }
+  
+  input, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f0f0f0;
+  }
+  
+  .submit-button {
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-form-map-container {
+      flex-direction: column;
+    }
+  
+    .map-section {
+      height: 50vh;
+      width: 100%;
+    }
+  
+    .form-section {
+      height: 50vh;
+      width: 100%;
+      padding: 20px;
+    }
+  }
+  

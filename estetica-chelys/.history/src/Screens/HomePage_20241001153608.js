@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Button from '../Components/Button';
-import ContactFormMap from '../Screens/ContactFormMap';
+import ContactFormMap from '../Screens/ContactFormMap'; // Asegúrate de que este componente esté bien importado
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../Styles/HomePage.css';
 
 const HomePage = () => {
-  const [showMapForm, setShowMapForm] = useState(false);
+  const [showMapForm, setShowMapForm] = useState(false); // Estado para mostrar el ContactFormMap
 
-  const openMapForm = () => setShowMapForm(true); // Mostrar el formulario/mapa
-  const closeMapForm = () => setShowMapForm(false); // Cerrar el formulario/mapa
+  const openMapForm = () => setShowMapForm(true); // Abre el ContactFormMap
+  const closeMapForm = () => setShowMapForm(false); // Cierra el ContactFormMap
 
   return (
     <div className="homepage">
@@ -34,7 +34,7 @@ const HomePage = () => {
           <h2>Araceli Almeda Reynaga</h2>
           <p>Araceli Almeda es el alma detrás de Estética Chely's en Cuautla, Jalisco. Reconocida por su dedicación incansable, Araceli es una mujer trabajadora que día a día da su máximo esfuerzo para satisfacer y superar las expectativas de sus clientes. En su estética, cada detalle y cada servicio reflejan su compromiso por ofrecer no solo calidad, sino también una experiencia personalizada y cercana.</p>
         </div>
-        <img src="https://www.clarin.com/img/2023/12/28/k8gOUmfp5_600x600__1.jpg" alt="Araceli Almeda" />
+        <img src="https://www.clarin.com/img/2023/12/28/k8gOUmfp5_600x600__1.jpg" alt="Cristina Herráiz" />
       </section>
       <section className="facilities" style={{ background: 'url("https://cdn.pixabay.com/photo/2016/03/15/02/42/floor-1256804_1280.jpg") no-repeat center center / cover'}}>
         <h2 className="facilities-header">Ven a nuestras instalaciones</h2>
@@ -51,8 +51,8 @@ const HomePage = () => {
         </Carousel>
         <p className="facilities-invitation">¡Te esperamos!</p>
       </section>
-      
-      {/* Renderizamos ContactFormMap si se ha hecho clic en el botón */}
+
+      {/* Mostrar ContactFormMap cuando showMapForm es true */}
       {showMapForm && (
         <ContactFormMap onClose={closeMapForm} />
       )}

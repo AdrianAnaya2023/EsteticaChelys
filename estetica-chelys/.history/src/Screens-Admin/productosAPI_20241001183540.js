@@ -3,7 +3,7 @@ import axios from 'axios';
 // Configura la URL base y el timeout para todas las peticiones al endpoint de productos
 const axiosInstance = axios.create({
   baseURL: `http://localhost:3000/api/productos`,
-  timeout: 10000, // Tiempo de espera máximo en milisegundos (10 segundos)
+  timeout: 4000, // Tiempo de espera máximo en milisegundos (10 segundos)
 });
 
 // Función para obtener todos los productos

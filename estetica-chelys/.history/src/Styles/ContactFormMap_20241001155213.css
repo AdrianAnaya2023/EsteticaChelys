@@ -1,0 +1,124 @@
+/* Estilos para el overlay y el modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    display: flex;
+    width: 80vw;
+    max-width: 1000px;
+    height: 80vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+  
+  /* Sección del mapa a la izquierda */
+  .map-section {
+    flex: 1;
+    position: relative;
+  }
+  
+  /* Sección del formulario a la derecha */
+  .form-section {
+    flex: 1;
+    background-color: #681b3c; /* Color tinto fuerte */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  
+  /* Botón de cierre */
+  .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #b84141;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .close-button:hover {
+    background-color: #a03232;
+  }
+  
+  /* Título del formulario */
+  .form-title {
+    font-size: 28px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilo del formulario */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  label {
+    font-size: 16px;
+    color: white; /* Letras en blanco */
+  }
+  
+  input, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f0f0f0;
+  }
+  
+  .submit-button {
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .modal-content {
+      flex-direction: column;
+      height: 90vh;
+    }
+  
+    .map-section, .form-section {
+      height: 50%;
+      width: 100%;
+    }
+  
+    .form-section {
+      padding: 20px;
+    }
+  }
+  
