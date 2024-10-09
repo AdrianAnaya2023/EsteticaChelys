@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchCategoriasServicios } from '../Screens-Admin/categoriaServiciosAPI';
-import { fetchServiciosPorCategoria } from '../Screens-Admin/serviciosAPI';
+import { fetchServiciosPorCategoria } from '../Screens-Admin/serviciosAPI'; // Función actualizada para cargar servicios
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ServiceCatalog.css';
 
@@ -22,6 +22,7 @@ const ServiceCatalog = () => {
     loadCategories();
   }, []);
 
+  // Función para cargar servicios cuando se selecciona una categoría
   const handleCategoryClick = async (category) => {
     setCurrentCategory(category);
     try {
@@ -35,7 +36,7 @@ const ServiceCatalog = () => {
 
   const goBack = () => {
     setCurrentCategory(null);
-    setServices([]);
+    setServices([]); // Limpiar servicios al regresar
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -43,13 +44,15 @@ const ServiceCatalog = () => {
     <div ref={serviceSectionRef} className="service-catalog-container-new">
       {currentCategory ? (
         <div>
-          <h1>{currentCategory.nombre}</h1> {/* Solo muestra el nombre de la categoría */}
+          <h1>{currentCategory.nombre}</h1>
+          <p>{currentCategory.descripcion}</p>
           <div className="services-grid-catalog-new">
             {services.map(service => (
               <div key={service.id} className="service-card-catalog-new">
                 <img src={service.imagen} alt={service.titulo} className="service-image-catalog-new" />
                 <h2 className="service-title">{service.titulo}</h2>
                 <p className="service-description">{service.descripcion}</p>
+                <ViewMoreButton onClick={() => handleCategoryClick(currentCategory)} />
               </div>
             ))}
           </div>
@@ -60,7 +63,7 @@ const ServiceCatalog = () => {
           <h1>Catálogo de Categorías</h1>
           <div className="services-grid-catalog-new">
             {categories.map(category => (
-              <div key={category.id} className="service-card-catalog-new">
+              <div key={category.id} className="service-card-catalog-new" onClick={() => handleCategoryClick(category)}>
                 <img src={category.imagen} alt={category.nombre} className="service-image-catalog-new" />
                 <h2 className="service-title">{category.nombre}</h2>
                 <p className="service-description">{category.descripcion}</p>
@@ -75,4 +78,3 @@ const ServiceCatalog = () => {
 };
 
 export default ServiceCatalog;
-

@@ -43,7 +43,7 @@ const ServiceCatalog = () => {
     <div ref={serviceSectionRef} className="service-catalog-container-new">
       {currentCategory ? (
         <div>
-          <h1>{currentCategory.nombre}</h1> {/* Solo muestra el nombre de la categoría */}
+          <h1>Servicios en '{currentCategory.nombre}'</h1> {/* Solo muestra el nombre de la categoría */}
           <div className="services-grid-catalog-new">
             {services.map(service => (
               <div key={service.id} className="service-card-catalog-new">
