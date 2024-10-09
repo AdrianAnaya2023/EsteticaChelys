@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-// Configura la URL base y el timeout para todas las peticiones al endpoint de categorías de galería
+// Configura la URL base y el timeout para todas las peticiones al endpoint de categoría de galería
 const axiosInstance = axios.create({
   baseURL: `http://localhost:3000/api/categorias-galeria`,
   timeout: 10000, // Tiempo de espera máximo en milisegundos (10 segundos)
 });
+
+// Función para validar los datos de la categoría de galería
+const isValidCategoriaGaleriaData = (categoriaData) => {
+  const { nombre, descripcion, imagen } = categoriaData;
+  return nombre && descripcion && imagen;
+}
 
 // Función para obtener todas las categorías de galería
 export const fetchCategoriasGaleria = async () => {
@@ -28,6 +34,9 @@ export const fetchCategoriaGaleriaById = async (id) => {
 
 // Función para crear una nueva categoría de galería
 export const createCategoriaGaleria = async (categoriaData) => {
+  if (!isValidCategoriaGaleriaData(categoriaData)) {
+    throw new Error('Datos de la categoría de galería inválidos');
+  }
   try {
     const response = await axiosInstance.post('/', categoriaData);
     return response.data;
@@ -38,6 +47,9 @@ export const createCategoriaGaleria = async (categoriaData) => {
 
 // Función para actualizar una categoría de galería existente
 export const updateCategoriaGaleria = async (id, categoriaData) => {
+  if (!isValidCategoriaGaleriaData(categoriaData)) {
+    throw new Error('Datos de la categoría de galería inválidos para actualización');
+  }
   try {
     const response = await axiosInstance.put(`/${id}`, categoriaData);
     return response.data;
@@ -59,10 +71,13 @@ export const deleteCategoriaGaleria = async (id) => {
 // Manejo de errores comunes de Axios
 const handleAxiosError = (error, defaultMessage) => {
   if (error.response) {
+    console.error(`Error del servidor: ${error.response.status} - ${error.response.data.message}`);
     throw new Error(`Error del servidor: ${error.response.data.message || defaultMessage}`);
   } else if (error.request) {
+    console.error('No response from server', error.request);
     throw new Error('No se recibió respuesta del servidor. Verifique su conexión.');
   } else {
+    console.error('Error setting up request', error.message);
     throw new Error(`Error en la solicitud: ${error.message}`);
   }
 };

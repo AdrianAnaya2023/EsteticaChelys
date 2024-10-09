@@ -1,0 +1,102 @@
+.service-catalog-container-new {
+  text-align: center;
+  padding: 50px;
+  background-image: url('https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?cs=srgb&dl=pexels-8moments-1323550.jpg&fm=jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  background-color: rgba(244, 241, 238, 0.7);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.services-grid-catalog-new {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.service-card-catalog-new {
+  flex: 1 1 30%; /* Ajusta el ancho para permitir tres elementos por fila en pantallas grandes */
+  margin: 10px;
+  background-color: rgba(255, 248, 220, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-card-catalog-new:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.service-image-catalog-new {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.service-details {
+  padding: 10px 0; /* Espacio entre imagen y texto */
+}
+
+.service-title {
+  font-size: 1.5rem;
+  color: #333; /* Color del texto del título */
+  font-weight: bold; /* Resaltar el título */
+}
+
+.service-description {
+  color: #666; /* Color más claro para la descripción */
+  margin: 5px 0; /* Margen alrededor de la descripción */
+}
+
+.service-category {
+  font-size: 0.9rem;
+  color: #888; /* Color más suave para la categoría */
+}
+
+.pagination-buttons-catalog-new {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pagination-buttons-catalog-new button {
+  padding: 10px 20px;
+  background-color: #d3c2ae;
+  color: rgb(37, 36, 36);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-buttons-catalog-new button:hover {
+  background-color: #b8a691;
+}
+
+.catalog-back-button-new {
+  padding: 10px 20px;
+  background-color: #e05a5a;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.catalog-back-button-new:hover {
+  background-color: #b84040;
+}

@@ -66,7 +66,6 @@ export const fetchServiciosPorCategoria = async (categoriaId) => {
   }
 };
 
-
 // Manejo de errores comunes de Axios
 const handleAxiosError = (error, defaultMessage) => {
   if (error.response) {

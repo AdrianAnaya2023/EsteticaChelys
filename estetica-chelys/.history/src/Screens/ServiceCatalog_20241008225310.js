@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchCategoriasServicios } from '../Screens-Admin/categoriaServiciosAPI';
-import { fetchServicios } from '../Screens-Admin/serviciosAPI'; // Cambia esto para importar todos los servicios
-import ViewMoreButton from '../Components/ViewMoreButton';
+import { fetchServiciosPorCategoria } from '../Screens-Admin/serviciosAPI';
 import '../Styles/ServiceCatalog.css';
 
 const ServiceCatalog = () => {
@@ -22,30 +21,20 @@ const ServiceCatalog = () => {
     loadCategories();
   }, []);
 
-  // Nueva función para cargar todos los servicios
-  const loadAllServices = async () => {
+  const handleCategoryClick = async (category) => {
+    setCurrentCategory(category);
     try {
-      const loadedServices = await fetchServicios();
+      const loadedServices = await fetchServiciosPorCategoria(category.id);
       setServices(loadedServices || []);
     } catch (error) {
       console.error('Error al cargar servicios:', error.message);
     }
-  };
-
-  const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
-    loadAllServices(); // Cargar todos los servicios al seleccionar una categoría
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const goBack = () => {
     setCurrentCategory(null);
     setServices([]); // Limpiar servicios al regresar
-    serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const viewMoreServices = () => {
-    loadAllServices(); // Cargar todos los servicios al hacer clic en "Ver"
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -61,7 +50,7 @@ const ServiceCatalog = () => {
                 <img src={service.imagen} alt={service.titulo} className="service-image-catalog-new" />
                 <h2 className="service-title">{service.titulo}</h2>
                 <p className="service-description">{service.descripcion}</p>
-                <ViewMoreButton onClick={viewMoreServices} />
+                {/* El botón de ver no se muestra aquí */}
               </div>
             ))}
           </div>
@@ -76,7 +65,7 @@ const ServiceCatalog = () => {
                 <img src={category.imagen} alt={category.nombre} className="service-image-catalog-new" />
                 <h2 className="service-title">{category.nombre}</h2>
                 <p className="service-description">{category.descripcion}</p>
-                <ViewMoreButton onClick={() => handleCategoryClick(category)} />
+                <button className="view-more-button-catalog-new" onClick={() => handleCategoryClick(category)}>Ver</button>
               </div>
             ))}
           </div>

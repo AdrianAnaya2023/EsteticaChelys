@@ -1,52 +1,55 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ProductCatalog.css';
-import { fetchCategoriasProductos } from '../Screens-Admin/categoriaProductosAPI';
-import { fetchProductosPorCategoria } from '../Screens-Admin/productosAPI'; // Importamos la nueva función para obtener productos por categoría
 
 const ProductCatalog = () => {
-  const [categories, setCategories] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [itemsPerPage] = useState(3); // Controla cuántos productos mostrar por página
+  const [categories, setCategories] = useState([]); // Datos reales de categorías
+  const [products, setProducts] = useState([]); // Datos reales de productos
+  const [currentCategory, setCurrentCategory] = useState(null); // Categoría seleccionada
+  const [currentPage, setCurrentPage] = useState(0); // Página actual para la paginación
+  const [itemsPerPage] = useState(3); // Controlar cuántas categorías/productos mostrar por página
   const productSectionRef = useRef(null);
 
-  // Cargar las categorías cuando el componente se monta
   useEffect(() => {
-    const loadCategories = async () => {
+    // Fetch de categorías al montar el componente
+    const fetchCategories = async () => {
       try {
-        const data = await fetchCategoriasProductos(); // Cargar las categorías desde la API
-        setCategories(data);
+        const categoryResponse = await axios.get('http://localhost:3000/api/categorias-productos');
+        setCategories(categoryResponse.data);
       } catch (error) {
-        console.error('Error al cargar categorías', error);
+        console.error('Error al obtener las categorías', error);
       }
     };
 
-    loadCategories();
+    fetchCategories();
   }, []);
 
-  // Función para cargar productos de una categoría seleccionada
+  const fetchProductsByCategory = async (categoryId) => {
+    try {
+      const productResponse = await axios.get(`http://localhost:3000/api/productos?categoria_id=${categoryId}`);
+      setProducts(productResponse.data);
+    } catch (error) {
+      console.error('Error al obtener los productos', error);
+    }
+  };
+
+  const totalCategories = categories.length;
+  const totalPages = Math.ceil(totalCategories / itemsPerPage);
+
   const viewMore = async (category) => {
     setCurrentCategory(category);
-    try {
-      const data = await fetchProductosPorCategoria(category.id); // Obtener productos por categoría
-      setProducts(data);
-      setCurrentPage(0); // Reiniciar la paginación al seleccionar una categoría
-      productSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    } catch (error) {
-      console.error('Error al cargar productos por categoría', error);
-    }
+    setCurrentPage(0);
+    await fetchProductsByCategory(category.id);
+    productSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const goBack = () => {
     setCurrentCategory(null);
-    setProducts([]);
     productSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleCategoryPageChange = (direction) => {
-    const totalPages = Math.ceil(categories.length / itemsPerPage);
     const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1;
     if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
@@ -55,9 +58,9 @@ const ProductCatalog = () => {
   };
 
   const handleProductPageChange = (direction) => {
-    const totalPages = Math.ceil(products.length / itemsPerPage);
-    const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1;
-    if (newPage >= 0 && newPage < totalPages) {
+    const totalProducts = products.length;
+    const newPage = direction === 'next' ? currentPage + itemsPerPage : currentPage - itemsPerPage;
+    if (newPage >= 0 && newPage < totalProducts) {
       setCurrentPage(newPage);
       productSectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -70,8 +73,8 @@ const ProductCatalog = () => {
           <h1>{currentCategory.nombre}</h1>
           <div className="catalog-grid">
             {products
-              .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-              .map((product) => (
+              .slice(currentPage, currentPage + itemsPerPage)
+              .map(product => (
                 <div key={product.id} className="catalog-card">
                   <img src={product.imagen} alt={product.titulo} />
                   <h3>{product.titulo}</h3>
@@ -83,13 +86,11 @@ const ProductCatalog = () => {
             <button onClick={() => handleProductPageChange('prev')} disabled={currentPage === 0}>
               Anterior
             </button>
-            <button onClick={() => handleProductPageChange('next')} disabled={currentPage * itemsPerPage + itemsPerPage >= products.length}>
+            <button onClick={() => handleProductPageChange('next')} disabled={currentPage + itemsPerPage >= products.length}>
               Siguiente
             </button>
           </div>
-          <button className="catalog-back-button" onClick={goBack}>
-            Regresar
-          </button>
+          <button className="catalog-back-button" onClick={goBack}>Regresar</button>
         </div>
       ) : (
         <div>
@@ -97,11 +98,10 @@ const ProductCatalog = () => {
           <div className="catalog-grid">
             {categories
               .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-              .map((category) => (
+              .map(category => (
                 <div key={category.id} className="catalog-card">
                   <img src={category.imagen} alt={category.nombre} />
                   <h3>{category.nombre}</h3>
-                  <p>{category.descripcion}</p>
                   <ViewMoreButton onClick={() => viewMore(category)} />
                 </div>
               ))}
@@ -110,7 +110,7 @@ const ProductCatalog = () => {
             <button onClick={() => handleCategoryPageChange('prev')} disabled={currentPage === 0}>
               Anterior
             </button>
-            <button onClick={() => handleCategoryPageChange('next')} disabled={currentPage * itemsPerPage + itemsPerPage >= categories.length}>
+            <button onClick={() => handleCategoryPageChange('next')} disabled={currentPage + 1 >= totalPages}>
               Siguiente
             </button>
           </div>

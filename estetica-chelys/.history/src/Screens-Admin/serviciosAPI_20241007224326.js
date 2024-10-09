@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configura la URL base y el timeout para todas las peticiones al endpoint de servicios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api/servicios', // Asegúrate de que esta URL sea correcta
+  baseURL: `http://localhost:3000/api/servicios`,
   timeout: 10000, // Tiempo de espera máximo en milisegundos (10 segundos)
 });
 
@@ -10,11 +10,13 @@ const axiosInstance = axios.create({
 export const fetchServicios = async () => {
   try {
     const response = await axiosInstance.get('/');
+    console.log('Servicios obtenidos:', response.data); // Agrega esto
     return response.data;
   } catch (error) {
     handleAxiosError(error, 'Error al obtener los servicios');
   }
 };
+
 
 // Función para obtener un servicio por ID
 export const fetchServicioById = async (id) => {
@@ -66,17 +68,13 @@ export const fetchServiciosPorCategoria = async (categoriaId) => {
   }
 };
 
-
 // Manejo de errores comunes de Axios
 const handleAxiosError = (error, defaultMessage) => {
   if (error.response) {
-    console.error('Error Response:', error.response); // Para depuración
     throw new Error(`Error del servidor: ${error.response.data.message || defaultMessage}`);
   } else if (error.request) {
-    console.error('Error Request:', error.request); // Para depuración
     throw new Error('No se recibió respuesta del servidor. Verifique su conexión.');
   } else {
-    console.error('Error:', error.message); // Para depuración
     throw new Error(`Error en la solicitud: ${error.message}`);
   }
 };

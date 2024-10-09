@@ -256,6 +256,26 @@ const ManageGallery = ({ onClose }) => {
 
             {isGalleryView ? (
               <>
+                <label className="modal-label-GaleriaAdmin" htmlFor="foto_antes">Foto Antes</label>
+                <input
+                  type="text"
+                  id="foto_antes"
+                  name="foto_antes"
+                  placeholder="URL de la Foto Antes"
+                  value={newItem.foto_antes}
+                  onChange={handleChange}
+                  className="input-GaleriaAdmin"
+                />
+                <label className="modal-label-GaleriaAdmin" htmlFor="foto_despues">Foto Después</label>
+                <input
+                  type="text"
+                  id="foto_despues"
+                  name="foto_despues"
+                  placeholder="URL de la Foto Después"
+                  value={newItem.foto_despues}
+                  onChange={handleChange}
+                  className="input-GaleriaAdmin"
+                />
                 <label className="modal-label-GaleriaAdmin" htmlFor="imagenFileAntes">Subir Foto Antes</label>
                 <input
                   type="file"

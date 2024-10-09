@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchCategoriasServicios } from '../Screens-Admin/categoriaServiciosAPI';
-import { fetchServicios } from '../Screens-Admin/serviciosAPI'; // Cambia esto para importar todos los servicios
+import { fetchServiciosPorCategoria } from '../Screens-Admin/serviciosAPI';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ServiceCatalog.css';
 
@@ -22,19 +22,14 @@ const ServiceCatalog = () => {
     loadCategories();
   }, []);
 
-  // Nueva función para cargar todos los servicios
-  const loadAllServices = async () => {
+  const handleCategoryClick = async (category) => {
+    setCurrentCategory(category);
     try {
-      const loadedServices = await fetchServicios();
+      const loadedServices = await fetchServiciosPorCategoria(category.id);
       setServices(loadedServices || []);
     } catch (error) {
       console.error('Error al cargar servicios:', error.message);
     }
-  };
-
-  const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
-    loadAllServices(); // Cargar todos los servicios al seleccionar una categoría
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -44,24 +39,19 @@ const ServiceCatalog = () => {
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const viewMoreServices = () => {
-    loadAllServices(); // Cargar todos los servicios al hacer clic en "Ver"
-    serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div ref={serviceSectionRef} className="service-catalog-container-new">
       {currentCategory ? (
         <div>
-          <h1>{currentCategory.nombre}</h1>
-          <p>{currentCategory.descripcion}</p>
+          <h1>{currentCategory.nombre}</h1> {/* Mostrar el nombre de la categoría */}
+          <p>{currentCategory.descripcion}</p> {/* Mostrar la descripción de la categoría */}
           <div className="services-grid-catalog-new">
             {services.map(service => (
               <div key={service.id} className="service-card-catalog-new">
                 <img src={service.imagen} alt={service.titulo} className="service-image-catalog-new" />
                 <h2 className="service-title">{service.titulo}</h2>
                 <p className="service-description">{service.descripcion}</p>
-                <ViewMoreButton onClick={viewMoreServices} />
+                <ViewMoreButton onClick={() => {/* Implementar lógica para ver más detalles si es necesario */}} />
               </div>
             ))}
           </div>

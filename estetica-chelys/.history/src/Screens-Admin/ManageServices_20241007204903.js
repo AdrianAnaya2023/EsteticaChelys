@@ -32,7 +32,6 @@ const ManageServices = ({ onClose }) => {
     nombre: '',
   });
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -41,10 +40,8 @@ const ManageServices = ({ onClose }) => {
           fetchServicios(),
           fetchCategoriasServicios(),
         ]);
-        console.log('Loaded Services:', loadedServices);
-        console.log('Loaded Categories:', loadedCategories);
-        setServices(loadedServices || []);
-        setCategories(loadedCategories || []);
+        setServices(loadedServices);
+        setCategories(loadedCategories);
       } catch (error) {
         toast.error('Error al cargar datos: ' + error.message);
       }
@@ -64,51 +61,39 @@ const ManageServices = ({ onClose }) => {
     setNewItem(
       item || { titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' }
     );
-    setFile(null);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setUploadProgress(0);
     setNewItem({ titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' });
-    setFile(null);
   };
 
-  const handleFileChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    setFile(selectedFile);
-
-    try {
-      const imagenUrl = await uploadImage(selectedFile);
-      setNewItem(prevItem => ({ ...prevItem, imagen: imagenUrl }));
-    } catch (error) {
-      toast.error('Error al subir la imagen: ' + error.message);
-    }
-  };
-
-  const uploadImage = (file) => {
     const fileRef = ref(storage, `${isServicesView ? 'servicios' : 'categorias'}/${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
 
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        toast.error('Error al subir la imagen: ' + error.message);
+        setUploadProgress(0);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setNewItem(prev => ({ ...prev, imagen: downloadURL }));
+          toast.success('Imagen cargada con éxito!');
+          setUploadProgress(0);
+        });
+      }
+    );
   };
 
   const handleChange = (e) => {
@@ -118,28 +103,30 @@ const ManageServices = ({ onClose }) => {
   const handleSave = async () => {
     try {
       if (isServicesView) {
-        if (!newItem.titulo || !newItem.descripcion || !newItem.categoria_id || !newItem.imagen) {
+        if (!newItem.titulo || !newItem.descripcion || !newItem.categoria_id) {
           return toast.error('Todos los campos del servicio son obligatorios.');
         }
+      } else {
+        if (!newItem.nombre || !newItem.descripcion || !newItem.imagen) {
+          return toast.error('Todos los campos de la categoría son obligatorios.');
+        }
+      }
 
-        if (isEditing) {
+      if (isEditing) {
+        if (isServicesView) {
           const updatedService = await updateServicio(currentItem.id, newItem);
           setServices(services.map(serv => serv.id === currentItem.id ? updatedService : serv));
           toast.success('Servicio actualizado con éxito');
         } else {
-          const createdService = await createServicio(newItem);
-          setServices([...services, createdService]);
-          toast.success('Servicio creado con éxito');
-        }
-      } else {
-        if (!newItem.nombre || !newItem.descripcion) {
-          return toast.error('Todos los campos de la categoría son obligatorios.');
-        }
-
-        if (isEditing) {
           const updatedCategoria = await updateCategoriaServicio(currentItem.id, newItem);
           setCategories(categories.map(cat => cat.id === currentItem.id ? updatedCategoria : cat));
           toast.success('Categoría actualizada con éxito');
+        }
+      } else {
+        if (isServicesView) {
+          const createdService = await createServicio(newItem);
+          setServices([...services, createdService]);
+          toast.success('Servicio creado con éxito');
         } else {
           const createdCategoria = await createCategoriaServicio(newItem);
           setCategories([...categories, createdCategoria]);
@@ -209,41 +196,35 @@ const ManageServices = ({ onClose }) => {
                 </tr>
               </thead>
               <tbody>
-                {services.length > 0 ? (
-                  services.map((service) => (
-                    <tr key={service.id}>
-                      <td>{service.id}</td>
-                      <td>{service.titulo}</td>
-                      <td>{service.descripcion}</td>
-                      <td>
-                        <img
-                          src={service.imagen}
-                          alt={service.titulo}
-                          className="admin-manage-services-table-image"
-                        />
-                      </td>
-                      <td>{getCategoryName(service.categoria_id)}</td>
-                      <td>
-                        <button
-                          onClick={() => openModal(service, true)}
-                          className="admin-manage-services-edit-button"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(service.id)}
-                          className="admin-manage-services-delete-button"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6" style={{ textAlign: 'center' }}>No hay servicios disponibles.</td>
+                {services.map((service) => (
+                  <tr key={service.id}>
+                    <td>{service.id}</td>
+                    <td>{service.titulo}</td>
+                    <td>{service.descripcion}</td>
+                    <td>
+                      <img
+                        src={service.imagen}
+                        alt={service.titulo}
+                        className="admin-manage-services-table-image"
+                      />
+                    </td>
+                    <td>{getCategoryName(service.categoria_id)}</td>
+                    <td>
+                      <button
+                        onClick={() => openModal(service, true)}
+                        className="admin-manage-services-edit-button"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(service.id)}
+                        className="admin-manage-services-delete-button"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
-                )}
+                ))}
               </tbody>
             </table>
           </>
@@ -261,40 +242,34 @@ const ManageServices = ({ onClose }) => {
                 </tr>
               </thead>
               <tbody>
-                {categories.length > 0 ? (
-                  categories.map((category) => (
-                    <tr key={category.id}>
-                      <td>{category.id}</td>
-                      <td>{category.nombre}</td>
-                      <td>{category.descripcion}</td>
-                      <td>
-                        <img
-                          src={category.imagen}
-                          alt={category.nombre}
-                          className="admin-manage-services-table-image"
-                        />
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => openModal(category, true)}
-                          className="admin-manage-services-edit-button"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(category.id)}
-                          className="admin-manage-services-delete-button"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" style={{ textAlign: 'center' }}>No hay categorías disponibles.</td>
+                {categories.map((category) => (
+                  <tr key={category.id}>
+                    <td>{category.id}</td>
+                    <td>{category.nombre}</td>
+                    <td>{category.descripcion}</td>
+                    <td>
+                      <img
+                        src={category.imagen}
+                        alt={category.nombre}
+                        className="admin-manage-services-table-image"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => openModal(category, true)}
+                        className="admin-manage-services-edit-button"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(category.id)}
+                        className="admin-manage-services-delete-button"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
-                )}
+                ))}
               </tbody>
             </table>
           </>
@@ -339,7 +314,7 @@ const ManageServices = ({ onClose }) => {
             />
   
             <label className="admin-manage-services-modal-label" htmlFor="imagen">
-              Imagen
+              Imagen (URL)
             </label>
             <input
               type="file"
@@ -356,7 +331,15 @@ const ManageServices = ({ onClose }) => {
                 ></div>
               </div>
             )}
-
+            {newItem.imagen && (
+              <input
+                type="text"
+                value={newItem.imagen}
+                readOnly
+                className="admin-manage-services-input"
+              />
+            )}
+  
             {isServicesView && (
               <>
                 <label className="admin-manage-services-modal-label" htmlFor="categoria_id">

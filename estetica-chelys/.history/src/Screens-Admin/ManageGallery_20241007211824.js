@@ -26,8 +26,6 @@ const ManageGallery = ({ onClose }) => {
   const [currentItem, setCurrentItem] = useState(null);
   const [newItem, setNewItem] = useState({ foto_antes: '', foto_despues: '', categoria_id: null, nombre: '', descripcion: '', imagenCategoria: '' });
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [fileBefore, setFileBefore] = useState(null); // Estado para almacenar la imagen "foto_antes"
-  const [fileAfter, setFileAfter] = useState(null); // Estado para almacenar la imagen "foto_despues"
 
   useEffect(() => {
     const loadData = async () => {
@@ -59,52 +57,45 @@ const ManageGallery = ({ onClose }) => {
         ? { ...item } 
         : { foto_antes: '', foto_despues: '', categoria_id: null, nombre: '', descripcion: '', imagenCategoria: '' }
     );
-    setFileBefore(null); // Reiniciar la imagen "foto_antes"
-    setFileAfter(null); // Reiniciar la imagen "foto_despues"
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setNewItem({ foto_antes: '', foto_despues: '', categoria_id: null, nombre: '', descripcion: '', imagenCategoria: '' });
     setUploadProgress(0); // Reiniciar el progreso al cerrar el modal
-    setFileBefore(null); // Reiniciar el archivo "foto_antes"
-    setFileAfter(null); // Reiniciar el archivo "foto_despues"
   };
 
-  const handleFileChange = (e, isBefore) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (isBefore) {
-      setFileBefore(file);
-    } else {
-      setFileAfter(file);
-    }
-  };
-
-  const uploadImage = async (file) => {
     const fileRef = ref(storage, `${isGalleryView ? 'galeria' : 'categorias'}/${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
 
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          toast.error('Error al subir la imagen: ' + error.message);
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            toast.success('Imagen cargada con éxito!');
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        // Actualizar el progreso de carga
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        toast.error('Error al subir la imagen: ' + error.message);
+        setUploadProgress(0);
+      },
+      () => {
+        // Obtener URL de descarga una vez completada la carga
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          if (isGalleryView) {
+            setNewItem((prev) => ({ ...prev, foto_antes: downloadURL })); // En galería subir como `foto_antes`
+          } else {
+            setNewItem((prev) => ({ ...prev, imagenCategoria: downloadURL })); // En categoría subir como `imagenCategoria`
+          }
+          toast.success('Imagen cargada con éxito!');
+          setUploadProgress(0); // Reiniciar el progreso después de la carga
+        });
+      }
+    );
   };
 
   const handleChange = (e) => {
@@ -114,37 +105,27 @@ const ManageGallery = ({ onClose }) => {
   const handleSave = async () => {
     try {
       if (isGalleryView) {
-        if (!fileBefore || !fileAfter || !newItem.categoria_id) {
+        if (!newItem.foto_antes || !newItem.foto_despues || !newItem.categoria_id) {
           return toast.error('Todos los campos de la galería son obligatorios.');
         }
+      } else {
+        if (!newItem.nombre || !newItem.descripcion || !newItem.imagenCategoria) {
+          return toast.error('Todos los campos de la categoría son obligatorios.');
+        }
+      }
 
-        // Subir ambas imágenes y obtener sus URLs
-        const fotoAntesUrl = await uploadImage(fileBefore);
-        const fotoDespuesUrl = await uploadImage(fileAfter);
-        newItem.foto_antes = fotoAntesUrl;
-        newItem.foto_despues = fotoDespuesUrl;
-
-        if (isEditing) {
+      if (isEditing) {
+        if (isGalleryView) {
           await updateGaleria(currentItem.id, newItem);
           setGallery(gallery.map(item => (item.id === currentItem.id ? newItem : item)));
         } else {
-          const createdGaleria = await createGaleria(newItem);
-          setGallery([...gallery, createdGaleria]);
-        }
-      } else {
-        if (!newItem.nombre || !newItem.descripcion) {
-          return toast.error('Todos los campos de la categoría son obligatorios.');
-        }
-
-        // Si se sube una nueva imagen de categoría
-        if (fileBefore) {
-          const imagenCategoriaUrl = await uploadImage(fileBefore);
-          newItem.imagenCategoria = imagenCategoriaUrl;
-        }
-
-        if (isEditing) {
           await updateCategoriaGaleria(currentItem.id, newItem);
           setCategories(categories.map(cat => (cat.id === currentItem.id ? newItem : cat)));
+        }
+      } else {
+        if (isGalleryView) {
+          const createdGaleria = await createGaleria(newItem);
+          setGallery([...gallery, createdGaleria]);
         } else {
           const createdCategoria = await createCategoriaGaleria(newItem);
           setCategories([...categories, createdCategoria]);
@@ -256,18 +237,34 @@ const ManageGallery = ({ onClose }) => {
 
             {isGalleryView ? (
               <>
-                <label className="modal-label-GaleriaAdmin" htmlFor="imagenFileAntes">Subir Foto Antes</label>
+                <label className="modal-label-GaleriaAdmin" htmlFor="foto_antes">Foto Antes</label>
                 <input
-                  type="file"
-                  id="imagenFileAntes"
-                  onChange={(e) => handleFileChange(e, true)} // true para foto_antes
+                  type="text"
+                  id="foto_antes"
+                  name="foto_antes"
+                  placeholder="URL de la Foto Antes"
+                  value={newItem.foto_antes}
+                  onChange={handleChange}
                   className="input-GaleriaAdmin"
                 />
-                <label className="modal-label-GaleriaAdmin" htmlFor="imagenFileDespues">Subir Foto Después</label>
+
+                <label className="modal-label-GaleriaAdmin" htmlFor="foto_despues">Foto Después</label>
+                <input
+                  type="text"
+                  id="foto_despues"
+                  name="foto_despues"
+                  placeholder="URL de la Foto Después"
+                  value={newItem.foto_despues}
+                  onChange={handleChange}
+                  className="input-GaleriaAdmin"
+                />
+
+                <label className="modal-label-GaleriaAdmin" htmlFor="imagenFile">Imagen para Foto Antes</label>
                 <input
                   type="file"
-                  id="imagenFileDespues"
-                  onChange={(e) => handleFileChange(e, false)} // false para foto_despues
+                  id="imagenFile"
+                  name="imagenFile"
+                  onChange={handleFileChange}
                   className="input-GaleriaAdmin"
                 />
                 {uploadProgress > 0 && (
@@ -278,6 +275,7 @@ const ManageGallery = ({ onClose }) => {
                     ></div>
                   </div>
                 )}
+
               </>
             ) : (
               <>
@@ -291,6 +289,7 @@ const ManageGallery = ({ onClose }) => {
                   onChange={handleChange}
                   className="input-GaleriaAdmin"
                 />
+
                 <label className="modal-label-GaleriaAdmin" htmlFor="descripcion">Descripción</label>
                 <input
                   type="text"
@@ -301,11 +300,13 @@ const ManageGallery = ({ onClose }) => {
                   onChange={handleChange}
                   className="input-GaleriaAdmin"
                 />
-                <label className="modal-label-GaleriaAdmin" htmlFor="imagenFile">Subir Imagen de la Categoría</label>
+
+                <label className="modal-label-GaleriaAdmin" htmlFor="imagenFile">Imagen de la Categoría</label>
                 <input
                   type="file"
                   id="imagenFile"
-                  onChange={(e) => handleFileChange(e, true)} // usar true o false según tus necesidades
+                  name="imagenFile"
+                  onChange={handleFileChange}
                   className="input-GaleriaAdmin"
                 />
                 {uploadProgress > 0 && (

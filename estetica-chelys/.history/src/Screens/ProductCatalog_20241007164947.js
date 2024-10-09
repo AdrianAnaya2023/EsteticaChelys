@@ -101,7 +101,6 @@ const ProductCatalog = () => {
                 <div key={category.id} className="catalog-card">
                   <img src={category.imagen} alt={category.nombre} />
                   <h3>{category.nombre}</h3>
-                  <p>{category.descripcion}</p>
                   <ViewMoreButton onClick={() => viewMore(category)} />
                 </div>
               ))}

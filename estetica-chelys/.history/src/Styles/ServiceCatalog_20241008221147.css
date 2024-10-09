@@ -49,17 +49,15 @@
   margin-bottom: 15px;
 }
 
-.service-title {
+.service-card-catalog-new h2, .service-card-catalog-new p {
   color: #0c0d0e;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
   text-align: center;
-  font-weight: bold;
-  margin: 10px 0;
 }
 
-.service-description {
+.service-card-catalog-new p {
   font-size: 14px;
-  color: #333;
-  text-align: center;
+  margin-top: 10px;
 }
 
 /* Botones para modificar y eliminar en las categorías de servicios */
@@ -70,7 +68,7 @@
   margin-top: 10px;
 }
 
-.service-card-buttons .edit-button,
+.service-card-buttons .edit-button, 
 .service-card-buttons .delete-button {
   flex: 1 1 auto;
   padding: 5px 10px;
@@ -78,6 +76,24 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.service-card-buttons .edit-button {
+  background-color: #d37b08;
+  color: white;
+}
+
+.service-card-buttons .edit-button:hover {
+  background-color: #dfa221;
+}
+
+.service-card-buttons .delete-button {
+  background-color: #e05a5a;
+  color: white;
+}
+
+.service-card-buttons .delete-button:hover {
+  background-color: #b84040;
 }
 
 .view-more-button-catalog-new {
@@ -164,7 +180,7 @@
   margin-top: 10px;
 }
 
-.subservice-card-buttons .edit-button-sub,
+.subservice-card-buttons .edit-button-sub, 
 .subservice-card-buttons .delete-button-sub {
   flex: 1 1 auto;
   padding: 5px 10px;
@@ -175,7 +191,7 @@
 }
 
 .subservice-card-buttons .edit-button-sub {
-  background-color: #4caf50;
+  background-color: #4CAF50;
   color: white;
 }
 
@@ -191,3 +207,4 @@
 .subservice-card-buttons .delete-button-sub:hover {
   background-color: #b84040;
 }
+

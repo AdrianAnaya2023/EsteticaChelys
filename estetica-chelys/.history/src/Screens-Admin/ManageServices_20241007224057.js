@@ -32,7 +32,7 @@ const ManageServices = ({ onClose }) => {
     nombre: '',
   });
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null); // Estado para almacenar el archivo de imagen
 
   useEffect(() => {
     const loadData = async () => {
@@ -41,10 +41,10 @@ const ManageServices = ({ onClose }) => {
           fetchServicios(),
           fetchCategoriasServicios(),
         ]);
-        console.log('Loaded Services:', loadedServices);
-        console.log('Loaded Categories:', loadedCategories);
-        setServices(loadedServices || []);
-        setCategories(loadedCategories || []);
+        console.log('Servicios cargados:', loadedServices); // Verificar datos de servicios
+        console.log('Categorías cargadas:', loadedCategories); // Verificar datos de categorías
+        setServices(loadedServices);
+        setCategories(loadedCategories);
       } catch (error) {
         toast.error('Error al cargar datos: ' + error.message);
       }
@@ -64,31 +64,24 @@ const ManageServices = ({ onClose }) => {
     setNewItem(
       item || { titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' }
     );
-    setFile(null);
+    setFile(null); // Reiniciar el archivo de imagen
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setUploadProgress(0);
     setNewItem({ titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' });
-    setFile(null);
+    setFile(null); // Reiniciar el archivo
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
-    setFile(selectedFile);
-
-    try {
-      const imagenUrl = await uploadImage(selectedFile);
-      setNewItem(prevItem => ({ ...prevItem, imagen: imagenUrl }));
-    } catch (error) {
-      toast.error('Error al subir la imagen: ' + error.message);
-    }
+    setFile(selectedFile); // Guardar el archivo seleccionado
   };
 
-  const uploadImage = (file) => {
+  const uploadImage = async () => {
     const fileRef = ref(storage, `${isServicesView ? 'servicios' : 'categorias'}/${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
 
@@ -100,10 +93,12 @@ const ManageServices = ({ onClose }) => {
           setUploadProgress(progress);
         },
         (error) => {
+          toast.error('Error al subir la imagen: ' + error.message);
           reject(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            toast.success('Imagen cargada con éxito!');
             resolve(downloadURL);
           });
         }
@@ -118,9 +113,14 @@ const ManageServices = ({ onClose }) => {
   const handleSave = async () => {
     try {
       if (isServicesView) {
-        if (!newItem.titulo || !newItem.descripcion || !newItem.categoria_id || !newItem.imagen) {
+        // Validaciones para servicios
+        if (!newItem.titulo || !newItem.descripcion || !newItem.categoria_id || !file) {
           return toast.error('Todos los campos del servicio son obligatorios.');
         }
+
+        // Subir la imagen y obtener su URL
+        const imagenUrl = await uploadImage();
+        newItem.imagen = imagenUrl;
 
         if (isEditing) {
           const updatedService = await updateServicio(currentItem.id, newItem);
@@ -132,8 +132,15 @@ const ManageServices = ({ onClose }) => {
           toast.success('Servicio creado con éxito');
         }
       } else {
+        // Validaciones para categorías
         if (!newItem.nombre || !newItem.descripcion) {
           return toast.error('Todos los campos de la categoría son obligatorios.');
+        }
+
+        // Subir la imagen de la categoría si se ha seleccionado
+        if (file) {
+          const imagenUrl = await uploadImage();
+          newItem.imagen = imagenUrl;
         }
 
         if (isEditing) {
@@ -391,3 +398,4 @@ const ManageServices = ({ onClose }) => {
 };
 
 export default ManageServices;
+

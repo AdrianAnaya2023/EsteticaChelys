@@ -4,19 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../EstilosAdmin/ManageBeautyTips.css'; // Asegúrate de crear y usar los estilos correctos
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig.js'; // Importa la configuración de Firebase Storage
-import {
-  fetchCategoriasConsejos,
-  createCategoriaConsejo,
-  updateCategoriaConsejo,
-  deleteCategoriaConsejo,
-} from './categoriaConsejosAPI'; // Importar funciones de categorías
-
-import {
-  fetchConsejos,
-  createConsejo,
-  updateConsejo,
-  deleteConsejo,
-} from './consejosAPI'; // Importar funciones de consejos
 
 const ManageBeautyTips = ({ onClose }) => {
   const [categories, setCategories] = useState([]);
@@ -35,19 +22,19 @@ const ManageBeautyTips = ({ onClose }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(null); // Estado para almacenar el archivo de imagen
 
-  // Cargar datos iniciales de consejos y categorías
+  // Simulación de datos de categorías de consejos y consejos
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [loadedCategories, loadedBeautyTips] = await Promise.all([
-          fetchCategoriasConsejos(),
-          fetchConsejos(),
-        ]);
-        setCategories(loadedCategories);
-        setBeautyTips(loadedBeautyTips);
-      } catch (error) {
-        toast.error('Error al cargar datos: ' + error.message);
-      }
+    // Cargar datos iniciales (simulados por ahora)
+    const loadData = () => {
+      setCategories([
+        { id: 1, nombre: 'Cuidados Faciales', descripcion: 'Consejos para mantener una piel saludable', imagen: 'https://via.placeholder.com/100' },
+        { id: 2, nombre: 'Maquillaje', descripcion: 'Consejos para aplicar maquillaje', imagen: 'https://via.placeholder.com/100' },
+      ]);
+
+      setBeautyTips([
+        { id: 1, titulo: 'Hidratación Facial', imagen: 'https://via.placeholder.com/100', categoria_id: 1, descripcion: 'Hidratar la piel diariamente con una crema adecuada.' },
+        { id: 2, titulo: 'Maquillaje Natural', imagen: 'https://via.placeholder.com/100', categoria_id: 2, descripcion: 'Consejos para un maquillaje ligero y natural.' },
+      ]);
     };
     loadData();
   }, []);
@@ -124,14 +111,12 @@ const ManageBeautyTips = ({ onClose }) => {
             const imagenUrl = await uploadImage();
             newItem.imagen = imagenUrl;
           }
-          await updateConsejo(currentItem.id, newItem);
           setBeautyTips(beautyTips.map(tip => tip.id === currentItem.id ? newItem : tip));
           toast.success('Consejo actualizado con éxito');
         } else {
           if (!newItem.nombre || !newItem.descripcion) {
             return toast.error('Todos los campos de la categoría son obligatorios.');
           }
-          await updateCategoriaConsejo(currentItem.id, newItem);
           setCategories(categories.map(cat => cat.id === currentItem.id ? newItem : cat));
           toast.success('Categoría actualizada con éxito');
         }
@@ -143,15 +128,13 @@ const ManageBeautyTips = ({ onClose }) => {
           }
           const imagenUrl = await uploadImage();
           newItem.imagen = imagenUrl;
-          const createdConsejo = await createConsejo(newItem);
-          setBeautyTips([...beautyTips, { ...createdConsejo }]);
+          setBeautyTips([...beautyTips, { ...newItem, id: beautyTips.length + 1 }]);
           toast.success('Consejo creado con éxito');
         } else {
           if (!newItem.nombre || !newItem.descripcion) {
             return toast.error('Todos los campos de la categoría son obligatorios.');
           }
-          const createdCategoria = await createCategoriaConsejo(newItem);
-          setCategories([...categories, { ...createdCategoria }]);
+          setCategories([...categories, { ...newItem, id: categories.length + 1 }]);
           toast.success('Categoría creada con éxito');
         }
       }
@@ -161,25 +144,18 @@ const ManageBeautyTips = ({ onClose }) => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      if (isBeautyTipsView) {
-        await deleteConsejo(id);
-        setBeautyTips(beautyTips.filter(tip => tip.id !== id));
-        toast.success('Consejo eliminado con éxito');
-      } else {
-        await deleteCategoriaConsejo(id);
-        setCategories(categories.filter(cat => cat.id !== id));
-        toast.success('Categoría eliminada con éxito');
-      }
-    } catch (error) {
-      toast.error('Error al eliminar: ' + error.message);
+  const handleDelete = (id) => {
+    if (isBeautyTipsView) {
+      setBeautyTips(beautyTips.filter(tip => tip.id !== id));
+      toast.success('Consejo eliminado con éxito');
+    } else {
+      setCategories(categories.filter(cat => cat.id !== id));
+      toast.success('Categoría eliminada con éxito');
     }
   };
 
   return (
     <div className="manage-beauty-tips-container-Consejitos">
-      <ToastContainer position="top-right" autoClose={5000} />
       <button onClick={onClose} className="close-button-Consejitos">Cerrar</button>
       <h1 className="title-Consejitos"> {isBeautyTipsView ? 'Consejos de Belleza' : 'Categorías de Consejos'}</h1>
 

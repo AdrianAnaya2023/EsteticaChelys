@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ProductCatalog.css';
-import { fetchCategoriasProductos } from '../Screens-Admin/categoriaProductosAPI';
-import { fetchProductosPorCategoria } from '../Screens-Admin/productosAPI'; // Importamos la nueva función para obtener productos por categoría
+import { fetchCategoriasProductos } from '..Screens-Admin/categoriaProductosAPI';
+import { fetchProductosPorCategoria } from '..Screens-Admin/productosAPI'; // Importamos la nueva función para obtener productos por categoría
 
 const ProductCatalog = () => {
   const [categories, setCategories] = useState([]);
@@ -101,7 +101,6 @@ const ProductCatalog = () => {
                 <div key={category.id} className="catalog-card">
                   <img src={category.imagen} alt={category.nombre} />
                   <h3>{category.nombre}</h3>
-                  <p>{category.descripcion}</p>
                   <ViewMoreButton onClick={() => viewMore(category)} />
                 </div>
               ))}

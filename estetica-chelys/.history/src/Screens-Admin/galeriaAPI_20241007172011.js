@@ -6,23 +6,33 @@ const axiosInstance = axios.create({
   timeout: 10000, // Tiempo de espera máximo en milisegundos (10 segundos)
 });
 
-// Función para obtener todas las entradas de galería
+// Función para obtener todas las entradas de la galería
 export const fetchGalerias = async () => {
   try {
     const response = await axiosInstance.get('/');
     return response.data;
   } catch (error) {
-    handleAxiosError(error, 'Error al obtener las entradas de galería');
+    handleAxiosError(error, 'Error al obtener las galerías');
   }
 };
 
-// Función para obtener una entrada de galería por ID
+// Función para obtener una entrada de la galería por ID
 export const fetchGaleriaById = async (id) => {
   try {
     const response = await axiosInstance.get(`/${id}`);
     return response.data;
   } catch (error) {
-    handleAxiosError(error, 'Error al obtener la entrada de galería');
+    handleAxiosError(error, 'Error al obtener la galería');
+  }
+};
+
+// Función para obtener las entradas de galería por categoría
+export const fetchGaleriasByCategoria = async (categoriaId) => {
+  try {
+    const response = await axiosInstance.get(`/categoria/${categoriaId}`);
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, 'Error al obtener las galerías por categoría');
   }
 };
 
@@ -32,7 +42,7 @@ export const createGaleria = async (galeriaData) => {
     const response = await axiosInstance.post('/', galeriaData);
     return response.data;
   } catch (error) {
-    handleAxiosError(error, 'Error al crear la entrada de galería');
+    handleAxiosError(error, 'Error al crear la galería');
   }
 };
 
@@ -42,27 +52,17 @@ export const updateGaleria = async (id, galeriaData) => {
     const response = await axiosInstance.put(`/${id}`, galeriaData);
     return response.data;
   } catch (error) {
-    handleAxiosError(error, 'Error al actualizar la entrada de galería');
+    handleAxiosError(error, 'Error al actualizar la galería');
   }
 };
 
-// Función para eliminar una entrada de galería
+// Función para eliminar una entrada de la galería
 export const deleteGaleria = async (id) => {
   try {
     await axiosInstance.delete(`/${id}`);
-    return 'Entrada de galería eliminada correctamente';
+    return 'Galería eliminada correctamente';
   } catch (error) {
-    handleAxiosError(error, 'Error al eliminar la entrada de galería');
-  }
-};
-
-// Función para obtener entradas de galería por categoría
-export const fetchGaleriasPorCategoria = async (categoriaId) => {
-  try {
-    const response = await axiosInstance.get(`/categoria/${categoriaId}`);
-    return response.data;
-  } catch (error) {
-    handleAxiosError(error, 'Error al obtener las entradas de galería por categoría');
+    handleAxiosError(error, 'Error al eliminar la galería');
   }
 };
 

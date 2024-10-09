@@ -41,10 +41,8 @@ const ManageServices = ({ onClose }) => {
           fetchServicios(),
           fetchCategoriasServicios(),
         ]);
-        console.log('Loaded Services:', loadedServices);
-        console.log('Loaded Categories:', loadedCategories);
-        setServices(loadedServices || []);
-        setCategories(loadedCategories || []);
+        setServices(loadedServices);
+        setCategories(loadedCategories);
       } catch (error) {
         toast.error('Error al cargar datos: ' + error.message);
       }
@@ -64,25 +62,26 @@ const ManageServices = ({ onClose }) => {
     setNewItem(
       item || { titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' }
     );
-    setFile(null);
+    setFile(null); // Reiniciar el archivo de imagen
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setUploadProgress(0);
     setNewItem({ titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' });
-    setFile(null);
+    setFile(null); // Reiniciar el archivo
   };
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
-    setFile(selectedFile);
+    setFile(selectedFile); // Guardar el archivo seleccionado
 
+    // Subir la imagen y obtener su URL
     try {
       const imagenUrl = await uploadImage(selectedFile);
-      setNewItem(prevItem => ({ ...prevItem, imagen: imagenUrl }));
+      setNewItem(prevItem => ({ ...prevItem, imagen: imagenUrl })); // Actualizar el estado con la URL de la imagen
     } catch (error) {
       toast.error('Error al subir la imagen: ' + error.message);
     }
@@ -104,7 +103,7 @@ const ManageServices = ({ onClose }) => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
+            resolve(downloadURL); // Devuelve el URL de la imagen
           });
         }
       );
@@ -118,6 +117,7 @@ const ManageServices = ({ onClose }) => {
   const handleSave = async () => {
     try {
       if (isServicesView) {
+        // Validaciones para servicios
         if (!newItem.titulo || !newItem.descripcion || !newItem.categoria_id || !newItem.imagen) {
           return toast.error('Todos los campos del servicio son obligatorios.');
         }
@@ -132,6 +132,7 @@ const ManageServices = ({ onClose }) => {
           toast.success('Servicio creado con éxito');
         }
       } else {
+        // Validaciones para categorías
         if (!newItem.nombre || !newItem.descripcion) {
           return toast.error('Todos los campos de la categoría son obligatorios.');
         }

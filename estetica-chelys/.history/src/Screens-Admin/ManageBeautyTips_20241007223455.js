@@ -9,7 +9,7 @@ import {
   createCategoriaConsejo,
   updateCategoriaConsejo,
   deleteCategoriaConsejo,
-} from './categoriaConsejosAPI'; // Importar funciones de categorías
+} from './categoriasConsejosAPI'; // Importar funciones de categorías
 
 import {
   fetchConsejos,

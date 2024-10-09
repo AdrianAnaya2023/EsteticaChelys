@@ -2,9 +2,15 @@ import axios from 'axios';
 
 // Configura la URL base y el timeout para todas las peticiones al endpoint de servicios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api/servicios', // Asegúrate de que esta URL sea correcta
+  baseURL: `http://localhost:3000/api/servicios`,
   timeout: 10000, // Tiempo de espera máximo en milisegundos (10 segundos)
 });
+
+// Función para validar los datos del servicio
+const isValidServicioData = (servicioData) => {
+  const { titulo, descripcion, imagen, categoria_id } = servicioData;
+  return titulo && descripcion && imagen && typeof categoria_id === 'bigint';
+}
 
 // Función para obtener todos los servicios
 export const fetchServicios = async () => {
@@ -28,6 +34,9 @@ export const fetchServicioById = async (id) => {
 
 // Función para crear un nuevo servicio
 export const createServicio = async (servicioData) => {
+  if (!isValidServicioData(servicioData)) {
+    throw new Error('Datos del servicio inválidos');
+  }
   try {
     const response = await axiosInstance.post('/', servicioData);
     return response.data;
@@ -38,6 +47,9 @@ export const createServicio = async (servicioData) => {
 
 // Función para actualizar un servicio existente
 export const updateServicio = async (id, servicioData) => {
+  if (!isValidServicioData(servicioData)) {
+    throw new Error('Datos del servicio inválidos para actualización');
+  }
   try {
     const response = await axiosInstance.put(`/${id}`, servicioData);
     return response.data;
@@ -56,27 +68,17 @@ export const deleteServicio = async (id) => {
   }
 };
 
-// Función para obtener servicios por categoría
-export const fetchServiciosPorCategoria = async (categoriaId) => {
-  try {
-    const response = await axiosInstance.get(`/categoria/${categoriaId}`);
-    return response.data;
-  } catch (error) {
-    handleAxiosError(error, 'Error al obtener los servicios por categoría');
-  }
-};
-
-
 // Manejo de errores comunes de Axios
 const handleAxiosError = (error, defaultMessage) => {
   if (error.response) {
-    console.error('Error Response:', error.response); // Para depuración
+    console.error("Response data:", error.response.data);
+    console.error("Response status:", error.response.status);
     throw new Error(`Error del servidor: ${error.response.data.message || defaultMessage}`);
   } else if (error.request) {
-    console.error('Error Request:', error.request); // Para depuración
+    console.error("No response:", error.request);
     throw new Error('No se recibió respuesta del servidor. Verifique su conexión.');
   } else {
-    console.error('Error:', error.message); // Para depuración
+    console.error("Error setting up request:", error.message);
     throw new Error(`Error en la solicitud: ${error.message}`);
   }
 };

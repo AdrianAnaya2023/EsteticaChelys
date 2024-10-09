@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchCategoriasServicios } from '../Screens-Admin/categoriaServiciosAPI';
-import { fetchServicios } from '../Screens-Admin/serviciosAPI'; // Cambia esto para importar todos los servicios
+import { fetchServiciosPorCategoria } from '../Screens-Admin/serviciosAPI';
 import ViewMoreButton from '../Components/ViewMoreButton';
 import '../Styles/ServiceCatalog.css';
 
@@ -22,30 +22,20 @@ const ServiceCatalog = () => {
     loadCategories();
   }, []);
 
-  // Nueva función para cargar todos los servicios
-  const loadAllServices = async () => {
+  const handleCategoryClick = async (category) => {
+    setCurrentCategory(category);
     try {
-      const loadedServices = await fetchServicios();
+      const loadedServices = await fetchServiciosPorCategoria(category.id);
       setServices(loadedServices || []);
     } catch (error) {
       console.error('Error al cargar servicios:', error.message);
     }
-  };
-
-  const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
-    loadAllServices(); // Cargar todos los servicios al seleccionar una categoría
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const goBack = () => {
     setCurrentCategory(null);
     setServices([]); // Limpiar servicios al regresar
-    serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const viewMoreServices = () => {
-    loadAllServices(); // Cargar todos los servicios al hacer clic en "Ver"
     serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -56,14 +46,18 @@ const ServiceCatalog = () => {
           <h1>{currentCategory.nombre}</h1>
           <p>{currentCategory.descripcion}</p>
           <div className="services-grid-catalog-new">
-            {services.map(service => (
-              <div key={service.id} className="service-card-catalog-new">
-                <img src={service.imagen} alt={service.titulo} className="service-image-catalog-new" />
-                <h2 className="service-title">{service.titulo}</h2>
-                <p className="service-description">{service.descripcion}</p>
-                <ViewMoreButton onClick={viewMoreServices} />
-              </div>
-            ))}
+            {services.length > 0 ? (
+              services.map(service => (
+                <div key={service.id} className="service-card-catalog-new">
+                  <img src={service.imagen} alt={service.titulo} className="service-image-catalog-new" />
+                  <h2 className="service-title">{service.titulo}</h2>
+                  <p className="service-description">{service.descripcion}</p>
+                  <ViewMoreButton onClick={() => {/* Implementar lógica para ver más detalles si es necesario */}} />
+                </div>
+              ))
+            ) : (
+              <p>No hay servicios disponibles en esta categoría.</p>
+            )}
           </div>
           <button className="catalog-back-button-new" onClick={goBack}>Regresar</button>
         </div>
