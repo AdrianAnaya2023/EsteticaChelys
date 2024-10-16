@@ -1,0 +1,128 @@
+.survey-container-encuesta {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #f0efd0;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 2000;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-content-encuesta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+}
+
+.overlay-encuesta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1999;
+  display: none;
+}
+
+.overlay-encuesta.visible-encuesta {
+  display: block;
+}
+
+.survey-container-encuesta.visible-encuesta {
+  transform: translateX(0);
+}
+
+.cerrar-button-encuesta {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgb(112, 112, 90);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #b96d6d;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.cerrar-button-encuesta:hover {
+  color: #666;
+}
+
+/* Espaciado entre preguntas */
+.question-container-encuesta {
+  margin-bottom: 15px;
+}
+
+.encuesta-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.encuesta-description {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Estilos específicos para los labels y selects en la encuesta */
+.encuesta-label {
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.encuesta-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Botón de enviar */
+.submit-button-encuesta {
+  padding: 10px;
+  background-color: #4a4743;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.submit-button-encuesta:hover {
+  background-color: #3b3835;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .survey-container-encuesta {
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    padding: 15px;
+    border-radius: 0;
+  }
+
+  .form-content-encuesta {
+    padding: 10px;
+  }
+
+  .cerrar-button-encuesta {
+    top: 5px;
+    right: 5px;
+  }
+}

@@ -1,0 +1,113 @@
+.survey-container-encuesta {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px; /* Respetar el ancho */
+  height: 100%; /* Respetar la altura */
+  background-color: #f0efd0; /* Fondo gris medio */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Permite desplazamiento si el contenido es demasiado */
+  z-index: 2000; /* Asegúrate de que esto sea mayor que el z-index de otros elementos */
+  color: #000; /* Cambiar el color del texto a negro */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el contenido esté espaciado y el botón quede al final */
+}
+
+.form-content-encuesta {
+  flex: 1; /* Hace que esta sección ocupe todo el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+}
+
+.overlay-encuesta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1999; /* Menor que el survey pero suficiente para cubrir otros contenidos */
+  display: none; /* Oculto por defecto */
+}
+
+.overlay-encuesta.visible-encuesta {
+  display: block; /* Se muestra cuando la encuesta es visible */
+}
+
+.survey-container-encuesta.visible-encuesta {
+  transform: translateX(0);
+}
+
+.cerrar-button-encuesta {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgb(112, 112, 90);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #b96d6d;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.cerrar-button-encuesta:hover {
+  color: #666; /* Color al pasar el mouse */
+}
+
+label, select, option, p {
+  color: #000 !important; /* Forzar que todos estos elementos sean de color negro */
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000; /* Asegura que el texto dentro del select sea negro */
+}
+
+select option {
+  color: #000; /* Asegura que las opciones del menú desplegable sean negras */
+}
+
+.submit-button-encuesta {
+  padding: 10px;
+  background-color: #4a4743;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: auto; /* Empuja el botón al final del contenedor */
+}
+
+.submit-button-encuesta:hover {
+  background-color: #3b3835;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .survey-container-encuesta {
+    width: 100%; /* Abarca todo el ancho de la pantalla */
+    height: 100vh; /* Abarca toda la altura visible */
+    left: 0; /* Posiciona al inicio de la pantalla */
+    padding: 15px; /* Reduce el padding para pantallas pequeñas */
+    border-radius: 0; /* Quita los bordes redondeados para que se vea como un panel completo */
+  }
+
+  .form-content-encuesta {
+    padding: 10px; /* Ajusta el padding interno del contenedor de las preguntas */
+  }
+
+  .cerrar-button-encuesta {
+    top: 5px; 
+    right: 5px;
+  }
+}

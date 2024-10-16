@@ -1,0 +1,20 @@
+.survey-container-custom {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px; /* Respetar el ancho */
+  height: 100%; /* Respetar la altura */
+  background-color: #f0efd0; /* Fondo gris medio */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Permite desplazamiento si el contenido es demasiado */
+  z-index: 2000; /* Asegúrate de que esto sea mayor que el z-index de otros elementos */
+  color: #000; /* Cambiar el color del texto a negro */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el contenido esté espaciado y el botón quede al final */
+}
+
