@@ -30,11 +30,9 @@ const ManageGallery = ({ onClose }) => {
     categoria_id: null,
     nombre: '',
     descripcion: '',
-    imagen: '', // Ajustado para coincidir con la API
+    imagen: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Cargar las galerías y las categorías cuando el componente se monte
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -51,13 +49,11 @@ const ManageGallery = ({ onClose }) => {
     loadData();
   }, []);
 
-  // Obtener el nombre de la categoría
   const getCategoryName = (categoryId) => {
     const category = categories.find((cat) => cat.id === categoryId);
     return category ? category.nombre : 'Sin categoría';
   };
 
-  // Abrir modal para agregar o editar
   const openModal = (item = null, isEditing = false) => {
     setIsModalOpen(true);
     setIsEditing(isEditing);
@@ -69,14 +65,11 @@ const ManageGallery = ({ onClose }) => {
     );
   };
 
-  // Cerrar el modal
   const closeModal = () => {
     setIsModalOpen(false);
     setNewItem({ foto_antes: '', foto_despues: '', categoria_id: null, nombre: '', descripcion: '', imagen: '' });
-    setUploadProgress(0); // Reiniciar el progreso al cerrar el modal
   };
 
-  // Función para subir archivos a Firebase y retornar la URL
   const uploadFileToFirebase = async (file, path) => {
     return new Promise((resolve, reject) => {
       const fileRef = ref(storage, path);
@@ -84,10 +77,7 @@ const ManageGallery = ({ onClose }) => {
 
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
+        null,
         (error) => {
           toast.error('Error al subir la imagen: ' + error.message);
           reject(error);
@@ -100,17 +90,16 @@ const ManageGallery = ({ onClose }) => {
     });
   };
 
-  // Manejar la carga de la imagen y obtener la URL
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
 
     try {
-      const filePath = `categorias/${file.name}`;
+      const filePath = `galeria/${file.name}`;
       const imageUrl = await uploadFileToFirebase(file, filePath);
       setNewItem((prev) => ({
         ...prev,
-        imagen: imageUrl, // Actualizamos el campo 'imagen'
+        [field]: imageUrl,
       }));
       toast.success('Imagen cargada correctamente');
     } catch (error) {
@@ -118,7 +107,6 @@ const ManageGallery = ({ onClose }) => {
     }
   };
 
-  // Función para manejar los cambios en los campos de entrada (input)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewItem((prev) => ({
@@ -127,46 +115,64 @@ const ManageGallery = ({ onClose }) => {
     }));
   };
 
-  // Guardar los cambios (crear o editar)
   const handleSave = async () => {
+    if (!isEditing) {
+      if (isGalleryView) {
+        // Validaciones para galería
+        if (!newItem.foto_antes || !newItem.foto_despues || !newItem.categoria_id) {
+          toast.error('Todos los campos de galería son obligatorios');
+          return;
+        }
+      } else {
+        // Validaciones para categoría
+        if (!newItem.nombre || !newItem.descripcion || !newItem.imagen) {
+          toast.error('Todos los campos de la categoría son obligatorios');
+          return;
+        }
+      }
+    }
+
     try {
       if (isGalleryView) {
-        // Guardar en la galería
+        // Guardar galería
         if (isEditing) {
           await updateGaleria(currentItem.id, { ...newItem });
           setGallery(gallery.map((item) => (item.id === currentItem.id ? { ...currentItem, ...newItem } : item)));
+          toast.success('Imagen actualizada con éxito');
         } else {
           const createdGaleria = await createGaleria(newItem);
           setGallery([...gallery, createdGaleria]);
+          toast.success('Imagen agregada con éxito');
         }
       } else {
-        // Guardar en las categorías
+        // Guardar categoría
         if (isEditing) {
           await updateCategoriaGaleria(currentItem.id, { ...newItem });
           setCategories(categories.map((cat) => (cat.id === currentItem.id ? { ...newItem } : cat)));
+          toast.success('Categoría actualizada con éxito'); // Agregar notificación al editar categoría
         } else {
           const createdCategoria = await createCategoriaGaleria(newItem);
           setCategories([...categories, createdCategoria]);
+          toast.success('Categoría creada con éxito');
         }
       }
       closeModal();
-      toast.success('Guardado con éxito');
     } catch (error) {
       toast.error('Error al guardar: ' + error.message);
     }
   };
 
-  // Eliminar elementos
   const handleDelete = async (id) => {
     try {
       if (isGalleryView) {
         await deleteGaleria(id);
         setGallery(gallery.filter((item) => item.id !== id));
+        toast.success('Eliminado con éxito');
       } else {
         await deleteCategoriaGaleria(id);
         setCategories(categories.filter((cat) => cat.id !== id));
+        toast.success('Eliminado con éxito');
       }
-      toast.success('Eliminado con éxito');
     } catch (error) {
       toast.error('Error al eliminar: ' + error.message);
     }
@@ -260,24 +266,29 @@ const ManageGallery = ({ onClose }) => {
                 <input
                   type="file"
                   id="imagenFileAntes"
-                  onChange={(e) => handleFileChange(e, false)}
+                  onChange={(e) => handleFileChange(e, 'foto_antes')}
                   className="input-GaleriaAdmin"
                 />
                 <label className="modal-label-GaleriaAdmin" htmlFor="imagenFileDespues">Subir Foto Después</label>
                 <input
                   type="file"
                   id="imagenFileDespues"
-                  onChange={(e) => handleFileChange(e, false)}
+                  onChange={(e) => handleFileChange(e, 'foto_despues')}
                   className="input-GaleriaAdmin"
                 />
-                {uploadProgress > 0 && (
-                  <div className="progress-bar">
-                    <div
-                      className="progress-bar-fill"
-                      style={{ width: `${uploadProgress}%` }}
-                    ></div>
-                  </div>
-                )}
+                <label className="modal-label-GaleriaAdmin" htmlFor="categoria_id">Categoría</label>
+                <select
+                  id="categoria_id"
+                  name="categoria_id"
+                  value={newItem.categoria_id}
+                  onChange={handleChange}
+                  className="input-GaleriaAdmin"
+                >
+                  <option value="">Selecciona una Categoría</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                  ))}
+                </select>
               </>
             ) : (
               <>
@@ -305,33 +316,10 @@ const ManageGallery = ({ onClose }) => {
                 <input
                   type="file"
                   id="imagenFile"
-                  onChange={handleFileChange}
+                  onChange={(e) => handleFileChange(e, 'imagen')}
                   className="input-GaleriaAdmin"
                 />
-                {uploadProgress > 0 && (
-                  <div className="progress-bar">
-                    <div
-                      className="progress-bar-fill"
-                      style={{ width: `${uploadProgress}%` }}
-                    ></div>
-                  </div>
-                )}
               </>
-            )}
-
-            {isGalleryView && (
-              <select
-                id="categoria_id"
-                name="categoria_id"
-                value={newItem.categoria_id}
-                onChange={handleChange}
-                className="input-GaleriaAdmin"
-              >
-                <option value="">Selecciona una Categoría</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>{cat.nombre}</option>
-                ))}
-              </select>
             )}
 
             <div className="modal-buttons-GaleriaAdmin">

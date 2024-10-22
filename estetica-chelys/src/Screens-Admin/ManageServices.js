@@ -31,7 +31,6 @@ const ManageServices = ({ onClose }) => {
     categoria_id: '',
     nombre: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(null);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const ManageServices = ({ onClose }) => {
         setServices(loadedServices || []);
         setCategories(loadedCategories || []);
       } catch (error) {
-        toast.error('Error al cargar datos: ' + error.message);
+        console.error('Error al cargar datos: ' + error.message);
       }
     };
     loadData();
@@ -67,7 +66,6 @@ const ManageServices = ({ onClose }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setUploadProgress(0);
     setNewItem({ titulo: '', descripcion: '', imagen: '', categoria_id: '', nombre: '' });
     setFile(null);
   };
@@ -81,8 +79,9 @@ const ManageServices = ({ onClose }) => {
     try {
       const imagenUrl = await uploadImage(selectedFile);
       setNewItem(prevItem => ({ ...prevItem, imagen: imagenUrl }));
+      toast.success('Imagen cargada con éxito');
     } catch (error) {
-      toast.error('Error al subir la imagen: ' + error.message);
+      console.error('Error al subir la imagen: ' + error.message);
     }
   };
 
@@ -93,10 +92,7 @@ const ManageServices = ({ onClose }) => {
     return new Promise((resolve, reject) => {
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
+        null, // No manejar progreso
         (error) => {
           reject(error);
         },
@@ -114,61 +110,75 @@ const ManageServices = ({ onClose }) => {
   };
 
   const handleSave = async () => {
+    // Validaciones solo para crear un nuevo servicio o categoría
+    if (!isEditing) {
+      if (isServicesView && !newItem.titulo) {
+        toast.error('El título del servicio es obligatorio');
+        return;
+      }
+      if (!isServicesView && !newItem.nombre) {
+        toast.error('El nombre de la categoría es obligatorio');
+        return;
+      }
+      if (!newItem.descripcion) {
+        toast.error('La descripción es obligatoria');
+        return;
+      }
+      if (!newItem.imagen) {
+        toast.error('La imagen es obligatoria');
+        return;
+      }
+      if (isServicesView && !newItem.categoria_id) {
+        toast.error('Debes seleccionar una categoría para el servicio');
+        return;
+      }
+    }
+
     try {
       if (isEditing) {
         if (isServicesView) {
-          // Actualizar servicio
           const updatedService = await updateServicio(currentItem.id, newItem);
           setServices(
-            services.map((serv) => 
+            services.map((serv) =>
               serv.id === currentItem.id ? updatedService : serv
             )
           );
-          toast.success('Servicio actualizado con éxito');
         } else {
-          // Actualizar categoría de servicio
           const updatedCategoria = await updateCategoriaServicio(currentItem.id, newItem);
           setCategories(
             categories.map((cat) =>
               cat.id === currentItem.id ? updatedCategoria : cat
             )
           );
-          toast.success('Categoría actualizada con éxito');
         }
       } else {
         if (isServicesView) {
-          // Crear nuevo servicio
           const createdService = await createServicio(newItem);
           setServices([...services, createdService]);
-          toast.success('Servicio creado con éxito');
         } else {
-          // Crear nueva categoría de servicio
           const createdCategoria = await createCategoriaServicio(newItem);
           setCategories([...categories, createdCategoria]);
-          toast.success('Categoría creada con éxito');
         }
       }
+      toast.success(isEditing ? 'Actualizado con éxito' : 'Creado con éxito');
       closeModal();
     } catch (error) {
-      toast.error('Error al guardar: ' + error.message);
+      console.error('Error al guardar: ' + error.message);
     }
   };
-  
-  
 
   const handleDelete = async (id) => {
     try {
       if (isServicesView) {
         await deleteServicio(id);
         setServices(services.filter(serv => serv.id !== id));
-        toast.success('Servicio eliminado con éxito');
       } else {
         await deleteCategoriaServicio(id);
         setCategories(categories.filter(cat => cat.id !== id));
-        toast.success('Categoría eliminada con éxito');
       }
+      toast.success('Eliminado con éxito');
     } catch (error) {
-      toast.error('Error al eliminar: ' + error.message);
+      console.error('Error al eliminar: ' + error.message);
     }
   };
 
@@ -352,14 +362,6 @@ const ManageServices = ({ onClose }) => {
               onChange={handleFileChange}
               className="admin-manage-services-input-file"
             />
-            {uploadProgress > 0 && (
-              <div className="progress-bar">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
 
             {isServicesView && (
               <>

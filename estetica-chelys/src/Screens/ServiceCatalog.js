@@ -25,15 +25,22 @@ const ServiceCatalog = () => {
   }, []);
 
   const handleCategoryClick = async (category) => {
-    setCurrentCategory(category);
-    setCurrentPage(0); // Reiniciar paginación al seleccionar una categoría
     try {
       const loadedServices = await fetchServiciosPorCategoria(category.id);
-      setServices(loadedServices || []);
+
+      // Si no hay servicios, no avanzar
+      if (!loadedServices || loadedServices.length === 0) {
+        console.log('Esta categoría no tiene servicios disponibles.');
+        return;
+      }
+
+      setCurrentCategory(category);
+      setServices(loadedServices);
+      setCurrentPage(0); // Reiniciar paginación al seleccionar una categoría
+      serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       console.error('Error al cargar servicios:', error.message);
     }
-    serviceSectionRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const goBack = () => {
@@ -56,7 +63,8 @@ const ServiceCatalog = () => {
     <div ref={serviceSectionRef} className="service-catalog-container-new">
       {currentCategory ? (
         <div>
-          <h1>{currentCategory.nombre}</h1> {/* Solo muestra el nombre de la categoría */}
+          <h1 className="selected-category-title">{currentCategory.nombre}</h1>
+
           <div className="services-grid-catalog-new">
             {services
               .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
@@ -80,7 +88,7 @@ const ServiceCatalog = () => {
         </div>
       ) : (
         <div>
-          <h1>Catálogo de Servicios</h1>
+          <h1 className="service-catalog-title">Catálogo de Servicios</h1>
           <div className="services-grid-catalog-new">
             {categories
               .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)

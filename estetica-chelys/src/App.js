@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import Navbar from './Components/Navbar';
 import AdminNavbar from './Components/AdminNavbar';
 import HomePage from './Screens/HomePage';
@@ -10,8 +11,7 @@ import SatisfactionSurvey from './Screens/SatisfactionSurvey';
 import SpecialOffers from './Screens/SpecialOffers';
 import FooterPage from './Screens/FooterPage';
 import Login from './Screens/Login';
-
-
+import FloatingHelpIcon from './Components/FloatingHelpIcon';
 
 // Importar los componentes de administración
 import ManageServices from './Screens-Admin/ManageServices';
@@ -22,26 +22,61 @@ import ManageSurveysPreguntita from './Screens-Admin/ManageSurveysPreguntita';
 import ManageProducts from './Screens-Admin/ManageProducts';
 import ManagePromosPromosAdmin from './Screens-Admin/ManagePromosPromosAdmin';
 import ManageUsersAdmin from './Screens-Admin/ManageUsers'; // Componente para administrar usuarios
-import FloatingHelpIcon from './Components/FloatingHelpIcon';
+
 import './App.css';
 
 function App() {
   const [isSurveyVisible, setIsSurveyVisible] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoginVisible, setIsLoginVisible] = useState(false); // Controlar la visibilidad del login
+  const [isLoginVisible, setIsLoginVisible] = useState(false);
+  const [token, setToken] = useState(null);
 
-  // Verificar si estamos en /Admin
+  // Al cargar el componente, verificamos si hay un token en localStorage
   useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      try {
+        const decodedToken = jwtDecode(storedToken);
+        if (decodedToken.exp * 1000 > Date.now()) {
+          setIsAdmin(true);
+          setToken(storedToken);
+        } else {
+          localStorage.removeItem('token'); // Eliminar token si está expirado
+        }
+      } catch (error) {
+        console.error('Token inválido:', error);
+        localStorage.removeItem('token'); // Eliminar token inválido
+      }
+    }
+
     if (window.location.pathname === '/Admin') {
       setIsLoginVisible(true);
     } else {
       setIsLoginVisible(false);
     }
-  }, [window.location.pathname]);
+  }, []);
 
+  // Función para manejar el login y guardar el token
+  const handleLogin = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
+        setIsAdmin(true);
+        setToken(token);
+        localStorage.setItem('token', token); // Guardar token en localStorage
+        setIsLoginVisible(false); // Cerrar login si es correcto
+      }
+    } catch (error) {
+      console.error('Error al manejar el login:', error);
+    }
+  };
 
-  
-
+  const logoutAdmin = () => {
+    setIsAdmin(false);
+    setToken(null);
+    localStorage.removeItem('token'); // Eliminar token al cerrar sesión
+    closeAllAdminScreens();
+  };
 
   // Estados para cada pantalla de administración
   const [isModifyHomeFooterVisible, setIsModifyHomeFooterVisible] = useState(false);
@@ -51,7 +86,7 @@ function App() {
   const [isManageBeautyTipsVisible, setIsManageBeautyTipsVisible] = useState(false);
   const [isManageSurveysPreguntitaVisible, setIsManageSurveysPreguntitaVisible] = useState(false);
   const [isManagePromosVisible, setIsManagePromosVisible] = useState(false);
-  const [isManageUsersVisible, setIsManageUsersVisible] = useState(false); // Estado para gestionar usuarios
+  const [isManageUsersVisible, setIsManageUsersVisible] = useState(false);
 
   const [isSpecialOffersVisible, setIsSpecialOffersVisible] = useState(false);
 
@@ -93,7 +128,7 @@ function App() {
 
   const openManageUsers = () => {
     closeAllAdminScreens();
-    setIsManageUsersVisible(true); // Abrir la pantalla de usuarios
+    setIsManageUsersVisible(true);
   };
 
   // Cerrar todas las pantallas de administración
@@ -105,16 +140,15 @@ function App() {
     setIsManageBeautyTipsVisible(false);
     setIsManageSurveysPreguntitaVisible(false);
     setIsManagePromosVisible(false);
-    setIsManageUsersVisible(false); // Cerrar la pantalla de usuarios
+    setIsManageUsersVisible(false);
   };
 
   const openSpecialOffers = () => {
     setIsSpecialOffersVisible(true);
   };
 
-  const logoutAdmin = () => {
-    setIsAdmin(false);
-    closeAllAdminScreens();
+  const closeSpecialOffers = () => {
+    setIsSpecialOffersVisible(false);
   };
 
   useEffect(() => {
@@ -125,22 +159,8 @@ function App() {
     setIsSurveyVisible(!isSurveyVisible);
   };
 
-  const handleLogin = (email, password) => {
-    if (email === 'Admin@gmail.com' && password === 'Admin') {
-      setIsAdmin(true);
-      openModifyHomeFooter();
-      setIsLoginVisible(false); // Cerrar el login si inicia sesión correctamente
-    } else {
-      setIsAdmin(false);
-    }
-  };
-
   const closeSurvey = () => {
     setIsSurveyVisible(false);
-  };
-
-  const closeSpecialOffers = () => {
-    setIsSpecialOffersVisible(false);
   };
 
   const handleHelpClick = () => {
@@ -159,7 +179,6 @@ function App() {
           <BeautyTips />
           {isSpecialOffersVisible && <SpecialOffers onClose={closeSpecialOffers} />}
           {isSurveyVisible && <SatisfactionSurvey isVisible={isSurveyVisible} closeSurvey={closeSurvey} />}
-          {/* El login solo se muestra si se accede a /Admin */}
           {isLoginVisible && <Login closeLogin={() => setIsLoginVisible(false)} handleLogin={handleLogin} />}
         </>
       ) : (

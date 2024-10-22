@@ -11,7 +11,7 @@ const ContactFormMap = ({ onClose }) => {
   });
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [isSent, setIsSent] = useState(false); // Estado para mostrar el mensaje de agradecimiento
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,14 @@ const ContactFormMap = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validación
+    // Validación del número de teléfono
+    const phoneRegex = /^[0-9]{10}$/; // Acepta solo números con 10 dígitos
+    if (!phoneRegex.test(formData.phone)) {
+      setError('El número de teléfono debe contener exactamente 10 dígitos y solo números.');
+      return;
+    }
+
+    // Validación de los otros campos
     if (!formData.name || !formData.phone || !formData.email || !formData.message) {
       setError('Todos los campos son obligatorios.');
       return;
@@ -39,7 +46,7 @@ const ContactFormMap = ({ onClose }) => {
       .then(
         (response) => {
           console.log('Correo enviado:', response.status, response.text);
-          setSuccessMessage('¡Gracias! Tu mensaje ha sido enviado con éxito.');
+          setIsSent(true); // Mostrar agradecimiento
           setFormData({
             name: '',
             phone: '',
@@ -48,10 +55,10 @@ const ContactFormMap = ({ onClose }) => {
           });
           setSending(false);
 
-          // Cerrar el formulario después de 2 segundos
+          // Cerrar el formulario después de 4 segundos
           setTimeout(() => {
             onClose();
-          }, 2000);
+          }, 4000);
         },
         (error) => {
           console.error('Error al enviar el correo:', error);
@@ -80,56 +87,65 @@ const ContactFormMap = ({ onClose }) => {
           <button className="close-button" onClick={onClose}>X</button>
           <h1 className="form-title">Contáctanos</h1>
           {error && <p className="error-message">{error}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Nombre</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+          
+          {/* Mostrar el agradecimiento bonito cuando el formulario sea enviado */}
+          {isSent ? (
+            <div className="thank-you-minute">
+              <h2>¡Gracias por contactarnos!</h2>
+              <p>Hemos recibido tu mensaje y nos pondremos en contacto contigo lo antes posible.</p>
+              <p>¡Esperamos verte pronto!</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="phone">Teléfono</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Correo Electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="message">Mensaje</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="submit-button" disabled={sending}>
-              {sending ? 'Enviando...' : 'Enviar'}
-            </button>
-          </form>
+          ) : (
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Nombre</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Teléfono</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Correo Electrónico</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">Mensaje</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" className="submit-button" disabled={sending}>
+                {sending ? 'Enviando...' : 'Enviar'}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>

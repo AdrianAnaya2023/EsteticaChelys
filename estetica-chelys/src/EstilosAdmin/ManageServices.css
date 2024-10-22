@@ -30,7 +30,7 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 30px;
-    color: white; /* Cambiar el color a blanco */
+    color: rgb(0, 0, 0); /* Cambiar el color a blanco */
 }
 
 /* Contenedor de botones (ver categorías o agregar servicio/categoría) */

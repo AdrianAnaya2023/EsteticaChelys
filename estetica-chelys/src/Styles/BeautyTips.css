@@ -9,7 +9,7 @@
   background-blend-mode: multiply;
   
   position: relative;
-  min-height: 85vh; /* Asegura que no se pegue con el footer */
+  min-height: 100vh; /* Asegura que no se pegue con el footer */
 }
 
 .beauty-tips-main-container-custom h1 {

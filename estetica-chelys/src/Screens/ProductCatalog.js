@@ -28,9 +28,16 @@ const ProductCatalog = () => {
 
   // Función para cargar productos de una categoría seleccionada
   const viewMore = async (category) => {
-    setCurrentCategory(category);
     try {
       const data = await fetchProductosPorCategoria(category.id); // Obtener productos por categoría
+      
+      // Verificar si la categoría tiene productos asociados
+      if (!data || data.length === 0) {
+        console.log('Esta categoría no tiene productos.');
+        return;
+      }
+
+      setCurrentCategory(category);
       setProducts(data);
       setCurrentPage(0); // Reiniciar la paginación al seleccionar una categoría
       productSectionRef.current.scrollIntoView({ behavior: 'smooth' });

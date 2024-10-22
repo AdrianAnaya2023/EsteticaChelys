@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchPromos, createPromo, updatePromo, deletePromo } from './promosAPI';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebaseConfig.js'; // Asegúrate de tener la configuración correcta de Firebase
+import { storage } from '../firebaseConfig.js';
 import '../EstilosAdmin/ManagePromosPromosAdmin.css';
 
 const ManagePromosPromosAdmin = () => {
@@ -17,7 +17,6 @@ const ManagePromosPromosAdmin = () => {
     descripcion: '',
     fecha_fin: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     const loadPromos = async () => {
@@ -25,7 +24,7 @@ const ManagePromosPromosAdmin = () => {
         const data = await fetchPromos();
         setPromos(data);
       } catch (error) {
-        toast.error(error.message);
+        console.error('Error al cargar promociones: ', error.message);
       }
     };
     loadPromos();
@@ -40,21 +39,14 @@ const ManagePromosPromosAdmin = () => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        // Manejo del progreso de la carga
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
+      null,
       (error) => {
         toast.error('Error al subir la imagen: ' + error.message);
-        setUploadProgress(0);
       },
       () => {
-        // Obtener URL de descarga una vez completada la carga
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setCurrentPromo((prev) => ({ ...prev, foto: downloadURL }));
           toast.success('Imagen cargada con éxito!');
-          setUploadProgress(0); // Reiniciar el progreso después de la carga
         });
       }
     );
@@ -71,6 +63,26 @@ const ManagePromosPromosAdmin = () => {
   };
 
   const handleSave = async () => {
+    // Validaciones solo al crear una nueva promoción
+    if (!isEditing) {
+      if (!currentPromo.foto) {
+        toast.error('La imagen de la promoción es obligatoria');
+        return;
+      }
+      if (!currentPromo.titulo) {
+        toast.error('El título de la promoción es obligatorio');
+        return;
+      }
+      if (!currentPromo.descripcion) {
+        toast.error('La descripción de la promoción es obligatoria');
+        return;
+      }
+      if (!currentPromo.fecha_fin) {
+        toast.error('La fecha de fin es obligatoria');
+        return;
+      }
+    }
+
     try {
       let data;
       if (isEditing) {
@@ -84,7 +96,7 @@ const ManagePromosPromosAdmin = () => {
       }
       closeModal();
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Error al guardar promoción: ' + error.message);
     }
   };
 
@@ -94,7 +106,7 @@ const ManagePromosPromosAdmin = () => {
       setPromos(promos.filter((promo) => promo.id !== id));
       toast.success('Promoción eliminada con éxito');
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Error al eliminar promoción: ' + error.message);
     }
   };
 
@@ -165,14 +177,6 @@ const ManagePromosPromosAdmin = () => {
               onChange={handleFileChange}
               className="input-file-promosAdmin"
             />
-            {uploadProgress > 0 && (
-              <div className="progress-bar-promosAdmin">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
             <label className="modal-label-promosAdmin">Título de la promoción:</label>
             <input
               type="text"

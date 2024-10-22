@@ -32,8 +32,7 @@ const ManageProducts = ({ onClose }) => {
     categoria_id: '', // Asegurarse de que el ID de la categoría esté bien manejado
     nombre: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
-
+  
   useEffect(() => {
     // Cargar productos y categorías al montar el componente
     const loadData = async () => {
@@ -43,7 +42,7 @@ const ManageProducts = ({ onClose }) => {
         const loadedProducts = await fetchProductos();
         setProducts(loadedProducts);
       } catch (error) {
-        toast.error('Error al cargar datos: ' + error.message);
+        console.error('Error al cargar datos: ', error.message);
       }
     };
     loadData();
@@ -67,7 +66,6 @@ const ManageProducts = ({ onClose }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setUploadProgress(0); // Reiniciar progreso al cerrar el modal
   };
 
   const handleFileChange = (e) => {
@@ -79,21 +77,15 @@ const ManageProducts = ({ onClose }) => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        // Manejo del progreso de la carga
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
+      null,
       (error) => {
         toast.error('Error al subir la imagen: ' + error.message);
-        setUploadProgress(0);
       },
       () => {
         // Obtener URL de descarga una vez completada la carga
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setNewItem((prev) => ({ ...prev, imagen: downloadURL }));
           toast.success('Imagen cargada con éxito!');
-          setUploadProgress(0); // Reiniciar el progreso después de la carga
         });
       }
     );
@@ -104,6 +96,30 @@ const ManageProducts = ({ onClose }) => {
   };
 
   const handleSave = async () => {
+    // Validaciones solo para crear un nuevo producto o categoría
+    if (!isEditing) {
+      if (!newItem.titulo && isProductsView) {
+        toast.error('El título del producto es obligatorio');
+        return;
+      }
+      if (!newItem.nombre && !isProductsView) {
+        toast.error('El nombre de la categoría es obligatorio');
+        return;
+      }
+      if (!newItem.descripcion) {
+        toast.error('La descripción es obligatoria');
+        return;
+      }
+      if (!newItem.imagen) {
+        toast.error('La imagen es obligatoria');
+        return;
+      }
+      if (!newItem.categoria_id && isProductsView) {
+        toast.error('Debes seleccionar una categoría para el producto');
+        return;
+      }
+    }
+
     try {
       if (isEditing) {
         if (isProductsView) {
@@ -327,14 +343,6 @@ const ManageProducts = ({ onClose }) => {
               onChange={handleFileChange}
               className="input-file-ManageProducts"
             />
-            {uploadProgress > 0 && (
-              <div className="progress-bar-ManageProducts">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
 
             {isProductsView && (
               <>
@@ -352,15 +360,11 @@ const ManageProducts = ({ onClose }) => {
                   className="input-ManageProducts"
                 >
                   <option value="">Selecciona una Categoría</option>
-                  {categories.length === 0 ? (
-                    <option value="">Cargando categorías...</option>
-                  ) : (
-                    categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.nombre}
-                      </option>
-                    ))
-                  )}
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.nombre}
+                    </option>
+                  ))}
                 </select>
               </>
             )}

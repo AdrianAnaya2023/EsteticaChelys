@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Button from '../Components/Button';
 import ContactFormMap from '../Screens/ContactFormMap';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../Styles/HomePage.css';
+import { fetchHomepageById } from '../Screens-Admin/homepageAPI'; // Importamos la función de la API
 
 const HomePage = () => {
   const [showMapForm, setShowMapForm] = useState(false);
+  const [homeData, setHomeData] = useState({
+    descripcion: '',
+    fotos_local: [],
+    foto_dueno: '',
+  });
+
+  useEffect(() => {
+    // Llamada a la API para obtener los datos del HomePage
+    const loadHomepageData = async () => {
+      try {
+        const data = await fetchHomepageById(1); // Suponiendo que la ID de la homepage es 1
+        setHomeData(data);
+      } catch (error) {
+        console.error('Error al cargar los datos de la homepage:', error);
+      }
+    };
+
+    loadHomepageData();
+  }, []);
 
   const openMapForm = () => setShowMapForm(true); // Mostrar el formulario/mapa
   const closeMapForm = () => setShowMapForm(false); // Cerrar el formulario/mapa
@@ -14,7 +34,7 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <section className="hero-section">
-        <h1>Estetica Chely's</h1>
+        <h1>Estética Chely's</h1>
         <p>Un lugar para cuidarte</p>
         <div className="buttons">
           <div className="button-wrapper">
@@ -24,35 +44,29 @@ const HomePage = () => {
             />
           </div>
           <div className="button-wrapper">
-            {/* Este botón abrirá la pantalla ContactFormMap */}
-            <Button text="Contacto y Ubicacion" onClick={openMapForm} />
+            <Button text="Contacto y Ubicación" onClick={openMapForm} />
           </div>
         </div>
       </section>
       <section className="about-section">
         <div className="about-text">
           <h2>Araceli Almeda Reynaga</h2>
-          <p>Araceli Almeda es el alma detrás de Estética Chely's en Cuautla, Jalisco. Reconocida por su dedicación incansable, Araceli es una mujer trabajadora que día a día da su máximo esfuerzo para satisfacer y superar las expectativas de sus clientes. En su estética, cada detalle y cada servicio reflejan su compromiso por ofrecer no solo calidad, sino también una experiencia personalizada y cercana.</p>
+          <p>{homeData.descripcion}</p>
         </div>
-        <img src="https://www.clarin.com/img/2023/12/28/k8gOUmfp5_600x600__1.jpg" alt="Araceli Almeda" />
+        <img src={homeData.foto_dueno} alt="Araceli Almeda" />
       </section>
       <section className="facilities" style={{ background: 'url("https://cdn.pixabay.com/photo/2016/03/15/02/42/floor-1256804_1280.jpg") no-repeat center center / cover'}}>
         <h2 className="facilities-header">Ven a nuestras instalaciones</h2>
         <Carousel autoPlay infiniteLoop showThumbs={false}>
-          <div>
-            <img src="https://www.versum.com/m/es/wp-content/uploads/sites/6/2020/08/without-receptionist.jpg" alt="Facility 1" />
-          </div>
-          <div>
-            <img src="https://assets.easybroker.com/property_images/3750037/61400551/EB-NK0037.jpeg?version=1684357866" alt="Facility 2" />
-          </div>
-          <div>
-            <img src="https://http2.mlstatic.com/D_NQ_NP_980169-MLM51313441422_082022-O.webp" alt="Facility 3" />
-          </div>
+          {homeData.fotos_local.map((foto, index) => (
+            <div key={index}>
+              <img src={foto} alt={`Facility ${index + 1}`} />
+            </div>
+          ))}
         </Carousel>
         <p className="facilities-invitation">¡Te esperamos!</p>
       </section>
       
-      {/* Renderizamos ContactFormMap si se ha hecho clic en el botón */}
       {showMapForm && (
         <ContactFormMap onClose={closeMapForm} />
       )}

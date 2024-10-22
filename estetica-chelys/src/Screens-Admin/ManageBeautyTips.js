@@ -32,7 +32,6 @@ const ManageBeautyTips = ({ onClose }) => {
     categoria_id: null,
     nombre: '',
   });
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(null); // Estado para almacenar el archivo de imagen
 
   // Cargar datos iniciales de consejos y categorías
@@ -68,7 +67,6 @@ const ManageBeautyTips = ({ onClose }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setUploadProgress(0);
     setNewItem({ titulo: '', descripcion: '', imagen: '', categoria_id: null });
     setFile(null); // Reiniciar el archivo
   };
@@ -87,10 +85,7 @@ const ManageBeautyTips = ({ onClose }) => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
+      null, // No manejar el progreso de carga
       (error) => {
         toast.error('Error al subir la imagen: ' + error.message);
       },
@@ -287,15 +282,6 @@ const ManageBeautyTips = ({ onClose }) => {
               onChange={handleFileChange}
               className="input-Consejitos"
             />
-
-            {uploadProgress > 0 && (
-              <div className="progress-bar">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            )}
 
             {isBeautyTipsView && (
               <>

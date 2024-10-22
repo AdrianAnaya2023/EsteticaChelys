@@ -228,3 +228,44 @@
     background-color: #d32f2f;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+/* Estilo para las etiquetas (letreros) */
+.modal-label-ManageProducts {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Mejora en la apariencia del input */
+.input-ManageProducts {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+}
+
+/* Efecto de enfoque */
+.input-ManageProducts:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Mejora en la apariencia del selector */
+.input-ManageProducts select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+}
+
+.input-file-ManageProducts {
+    margin-bottom: 20px;
+}

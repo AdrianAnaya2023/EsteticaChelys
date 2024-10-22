@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { fetchHomepageById, updateHomepage } from '../Screens-Admin/homepageAPI'; // Importa las funciones del API de Homepage
-import { fetchFooterById, updateFooter } from '../Screens-Admin/footerAPI'; // Importa las funciones del API de Footer
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebaseConfig'; // Asegúrate de tener la configuración correcta de Firebase
-import '../EstilosAdmin/ModifyHomeFooter.css'; // Asegúrate de tener el archivo CSS correspondiente
+import { fetchHomepageById, updateHomepage } from '../Screens-Admin/homepageAPI';
+import { fetchFooterById, updateFooter } from '../Screens-Admin/footerAPI';
+import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
+import { storage } from '../firebaseConfig';
+import '../EstilosAdmin/ModifyHomeFooter.css';
 
 const ModifyHomeFooter = ({ onClose }) => {
   const [homeData, setHomeData] = useState({
     descripcion: '',
     foto_dueno: '',
-    fotos_local: [], // Permitir múltiples fotos del local
+    fotos_local: [],
   });
 
   const [footerData, setFooterData] = useState({
@@ -22,17 +22,14 @@ const ModifyHomeFooter = ({ onClose }) => {
     nombre_dueno: '',
   });
 
-  const [isTableView, setIsTableView] = useState(true); // Alternar entre vista de Home y Footer
+  const [isTableView, setIsTableView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditingHome, setIsEditingHome] = useState(false); // Distinguimos si estamos editando Home o Footer
-  const [currentData, setCurrentData] = useState({}); // Datos actuales que se están editando
-  const [uploadProgress, setUploadProgress] = useState(0); // Progreso de subida de imágenes
+  const [isEditingHome, setIsEditingHome] = useState(false);
+  const [currentData, setCurrentData] = useState({});
 
-  // Cargar los datos de la API al montar el componente
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Asume que el ID es 1, puedes ajustarlo según tu necesidad
         const homeResponse = await fetchHomepageById(1);
         const footerResponse = await fetchFooterById(1);
         setHomeData(homeResponse);
@@ -45,7 +42,6 @@ const ModifyHomeFooter = ({ onClose }) => {
     loadData();
   }, []);
 
-  // Manejo de modales
   const openModal = (isHome = true) => {
     setIsEditingHome(isHome);
     setCurrentData(isHome ? { ...homeData } : { ...footerData });
@@ -56,12 +52,10 @@ const ModifyHomeFooter = ({ onClose }) => {
     setIsModalOpen(false);
   };
 
-  // Manejo de cambios en los inputs del modal
   const handleChange = (e) => {
     setCurrentData({ ...currentData, [e.target.name]: e.target.value });
   };
 
-  // Manejo de la subida de imágenes para Firebase
   const handleFileChange = (e, isHomeImage = true, localIndex = null) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -77,13 +71,9 @@ const ModifyHomeFooter = ({ onClose }) => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
+      null, // No necesitamos manejar el progreso
       (error) => {
         toast.error('Error al subir la imagen: ' + error.message);
-        setUploadProgress(0);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -99,26 +89,48 @@ const ModifyHomeFooter = ({ onClose }) => {
             setCurrentData((prev) => ({ ...prev, logo_img: downloadURL }));
           }
           toast.success('Imagen cargada con éxito!');
-          setUploadProgress(0); // Reiniciar progreso
         });
       }
     );
   };
 
-  // Agregar una nueva foto del local
+  const deleteFotoLocal = async (index) => {
+    const fileUrl = currentData.fotos_local[index];
+
+    // Si el campo está vacío (no tiene URL de imagen), solo elimina el campo
+    if (!fileUrl) {
+      const updatedFotosLocal = currentData.fotos_local.filter((_, i) => i !== index);
+      setCurrentData((prev) => ({ ...prev, fotos_local: updatedFotosLocal }));
+      toast.success('Campo eliminado con éxito');
+      return;
+    }
+
+    const fileRef = ref(storage, fileUrl);
+
+    try {
+      await deleteObject(fileRef);
+      const updatedFotosLocal = currentData.fotos_local.filter((_, i) => i !== index);
+      setCurrentData((prev) => ({ ...prev, fotos_local: updatedFotosLocal }));
+      toast.success('Foto y campo eliminados con éxito');
+    } catch (error) {
+      toast.error('Error al eliminar la foto: ' + error.message);
+    }
+  };
+
   const addFotoLocal = () => {
     setCurrentData((prev) => ({ ...prev, fotos_local: [...prev.fotos_local, ''] }));
   };
 
-  // Guardar cambios
   const handleSave = async () => {
     try {
       if (isEditingHome) {
-        await updateHomepage(1, currentData); // Actualiza el home data (ID 1 como ejemplo)
-        setHomeData(currentData); // Actualizamos los datos locales con los datos modificados
+        await updateHomepage(1, currentData);
+        setHomeData(currentData);
+        toast.success('Home actualizado con éxito!');
       } else {
-        await updateFooter(1, currentData); // Actualiza el footer data (ID 1 como ejemplo)
-        setFooterData(currentData); // Actualizamos los datos locales con los datos modificados
+        await updateFooter(1, currentData);
+        setFooterData(currentData);
+        toast.success('Footer actualizado con éxito!');
       }
       closeModal();
     } catch (error) {
@@ -138,7 +150,6 @@ const ModifyHomeFooter = ({ onClose }) => {
         </button>
       </div>
 
-      {/* Tabla de Home o Footer */}
       <div className="table-container-modify">
         {isTableView ? (
           <>
@@ -203,7 +214,6 @@ const ModifyHomeFooter = ({ onClose }) => {
         )}
       </div>
 
-      {/* Modal para editar Home o Footer */}
       {isModalOpen && (
         <div className="modal-modify">
           <div className="modal-content-modify">
@@ -222,25 +232,21 @@ const ModifyHomeFooter = ({ onClose }) => {
 
                 <label className="modal-label-modify" htmlFor="foto_dueno">Foto del Dueño (URL)</label>
                 <input type="file" onChange={(e) => handleFileChange(e, true)} className="input-file-modify" />
-                {uploadProgress > 0 && (
-                  <div className="progress-bar-modify">
-                    <div className="progress-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
-                  </div>
-                )}
 
                 <label className="modal-label-modify" htmlFor="fotos_local">Fotos del Local (URL)</label>
                 {currentData.fotos_local.map((foto, index) => (
-                  <div key={index}>
+                  <div key={index} className="foto-local-container-modify">
                     <input
                       type="file"
                       onChange={(e) => handleFileChange(e, true, index)}
                       className="input-file-modify"
                     />
-                    {uploadProgress > 0 && (
-                      <div className="progress-bar-modify">
-                        <div className="progress-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
-                      </div>
-                    )}
+                    <button
+                      onClick={() => deleteFotoLocal(index)}
+                      className="delete-foto-button-modify"
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 ))}
                 <button onClick={addFotoLocal} className="add-foto-button-modify">Agregar Foto</button>
@@ -279,11 +285,6 @@ const ModifyHomeFooter = ({ onClose }) => {
 
                 <label className="modal-label-modify" htmlFor="logo_img">Logo (URL)</label>
                 <input type="file" onChange={(e) => handleFileChange(e, false)} className="input-file-modify" />
-                {uploadProgress > 0 && (
-                  <div className="progress-bar-modify">
-                    <div className="progress-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
-                  </div>
-                )}
               </>
             )}
 

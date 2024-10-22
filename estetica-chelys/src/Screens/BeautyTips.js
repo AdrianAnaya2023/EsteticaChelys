@@ -10,7 +10,7 @@ const BeautyTips = () => {
   const [consejos, setConsejos] = useState([]);
   const [currentTipPage, setCurrentTipPage] = useState(0);
   const [currentSubcategoryPage, setCurrentSubcategoryPage] = useState(0);
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   const subcategoriesPerPage = 3;
 
   useEffect(() => {
@@ -28,13 +28,20 @@ const BeautyTips = () => {
   }, []);
 
   const viewCategoryDetails = async (category) => {
-    setCurrentCategory(category);
-    setCurrentSubcategoryPage(0);
-
     // Obtener los consejos de la categoría seleccionada
     try {
       const data = await fetchConsejosPorCategoria(category.id);
-      setConsejos(data || []);
+      
+      // Si la categoría no tiene consejos, no hacer nada
+      if (!data || data.length === 0) {
+        console.log('La categoría no tiene consejos.');
+        return;
+      }
+
+      // Si tiene consejos, establecer la categoría y los consejos
+      setCurrentCategory(category);
+      setCurrentSubcategoryPage(0);
+      setConsejos(data);
     } catch (error) {
       console.error('Error al cargar los consejos por categoría:', error.message);
     }

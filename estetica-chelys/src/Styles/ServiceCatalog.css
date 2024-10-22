@@ -12,6 +12,15 @@
   z-index: 0;
   opacity: 0.9;
 }
+.service-catalog-title {
+  color: black; /* Cambia el color del h1 a negro */
+  font-size: 2em; /* Puedes ajustar el tamaño si lo deseas */
+  text-align: center; /* Mantener el texto centrado */
+}
+.selected-category-title {
+  color: #000; /* Asegúrate de que el color sea negro */
+}
+
 
 .services-grid-catalog-new {
   display: flex;
